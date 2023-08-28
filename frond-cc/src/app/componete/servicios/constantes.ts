@@ -16,3 +16,18 @@ export class LoginConstante {
 export class usuarios{
 	public static URLUsuarios = "user";
 }
+
+export class cp{
+	public static URLcp = "cp";
+	public static URLcpid= "cp/id"
+}
+
+export class rol{
+	public static URLrol = "rol";
+}
+export class Sucursal{
+	public static URLsucursal = "sucursal";
+}
+export class Empresa{
+	public static URLempresa = "empresa";
+}

@@ -1,144 +1,204 @@
 <div class="container mt-4">
-  <button  class="btn btn-primary mt-3" (click)="guardars()">Agregar Comisionista</button>
+  <button class="btn btn-primary mt-3" (click)="guardars()">Agregar Comisionista</button>
 
-<div class="table-responsive">
-  <mat-form-field>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
-  </mat-form-field>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    <!-- Columna Usuario -->
-    <ng-container matColumnDef="usuario">
-      <th mat-header-cell *matHeaderCellDef> Usuario </th>
-      <td mat-cell *matCellDef="let row"> {{row.usuario}} </td>
-    </ng-container>
+  <div class="table-responsive">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+    </mat-form-field>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Columna Usuario -->
+      <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef> Usuario </th>
+        <td mat-cell *matCellDef="let row"> {{row.usuario}} </td>
+      </ng-container>
 
-    <!-- Columna Correo -->
-    <ng-container matColumnDef="correo">
-      <th mat-header-cell *matHeaderCellDef> Correo </th>
-      <td mat-cell *matCellDef="let row"> {{row.correo}} </td>
-    </ng-container>
+      <!-- Columna Correo -->
+      <ng-container matColumnDef="correo">
+        <th mat-header-cell *matHeaderCellDef> Correo </th>
+        <td mat-cell *matCellDef="let row"> {{row.correo}} </td>
+      </ng-container>
 
-    <!-- Columna Acciones -->
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef> Acciones </th>
-      <td mat-cell *matCellDef="let row">
-        <button mat-icon-button color="primary" (click)="actualizarUsuario(row)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="eliminarUsuario(row)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <!-- Columna Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="actualizarUsuario(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="eliminarUsuario(row)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-</div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+  </div>
 
 </div>
 <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-          <div class="modal-header">
+    <div class="modal-content">
+      <div class="modal-header">
 
-              <h4 class="modal-title" *ngIf="info ==true">Ingresar Usuario</h4>
-              <h4 class="modal-title" *ngIf="info ==false">Editar Usuario</h4>
+        <h4 class="modal-title" *ngIf="info ==true">Ingresar Usuario</h4>
+        <h4 class="modal-title" *ngIf="info ==false">Editar Usuario</h4>
 
-          </div>
-          <div class="modal-body row">
-
-            <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="form-responsive" >
-              <div class="form-group">
-                <label for="usuario">Usuario:</label>
-                <input type="text" class="form-control" id="usuario" formControlName="usuario" />
-              </div>
-            
-              <div class="form-group">
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" class="form-control" id="contrasena" formControlName="contrasena" />
-              </div>
-            
-              <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" formControlName="nombre" />
-              </div>
-            
-              <div class="form-group">
-                <label for="paterno">Apellido Paterno:</label>
-                <input type="text" class="form-control" id="paterno" formControlName="paterno" />
-              </div>
-            
-              <div class="form-group">
-                <label for="materno">Apellido Materno:</label>
-                <input type="text" class="form-control" id="materno" formControlName="materno" />
-              </div>
-            
-              <div class="form-group">
-                <label for="calle">Calle:</label>
-                <input type="text" class="form-control" id="calle" formControlName="calle" />
-              </div>
-            
-              <div class="form-group">
-                <label for="numero">Número:</label>
-                <input type="text" class="form-control" id="numero" formControlName="numero" />
-              </div>
-            
-              <div class="form-group">
-                <label for="idcp">Código Postal:</label>
-                <input type="text" class="form-control" id="idcp" formControlName="idcp" />
-              </div>
-            
-              <div class="form-group">
-                <label for="correo">Correo:</label>
-                <input type="email" class="form-control" id="correo" formControlName="correo" />
-              </div>
-            
-              <div class="form-group">
-                <label for="telefono">Teléfono:</label>
-                <input type="tel" class="form-control" id="telefono" formControlName="telefono" />
-              </div>
-            
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="activo" formControlName="activo" />
-                <label class="form-check-label" for="activo">Activo</label>
-              </div>
-            
-              <div class="form-group">
-                <label for="fecharegistro">Fecha de Registro:</label>
-                <input type="date" class="form-control" id="fecharegistro" formControlName="fecharegistro" />
-              </div>
-            
-              <div class="form-group">
-                <label for="fechamodificacion">Fecha de Modificación:</label>
-                <input type="date" class="form-control" id="fechamodificacion" formControlName="fechamodificacion" />
-              </div>
-            
-              <div class="form-group">
-                <label for="perfilid">Perfil ID:</label>
-                <input type="text" class="form-control" id="perfilid" formControlName="perfilid" />
-              </div>
-            
-              <div class="form-group">
-                <label for="sucursalid">Sucursal ID:</label>
-                <input type="text" class="form-control" id="sucursalid" formControlName="sucursalid" />
-              </div>
-            <br>
-            <div class="row">
-              <div class="col"  *ngIf="info ==true">              <button type="submit" class="btn btn-primary" >Guardar</button>
-              </div>
-              <div class="col" *ngIf="info ==false">              <button type="submit" class="btn btn-primary"  >Actualizar</button>
-              </div>
-             
-            </div>
-           
-            </form>
-            <div class="col">  <button class="btn btn-danger" (click)="will.hide()">Cerrar</button>
-            </div>
-
-          </div>
       </div>
+      <div class="modal-body row">
+
+        <form [formGroup]="usuarioForm" class="form-responsive">
+
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Usuarios
+            </div>
+            <div class="card-body">
+              <div class="row align-items-center">
+                <div class="form-group col">
+                  <label for="usuario">Usuario:</label>
+                  <input type="text" class="form-control" id="usuario" formControlName="usuario" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="contrasena">Contraseña:</label>
+                  <input type="password" class="form-control" id="contrasena" formControlName="contrasena" />
+                </div>
+                <div class="form-group form-check col">
+                  <input type="checkbox" class="form-check-input" id="activo" formControlName="activo" />
+                  <label class="form-check-label" for="activo">Activo</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="fecharegistro">Fecha de Registro:</label>
+                  <input type="date" class="form-control" id="fecharegistro" formControlName="fecharegistro" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="fechamodificacion">Fecha de Modificación:</label>
+                  <input type="date" class="form-control" id="fechamodificacion" formControlName="fechamodificacion" />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                    <label for="perfilid">Perfil:</label>
+                    <select class="form-control" id="perfilid" formControlName="perfilid">
+                      <option *ngFor="let item of rol" [value]="item.idrol">{{ item.descripcion }}</option>
+                      <!-- Agrega más opciones según tus necesidades -->
+                    </select>
+                </div>
+
+                <div class="form-group col">
+                    <label for="empresa">Empresa:</label>
+                    <select class="form-control" id="empresa" formControlName="empresa" (change)="suc($event)">
+                      <option *ngFor="let item of empre" [value]="item.idempresa">{{ item.razonsocial }}</option>
+                      <!-- Agrega más opciones según tus necesidades -->
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <label for="sucursalid">Sucursal:</label>
+                    <select class="form-control" id="sucursalid" formControlName="sucursalid">
+                      <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">{{ dat.nombre_sucursal }}</option>
+                      <!-- Agrega más opciones según tus necesidades -->
+                    </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Personales
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" class="form-control" id="nombre" formControlName="nombre" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="paterno">Apellido Paterno:</label>
+                  <input type="text" class="form-control" id="paterno" formControlName="paterno" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="materno">Apellido Materno:</label>
+                  <input type="text" class="form-control" id="materno" formControlName="materno" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="codigopostal">Código Postal:</label>
+                  <input type="text" class="form-control" formControlName="codigopostal"
+                    (input)="consultarDespuesDe5Digitos()"maxlength="5" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="calle">Calle:</label>
+                  <input type="text" class="form-control" id="calle" formControlName="calle" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="numero">Número:</label>
+                  <input type="text" class="form-control" id="numero" formControlName="numero" />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="idcp">Seleccionar Colonia:</label>
+                  <select class="form-control" id="idcp" formControlName="idcp"  (change)="seleccionarColonia($event)">
+                    <option *ngFor="let item of colonia" [value]="item.id">{{ item.colonia }}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <label for="municipio">Municipio:</label>
+                  <input type="text" class="form-control" formControlName="municipio" id="municipio" />
+                </div>
+                
+                <div class="form-group col">
+                  <label for="estado">Estado:</label>
+                  <input type="text" class="form-control" formControlName="estado" id="estado"/>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="correo">Correo:</label>
+                  <input type="email" class="form-control" id="correo" formControlName="correo" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="telefono">Teléfono:</label>
+                  <input type="tel" class="form-control" id="telefono" formControlName="telefono" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+         
+        </form>
+
+        <div class="row">
+          <div class="col" > <button  class="btn btn-primary mt-4" *ngIf="info ==true" (click)="onSubmit()">Guardar</button>
+            <button  class="btn btn-primary mt-4" *ngIf="info ==false" (click)="onSubmit()">Actualizar</button>
+          </div>
+         
+          <div class="col">
+
+          </div>
+          <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
   </div>
 </div>

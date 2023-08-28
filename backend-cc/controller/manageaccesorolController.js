@@ -14,7 +14,7 @@ function manage_acceso_rol(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_acceso_rol(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -35,7 +35,7 @@ function manage_cliente(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_cliente(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -56,7 +56,7 @@ function manage_divisa(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_divisa(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -77,7 +77,7 @@ function manage_empresa(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_empresa(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -98,7 +98,7 @@ function manage_grupo_divisa(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_grupo_divisa(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -119,7 +119,7 @@ function manage_identificacion(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_identificacion(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -140,7 +140,7 @@ function manage_menu(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_menu(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -179,7 +179,7 @@ function manage_ocupacion(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_ocupacion(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -200,7 +200,7 @@ function manage_rol(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_rol(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -221,7 +221,7 @@ function manage_sucursal(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_sucursal(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -241,7 +241,7 @@ function manage_user(req, res) {
     //return;
     //}
 
-    console.log(req.body);
+     
     manage.manage_user(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });

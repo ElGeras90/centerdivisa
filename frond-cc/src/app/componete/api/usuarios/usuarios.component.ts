@@ -6,6 +6,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { userservice } from '../../servicios/userService';
 import { MatPaginator } from '@angular/material/paginator';
+import { cpservice } from '../../servicios/all.service';
 
 
 @Component({
@@ -23,9 +24,16 @@ export class UsuariosComponent {
   usuarioForm!: FormGroup;
   displayedColumns: string[] = ['usuario', 'correo', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
-  constructor(private router: Router,
-    private modalService: NgbModal,
-    private user: userservice) { }
+  codigoValue: string = '';
+  colonia: any;
+  rol: any;
+  empre: any;
+  sucursales: any[] = [];
+  llenardatos: any;
+  formularioupdate: any = {};
+  constructor(
+    private user: userservice,
+    private cp: cpservice) { }
 
   ngOnInit(): void {
     this.usuarioForm = new FormGroup({
@@ -46,49 +54,55 @@ export class UsuariosComponent {
       fechamodificacion: new FormControl(),
       perfilid: new FormControl(),
       sucursalid: new FormControl(),
-      userid: new FormControl()
+      userid: new FormControl(),
+      codigopostal: new FormControl(),
+      municipio: new FormControl(),
+      estado: new FormControl(),
+      empresa: new FormControl()
     });
 
     this.consultar();
-
-   
+    this.consultarol();
+    this.Empresas();
   }
-  ngAfterViewInit(): void{
+  //para llenar el paginador
+  ngAfterViewInit(): void {
     setTimeout(() => {
       this.dataSource.paginator = this.paginator; // Configurar el paginador
       this.paginator.pageSize = 10; // Establecer el tamaño de página predeterminado
     });
   }
+  //accion que realizara el formulario al dar clic al boton
   onSubmit() {
     if (this.usuarioForm.valid) {
       // Enviar el formulario al servicio o realizar la acción que necesites
-      console.log(this.usuarioForm.value);
-      if(this.info ==true){
-      this.guardar(this.usuarioForm.value)
-      }else{
+      if (this.info == true) {
+        this.guardar(this.usuarioForm.value)
+      } else {
         this.actualiza(this.usuarioForm.value)
       }
     } else {
       // Mostrar mensajes de error o realizar acciones apropiadas
     }
   }
+  //actualiza el usuario
   actualiza(value: any) {
     const info = {
-      option:2,
+      option: 2,
       ...value
     }
- 
-    this.user.Login(info).subscribe(
-      (data:any) => {
+
+    this.user.User(info).subscribe(
+      (data: any) => {
         Swal.fire({
           icon: data.resultado[0].manage_user.action,
           title: data.resultado[0].manage_user.message,
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-       this.consultar()
-       this.usuarioForm.reset();
-      },(error: any) => {
+        this.consultar()
+        this.usuarioForm.reset();
+      }, (error: any) => {
         Swal.fire({
           icon: 'error',
           title: 'Ocurrio un problema al intentar realizar la accion ',
@@ -96,29 +110,79 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
 
-    }
+      }
     )
   }
 
   info: boolean = false;
-
-  guardars(){
+  //abre el modal llamado will para hacer la opcion de guardar
+  guardars() {
     this.info = true;
     this.will.show();
   }
-  actualizarUsuario(datos:any){
+
+  
+  async actualizarUsuario(datos: any) {
+    this.formularioupdate= {...datos}
+    const info = {
+      option: 4,
+      sucursalid:datos.sucursalid
+    }
+    console.log(this.formularioupdate)
+
+    this.cp.sucursal(info).subscribe(
+      (data: any) => {
+        if (data.resultado[0].manage_sucursal.action == 'error') {
+        } else {
+         console.log(data.resultado[0].manage_sucursal.data.empresaid)
+          this.formularioupdate = {
+              ...this.formularioupdate,
+              empresaid : data.resultado[0].manage_sucursal.data.empresaid
+            }
+          
+        }
+      }, (error: any) => {
+        
+      }
+      )
+      const info2 = {
+        cp:datos.idcp
+      }
+      console.log(this.formularioupdate)
+
+      this.cp.codigopostar(info2).subscribe(
+        (data: any) => {
+        
+            
+          this.formularioupdate = {
+                ...this.formularioupdate,
+                codigopostal:data.info.data.cp}
+            console.log(data.info.data.cp)
+          
+        }, (error: any) => {
+          
+        }
+      )
+
+
+
+    console.log(this.formularioupdate)
+
+   //this.imprimir(v)
+  }
+
+  imprimir(v:any){
     this.usuarioForm.patchValue({
-      ...datos
+      ...v
     });
+
     this.info = false;
     this.will.show();
   }
-
-  eliminarUsuario(datos:any){
-    console.log(datos)
+  eliminarUsuario(datos: any) {
     Swal.fire({
       icon: 'warning',
-      title: 'Eliminar usuario '+ datos.usuarios,
+      title: 'Eliminar usuario ' + datos.usuarios,
       text: 'Esta seguro de eliminar al usuario ya se podra recuperar',
       showCancelButton: true,
       confirmButtonText: 'Aceptar',
@@ -128,22 +192,20 @@ export class UsuariosComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.elimina(datos.userid)
-        console.log('Aceptar');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         // Acción cuando se hace clic en Cancelar o se cierra la alerta
-        console.log('Cancelar');
 
       }
     });
   }
-  elimina(dato:any){
+  elimina(dato: any) {
     const info = {
-      option:3,
-      userid:dato
+      option: 3,
+      userid: dato
     }
- 
-    this.user.Login(info).subscribe(
-      (data:any) => {
+
+    this.user.User(info).subscribe(
+      (data: any) => {
         Swal.fire({
           icon: data.resultado[0].manage_user.action,
           title: data.resultado[0].manage_user.message,
@@ -151,8 +213,8 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.usuarioForm.reset();
-       this.consultar()
-      },(error: any) => {
+        this.consultar()
+      }, (error: any) => {
         Swal.fire({
           icon: 'error',
           title: 'Ocurrio un problema al intentar realizar la accion ',
@@ -160,36 +222,35 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
 
-    }
+      }
     )
   }
-  consultar(){
+  consultar() {
 
     const info = {
-      option:5
+      option: 5
     }
-    this.user.Login(info).subscribe(
-      (data:any) => {
-        console.log(data.resultado[0].manage_user.data)
+    this.user.User(info).subscribe(
+      (data: any) => {
         this.dataSource.data = data.resultado[0].manage_user.data; // Llenar dataSource con los datos
-      },(error: any) => {
+      }, (error: any) => {
         Swal.fire({
           icon: 'error',
           title: 'Ocurrio un problema al intentar realizar la accion ',
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-    }
+      }
     )
   }
 
-  guardar(datos:any){
+  guardar(datos: any) {
     const info = {
-      option:1,
+      option: 1,
       ...datos
     }
-    this.user.Login(info).subscribe(
-      (data:any) => {
+    this.user.User(info).subscribe(
+      (data: any) => {
         Swal.fire({
           icon: data.resultado[0].manage_user.action,
           title: data.resultado[0].manage_user.message,
@@ -197,8 +258,8 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.usuarioForm.reset();
-       this.consultar()
-      },(error: any) => {
+        this.consultar()
+      }, (error: any) => {
         Swal.fire({
           icon: 'error',
           title: 'Ocurrio un problema al intentar realizar la accion ',
@@ -206,13 +267,163 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
 
-    }
+      }
     )
   }
+  //filtra los resultados de la tabla
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
-    console.log(event)
+
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  consultarCodigosPostales(dato: any) {
+
+    const info = {
+      cp: dato
+    }
+    this.cp.codigopostarl(info).subscribe(
+      (data: any) => {
+        if (data.info.action == 'error') {
+          Swal.fire({
+            icon: data.info.action,
+            title: data.info.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+
+        } else {
+          this.colonia = data.info.data;
+        }
+      }, (error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
+  }
+
+  consultarDespuesDe5Digitos() {
+    const codigoControl = this.usuarioForm.get('codigopostal');
+    const codigoValue = codigoControl?.value;
+
+    if (codigoValue && codigoValue.length === 5) {
+      this.consultarCodigosPostales(codigoValue);
+    }
+
+  }
+
+  seleccionarColonia(event: any) {
+    const selectedValue = event.target.value;
+    if (selectedValue !== null) {
+      const selectedColonia = this.colonia.find((item: any) => item.id == selectedValue);
+      if (selectedColonia) {
+        this.usuarioForm.patchValue({
+          municipio: selectedColonia.municipio,
+          estado: selectedColonia.estado
+        });
+      }
+    }
+  }
+  seleccionarSucursal(event: Event) {
+    const selectedValue = (event.target as HTMLInputElement).value;
+
+    console.log(selectedValue)
+    if (selectedValue !== null) {
+      this.llenardatos = this.sucursales.find((item: any) => item.empresaid == selectedValue);
+      console.log(this.llenardatos)
+
+    }
+  }
+  consultarol() {
+
+    const info = {
+      option: 5
+    }
+    this.cp.roles(info).subscribe(
+      (data: any) => {
+        if (data.resultado[0].manage_rol.action == 'error') {
+          Swal.fire({
+            icon: data.info.action,
+            title: data.info.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+
+        } else {
+          this.rol = data.resultado[0].manage_rol.data;
+        }
+      }, (error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
+  }
+
+  Empresas() {
+
+    const info = {
+      option: 5
+    }
+    this.cp.Empresax(info).subscribe(
+      (data: any) => {
+        if (data.resultado[0].manage_empresa.action == 'error') {
+          Swal.fire({
+            icon: data.info.action,
+            title: data.info.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+
+        } else {
+          this.empre = data.resultado[0].manage_empresa.data;
+        }
+      }, (error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
+  }
+  suc(event: Event) {
+    const selectedValue = (event.target as HTMLInputElement).value;
+
+    const info = {
+      option: 6,
+      empresaid:selectedValue
+    }
+    this.cp.sucursal(info).subscribe(
+      (data: any) => {
+        if (data.resultado[0].manage_sucursal.action == 'error') {
+          Swal.fire({
+            icon: data.info.action,
+            title: data.info.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+
+        } else {
+          this.sucursales = data.resultado[0].manage_sucursal.data;
+          console.log(this.sucursales)
+        }
+      }, (error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
   }
 }

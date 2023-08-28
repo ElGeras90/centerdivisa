@@ -11,7 +11,7 @@ export class userservice {
   ) {
   }
 
-  Login(datos: any) {
+  User(datos: any) {
     return this._apiServicio.Post(datos, usuarios.URLUsuarios); // Usa LoginConstante directamente
   }
 

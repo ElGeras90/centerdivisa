@@ -19,10 +19,6 @@ app.get('/', (req, res) => {
 });
 // Cargar las rutas
 const apiRoutes = require('./routes/api');
-app.use('/public', express.static(path.join(__dirname, 'public/')));
-app.use('/static', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
-
-
 
 // Usar las rutas en la aplicación Express
 apiRoutes(app);

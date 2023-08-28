@@ -6,13 +6,15 @@ import { InicioComponent } from './inicio/inicio.component';
 import { NavComponent } from './nav/nav.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ApiRoutingModule } from './api-routing.component';
+import { EmpresasComponent } from './empresas/empresas.component';
 
 @NgModule({
     declarations:[
         ApiComponent,
         InicioComponent,
         UsuariosComponent,
-        NavComponent
+        NavComponent,
+        EmpresasComponent
     ],
     imports:[
        CommonModule,
