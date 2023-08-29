@@ -4,9 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { userservice } from '../../servicios/userService';
+import { userservice } from '../../../servicios/userService';
 import { MatPaginator } from '@angular/material/paginator';
-import { cpservice } from '../../servicios/all.service';
+import { cpservice } from '../../../servicios/all.service';
 @Component({
   selector: 'app-empresas',
   templateUrl: './empresas.component.html',

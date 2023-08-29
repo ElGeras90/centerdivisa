@@ -4,9 +4,12 @@ import { ApiComponent } from './api.component';
 import { imports } from '../import';
 import { InicioComponent } from './inicio/inicio.component';
 import { NavComponent } from './nav/nav.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosComponent } from './crud/usuarios/usuarios.component';
 import { ApiRoutingModule } from './api-routing.component';
-import { EmpresasComponent } from './empresas/empresas.component';
+import { EmpresasComponent } from './crud/empresas/empresas.component';
+import { SucursalesComponent } from './crud/sucursales/sucursales.component';
+import { RolesComponent } from './crud/roles/roles.component';
+
 
 @NgModule({
     declarations:[
@@ -14,7 +17,9 @@ import { EmpresasComponent } from './empresas/empresas.component';
         InicioComponent,
         UsuariosComponent,
         NavComponent,
-        EmpresasComponent
+        EmpresasComponent,
+        SucursalesComponent,
+        RolesComponent
     ],
     imports:[
        CommonModule,
