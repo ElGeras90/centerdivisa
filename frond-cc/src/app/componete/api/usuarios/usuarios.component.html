@@ -1,10 +1,19 @@
 <div class="container mt-4">
-  <button class="btn btn-primary mt-3" (click)="guardars()">Agregar Comisionista</button>
+  <div class="row align-items-center">
+    <div class="col">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+      </mat-form-field>
+    </div>
+    <div class="col" style="text-align: right;">
+      <button class="btn btn-primary mt-3" (click)="guardars()">Agregar Comisionista</button>
 
+    </div>
+ 
+
+</div>
   <div class="table-responsive">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
-    </mat-form-field>
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <!-- Columna Usuario -->
       <ng-container matColumnDef="usuario">

@@ -3,12 +3,14 @@
 const loginRoutes = require('./loginRoute');
 const acceso_rol = require('./accesorolRoute')
 const cp = require('./cpRoute')
+const p = require('./paisRoute')
 
 module.exports = function(server) {
   // Rutas de login
   loginRoutes(server);
   acceso_rol(server);
   cp(server)
+  p(server)
   // Ruta de inicio
   server.get('/api', (req, res, next) => {
     res.status(200).send({ success: true, message: 'API ONLINE', date: new Date() });

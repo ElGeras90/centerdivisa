@@ -164,6 +164,20 @@ const {postgresPool} = require('./../util/condb');
       client.release();
     }
   }
+
+  async function manage_cat_reg(manage_cat_reg) {
+    const client = await postgresPool.connect();
+  
+    try {
+      const query = 'SELECT * FROM "public"."manage_cat_reg"($1)';
+      const result = await client.query(query, [manage_cat_reg]);
+      return result;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
   module.exports = {
     manage_acceso_rol,
     manage_cliente,
@@ -176,7 +190,8 @@ const {postgresPool} = require('./../util/condb');
     manage_ocupacion,
     manage_rol,
     manage_sucursal,
-    manage_user
+    manage_user,
+    manage_cat_reg
 
   };
   

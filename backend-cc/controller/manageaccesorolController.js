@@ -252,6 +252,16 @@ function manage_user(req, res) {
         });
 
 }
+function manage_cat_reg(req,res){
+
+    manage.manage_cat_reg(req.body)
+        .then(resultado =>{
+            res.status(200).send({success:true,resultado:resultado.rows})
+        })
+        .catch(error => {
+            res.status(501).send({ success: false, message: error})
+        })
+}
 module.exports = {
     manage_acceso_rol,
     manage_cliente,
@@ -264,6 +274,7 @@ module.exports = {
     manage_ocupacion,
     manage_rol,
     manage_sucursal,
-    manage_user
+    manage_user,
+    manage_cat_reg
 
 };

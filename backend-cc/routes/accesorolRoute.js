@@ -13,5 +13,6 @@ module.exports = function(server) {
   server.post('/api/rol', accesocontroler.manage_rol);
   server.post('/api/sucursal', accesocontroler.manage_sucursal);
   server.post('/api/user', accesocontroler.manage_user);
+  server.post('/api/regimen',accesocontroler.manage_cat_reg);
 };
 

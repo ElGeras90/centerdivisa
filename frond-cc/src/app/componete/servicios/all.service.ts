@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { cp,rol,Sucursal,Empresa } from "./constantes"; // Importa LoginConstante directamente
+import { cp,rol,Sucursal,Empresa,regimenfiscal, paises } from "./constantes"; // Importa LoginConstante directamente
 
 @Injectable({
   providedIn: 'root'
@@ -22,5 +22,11 @@ export class cpservice {
   }
   Empresax(codigo: any) {
     return this._apiServicio.Post(codigo, Empresa.URLempresa);
+  }
+  regimen(data:any){
+    return this._apiServicio.Post(data, regimenfiscal.URLregimen);
+  }
+  pais(data:any){
+    return this._apiServicio.Post(data, paises.URLpais);
   }
 }

@@ -31,6 +31,10 @@ export class UsuariosComponent {
   sucursales: any[] = [];
   llenardatos: any;
   formularioupdate: any = {};
+  code: any;
+  est: any;
+  mun: any;
+  e: any;
   constructor(
     private user: userservice,
     private cp: cpservice) { }
@@ -121,61 +125,97 @@ export class UsuariosComponent {
     this.will.show();
   }
 
-  
+
   async actualizarUsuario(datos: any) {
-    this.formularioupdate= {...datos}
-    const info = {
-      option: 4,
-      sucursalid:datos.sucursalid
+    this.formularioupdate = { ...datos };
+  
+    try {
+      const info = {
+        option: 4,
+        sucursalid: datos.sucursalid
+      };
+  
+      const data1: any = await this.cp.sucursal(info).toPromise(); // Convertir el observable a una promesa
+
+    if (data1?.resultado?.[0]?.manage_sucursal?.action !== 'error') {
+      this.e = data1.resultado[0].manage_sucursal.data.empresaid;
     }
-    console.log(this.formularioupdate)
-
-    this.cp.sucursal(info).subscribe(
-      (data: any) => {
-        if (data.resultado[0].manage_sucursal.action == 'error') {
-        } else {
-         console.log(data.resultado[0].manage_sucursal.data.empresaid)
-          this.formularioupdate = {
-              ...this.formularioupdate,
-              empresaid : data.resultado[0].manage_sucursal.data.empresaid
-            }
-          
-        }
-      }, (error: any) => {
-        
-      }
-      )
+  
       const info2 = {
-        cp:datos.idcp
-      }
-      console.log(this.formularioupdate)
-
-      this.cp.codigopostar(info2).subscribe(
-        (data: any) => {
+        cp: datos.idcp
+      };
+  
+      const data2: any = await this.cp.codigopostar(info2).toPromise(); // Convertir el observable a una promesa
+  
+      this.code = data2.info.data[0].cp;
+      this.est = data2.info.data[0].estado;
+      this.mun = data2.info.data[0].municipio;
+  
+      this.usuarioForm.patchValue({
+        usuario: datos.usuario,
+        contrasena: datos.contrasena,
+        nombre: datos.nombre,
+        paterno: datos.paterno,
+        materno: datos.materno,
+        calle: datos.calle,
+        numero: datos.numero,
+        idcp: datos.idcp,
+        correo:datos.correo,
+        telefono: datos.telefono,
+        activo:datos.activo,
+        fecharegistro:datos.fecharegistro,
+        fechacierre: datos.fechacierre,
+        usuariomodifico: datos.usuariomodifico,
+        fechamodificacion: datos.fechamodificacion,
+        perfilid: datos.perfilid,
+        sucursalid: datos.sucursalid,
+        userid: datos.userid,
+        codigopostal: this.code,
+        municipio: this.mun,
+        estado: this.est,
+        empresa:  this.e
         
-            
-          this.formularioupdate = {
-                ...this.formularioupdate,
-                codigopostal:data.info.data.cp}
-            console.log(data.info.data.cp)
-          
+      });
+  
+      const infos = {
+        option: 6,
+        empresaid: this.e
+      }
+      this.cp.sucursal(infos).subscribe(
+        (data: any) => {
+          if (data.resultado[0].manage_sucursal.action == 'error') {
+            Swal.fire({
+              icon: data.info.action,
+              title: data.info.message,
+              allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+              allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+            });
+  
+          } else {
+            this.sucursales = data.resultado[0].manage_sucursal.data;
+            console.log(this.sucursales)
+          }
         }, (error: any) => {
-          
+          Swal.fire({
+            icon: 'error',
+            title: 'Ocurrio un problema al intentar realizar la accion ',
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
         }
       )
-
-
-
-    console.log(this.formularioupdate)
-
-   //this.imprimir(v)
+      this.consultarCodigosPostales(this.code);
+      this.imprimir();
+    } catch (error) {
+      // Manejar errores si es necesario
+    }
   }
+  
 
-  imprimir(v:any){
-    this.usuarioForm.patchValue({
-      ...v
-    });
+  imprimir() {
+   
 
+    console.log(this.usuarioForm.value)
     this.info = false;
     this.will.show();
   }
@@ -395,12 +435,12 @@ export class UsuariosComponent {
       }
     )
   }
-  suc(event: Event) {
-    const selectedValue = (event.target as HTMLInputElement).value;
+  suc(event: any) {
+    const selectedValue = event.target.value;
 
     const info = {
       option: 6,
-      empresaid:selectedValue
+      empresaid: selectedValue
     }
     this.cp.sucursal(info).subscribe(
       (data: any) => {
