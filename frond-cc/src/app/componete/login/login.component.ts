@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as bcrypt from 'bcryptjs';
 
 import { AuthenticationService } from '../servicios/AuthenticationService';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -41,9 +42,19 @@ export class LoginComponent {
         console.log('Usuario:', usuario);
         console.log('Contraseña:', contraseña);
 
-        this.Auth.Login(usuario,hashedPassword).subscribe(
+        this.Auth.Login(usuario,contraseña).subscribe(
           (data:any) => {
-              console.log(data)
+            if(data.info[0].login_usuario.action == 'error'){
+              Swal.fire({
+                icon: data.info[0].login_usuario.action,
+                title: data.info[0].login_usuario.message,
+                allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+                allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+              });
+            }else{
+              this.Auth.loginUser(data.info[0].login_usuario,data.Token)
+              this.router.navigate(['api']);
+            }
           },(error: any) => {
             console.log(error);
 

@@ -105,6 +105,7 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.consultar()
+        this.will.hide()
         this.usuarioForm.reset();
       }, (error: any) => {
         Swal.fire({
@@ -113,7 +114,9 @@ export class UsuariosComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-
+        this.consultar()
+        this.will.hide()
+        this.usuarioForm.reset();
       }
     )
   }
@@ -298,6 +301,7 @@ export class UsuariosComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.usuarioForm.reset();
+        this.will.hide()
         this.consultar()
       }, (error: any) => {
         Swal.fire({
@@ -306,7 +310,9 @@ export class UsuariosComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-
+        this.consultar()
+        this.will.hide()
+        this.usuarioForm.reset();
       }
     )
   }

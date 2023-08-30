@@ -7,14 +7,14 @@ const token = require('./../util/token');
 
 function manage_acceso_rol(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_acceso_rol(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -28,14 +28,14 @@ function manage_acceso_rol(req, res) {
 
 function manage_cliente(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_cliente(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -49,14 +49,14 @@ function manage_cliente(req, res) {
 
 function manage_divisa(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_divisa(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -70,14 +70,14 @@ function manage_divisa(req, res) {
 
 function manage_empresa(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_empresa(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -91,14 +91,14 @@ function manage_empresa(req, res) {
 
 function manage_grupo_divisa(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_grupo_divisa(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -112,14 +112,14 @@ function manage_grupo_divisa(req, res) {
 
 function manage_identificacion(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_identificacion(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -133,14 +133,14 @@ function manage_identificacion(req, res) {
 
 function manage_menu(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_menu(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -153,12 +153,12 @@ function manage_menu(req, res) {
 }
 function manage_nacionalidad(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
     manage.manage_nacionalidad(req.body)
         .then(resultado => {
@@ -175,11 +175,11 @@ function manage_ocupacion(req, res) {
     //const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_ocupacion(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -193,14 +193,14 @@ function manage_ocupacion(req, res) {
 
 function manage_rol(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_rol(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -214,14 +214,14 @@ function manage_rol(req, res) {
 
 function manage_sucursal(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_sucursal(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -234,14 +234,14 @@ function manage_sucursal(req, res) {
 }
 function manage_user(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
+    const authResult = token.middlewareDeAutenticacion(req, res);
 
     // Si el middleware devuelve una respuesta, detén el proceso
-    //if (authResult) {
-    //return;
-    //}
+    if (authResult) {
+        return;
+    }
 
-     
+
     manage.manage_user(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -252,14 +252,14 @@ function manage_user(req, res) {
         });
 
 }
-function manage_cat_reg(req,res){
+function manage_cat_reg(req, res) {
 
     manage.manage_cat_reg(req.body)
-        .then(resultado =>{
-            res.status(200).send({success:true,resultado:resultado.rows})
+        .then(resultado => {
+            res.status(200).send({ success: true, resultado: resultado.rows })
         })
         .catch(error => {
-            res.status(501).send({ success: false, message: error})
+            res.status(501).send({ success: false, message: error })
         })
 }
 module.exports = {

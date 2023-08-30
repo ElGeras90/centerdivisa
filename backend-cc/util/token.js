@@ -8,7 +8,7 @@ function middlewareDeAutenticacion(req, res) {
   }
 
   try {
-    const decodedToken = jwt.verify(token, 'secreto-seguro');
+    const decodedToken = jwt.verify(token, 'aB$7pQ2*Zu9!wC8xaB$7pQ2*Zu9!wC8x');
     req.userData = decodedToken; // Almacena los datos decodificados en la solicitud
 
   } catch (error) {

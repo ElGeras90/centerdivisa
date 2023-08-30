@@ -9,6 +9,7 @@ import { ApiRoutingModule } from './api-routing.component';
 import { EmpresasComponent } from './crud/empresas/empresas.component';
 import { SucursalesComponent } from './crud/sucursales/sucursales.component';
 import { RolesComponent } from './crud/roles/roles.component';
+import { AccesosComponent } from './crud/accesos/accesos.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RolesComponent } from './crud/roles/roles.component';
         NavComponent,
         EmpresasComponent,
         SucursalesComponent,
-        RolesComponent
+        RolesComponent,
+        AccesosComponent
     ],
     imports:[
        CommonModule,

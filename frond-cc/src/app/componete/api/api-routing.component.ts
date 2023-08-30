@@ -6,6 +6,7 @@ import { UsuariosComponent } from './crud/usuarios/usuarios.component';
 import { EmpresasComponent } from './crud/empresas/empresas.component';
 import { SucursalesComponent } from './crud/sucursales/sucursales.component';
 import { RolesComponent } from './crud/roles/roles.component';
+import { AccesosComponent } from './crud/accesos/accesos.component';
 
 const routes: Routes = [
     {
@@ -14,7 +15,8 @@ const routes: Routes = [
             {path:'Usuarios',component: UsuariosComponent},
             {path:'Empresas',component: EmpresasComponent},
             {path:'Sucursales',component: SucursalesComponent},
-            {path:'Roles',component: RolesComponent}
+            {path:'Roles',component: RolesComponent},
+            {path:'Accesos',component: AccesosComponent},
         ]
     },
 ];

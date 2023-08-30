@@ -315,6 +315,7 @@ export class SucursalesComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.clean();
+        this.will.hide()
         this.consultar()
       }, (error: any) => {
         Swal.fire({
@@ -324,6 +325,7 @@ export class SucursalesComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.clean();
+        this.will.hide()
         this.consultar()
       }
     )

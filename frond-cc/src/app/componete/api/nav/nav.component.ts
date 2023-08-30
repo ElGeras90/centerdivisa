@@ -9,16 +9,31 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent {
-  constructor(private snack: MatSnackBar,
-     private router: Router) {
+export class NavComponent  implements OnInit {
+  menus: any[] | null = null;
+  constructor(private snack: MatSnackBar, private router: Router) {
+    this.screenWidth = window.innerWidth;
 
   }
-  menuOptions = [
-    { label: 'Inicio', route: '/inicio' },
-    { label: 'Usuarios', route: '/usuarios' },
-    { label: 'Productos', route: '/productos' },
-    // Agrega más opciones según tus necesidades
-  ];
+
+  @ViewChild('sidenav', { static: true }) sidenav!: MatSidenav; // <- Agregamos "{ static: true }" aquí
+  screenWidth: number | undefined;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+  }
+  ngOnInit(): void {
+        const dmnues = localStorage.getItem('menus');
+
+    if (dmnues !== null) {
+     const dmo = JSON.parse(dmnues);
+
+     this.menus = dmo
+     console.log(this.menus)
+      
+    } 
+  }
+ 
 
 }

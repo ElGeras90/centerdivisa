@@ -246,6 +246,7 @@ export class EmpresasComponent {
         });
         this.clean();
         this.consultar()
+        this.will.hide();
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -254,7 +255,8 @@ export class EmpresasComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.clean();
-        this.consultar()
+        this.consultar();
+        this.will.hide();
       }
     )
 
@@ -288,7 +290,8 @@ export class EmpresasComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.clean();
-        this.consultar()
+        this.consultar();
+        this.will.hide();
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -297,7 +300,8 @@ export class EmpresasComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
         this.clean();
-        this.consultar()
+        this.consultar();
+        this.will.hide();
       }
     )
 

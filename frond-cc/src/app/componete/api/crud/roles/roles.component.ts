@@ -98,7 +98,7 @@ export class RolesComponent {
             allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
             allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
           });
-
+          this.will.hide()
           this.consultar();
       }, (error: any) => {
         Swal.fire({
@@ -107,6 +107,7 @@ export class RolesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
+        this.will.hide()
         this.consultar();
       }
     )
@@ -125,7 +126,7 @@ export class RolesComponent {
             allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
             allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
           });
-
+          this.will.hide()
           this.consultar();
       }, (error: any) => {
         Swal.fire({
@@ -134,6 +135,7 @@ export class RolesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
+        this.will.hide()
         this.consultar();
       }
     )
@@ -154,7 +156,7 @@ export class RolesComponent {
             allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
             allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
           });
-
+          this.will.hide()
           this.consultar();
       }, (error: any) => {
         Swal.fire({
@@ -163,6 +165,7 @@ export class RolesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
+        this.will.hide()
         this.consultar();
       }
     )
