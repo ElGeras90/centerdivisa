@@ -3,7 +3,10 @@ const app = express();
 const port = 3000;
 const cors = require('cors'); // Importa el paquete cors
 const path = require('path'); // Importa el módulo 'path'
-
+const accesosrol = require('./routes/accesorolRoute');
+const cp = require('./routes/cpRoute');
+const auth = require('./routes/loginRoute');
+const pais = require('./routes/paisRoute');
 
 const corsOptions = {
     origin: '*', // Cambia esto al dominio de tu aplicación front-end
@@ -13,15 +16,17 @@ const corsOptions = {
   app.use(cors(corsOptions));
   app.use(express.json());
   app.set('view engine', 'ejs'); 
+
 // Ruta de ejemplo para recibir peticiones GET
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 // Cargar las rutas
-const apiRoutes = require('./routes/api');
-
+app.use('/accsosrol', accesosrol);
+app.use('/cp', cp);
+app.use('/auth',auth);
+app.use('/pais',pais)
 // Usar las rutas en la aplicación Express
-apiRoutes(app);
 
 // Iniciar el servidor
 app.listen(port, () => {

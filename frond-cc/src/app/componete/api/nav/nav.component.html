@@ -15,8 +15,8 @@
           
           <li class="nav-item dropdown" *ngFor="let a of menus">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{a.menusuperior}}</a>
-            <ul class="dropdown-menu" *ngFor="let b of a.menu">
-              <li><a class="dropdown-item" [routerLink]="a.ruta">{{b.menus}}</a></li>
+            <ul class="dropdown-menu" >
+              <li *ngFor="let b of a.menu"><a class="dropdown-item" [routerLink]="b.ruta">{{b.menu}}</a></li>
             </ul>
           </li>
         </ul>

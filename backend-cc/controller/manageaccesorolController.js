@@ -2,17 +2,8 @@
 const jwt = require('jsonwebtoken');
 
 const manage = require('./../model/manageaccesorolmodel');
-const token = require('./../util/token');
-
 
 function manage_acceso_rol(req, res) {
-
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_acceso_rol(req.body)
@@ -28,14 +19,6 @@ function manage_acceso_rol(req, res) {
 
 function manage_cliente(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
-
-
     manage.manage_cliente(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -49,12 +32,7 @@ function manage_cliente(req, res) {
 
 function manage_divisa(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
 
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_divisa(req.body)
@@ -70,13 +48,6 @@ function manage_divisa(req, res) {
 
 function manage_empresa(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
-
 
     manage.manage_empresa(req.body)
         .then(resultado => {
@@ -90,13 +61,6 @@ function manage_empresa(req, res) {
 }
 
 function manage_grupo_divisa(req, res) {
-
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_grupo_divisa(req.body)
@@ -112,12 +76,7 @@ function manage_grupo_divisa(req, res) {
 
 function manage_identificacion(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
 
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_identificacion(req.body)
@@ -133,12 +92,6 @@ function manage_identificacion(req, res) {
 
 function manage_menu(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_menu(req.body)
@@ -153,12 +106,7 @@ function manage_menu(req, res) {
 }
 function manage_nacionalidad(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
 
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
     manage.manage_nacionalidad(req.body)
         .then(resultado => {
@@ -172,12 +120,6 @@ function manage_nacionalidad(req, res) {
 }
 function manage_ocupacion(req, res) {
 
-    //const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_ocupacion(req.body)
@@ -193,12 +135,6 @@ function manage_ocupacion(req, res) {
 
 function manage_rol(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_rol(req.body)
@@ -214,12 +150,6 @@ function manage_rol(req, res) {
 
 function manage_sucursal(req, res) {
 
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_sucursal(req.body)
@@ -233,13 +163,6 @@ function manage_sucursal(req, res) {
 
 }
 function manage_user(req, res) {
-
-    const authResult = token.middlewareDeAutenticacion(req, res);
-
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-        return;
-    }
 
 
     manage.manage_user(req.body)

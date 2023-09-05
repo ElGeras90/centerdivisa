@@ -8,6 +8,7 @@ import {imports} from './componete/import'
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticationService } from './componete/servicios/AuthenticationService';
 import { LoginService } from './componete/servicios/loginService';
+import { EncryptDataService } from './componete/servicios/encriptar';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { LoginService } from './componete/servicios/loginService';
     imports,
     HttpClientModule
   ],
-  providers: [],
+  providers: [EncryptDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

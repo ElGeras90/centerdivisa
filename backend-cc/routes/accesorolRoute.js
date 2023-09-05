@@ -1,18 +1,21 @@
+const express = require('express');
+const router = express.Router();
+const { verifyAuthToken } = require('../util/token');
+
 const accesocontroler = require('../controller/manageaccesorolController');
 
-module.exports = function(server) {
-  server.post('/api/accrol', accesocontroler.manage_acceso_rol);
-  server.post('/api/cliente', accesocontroler.manage_cliente);
-  server.post('/api/divisa', accesocontroler.manage_divisa);
-  server.post('/api/empresa', accesocontroler.manage_empresa);
-  server.post('/api/grupo', accesocontroler.manage_grupo_divisa);
-  server.post('/api/identificacion', accesocontroler.manage_identificacion);
-  server.post('/api/menu', accesocontroler.manage_menu);
-  server.post('/api/nacionalidad', accesocontroler.manage_nacionalidad);
-  server.post('/api/ocupacion', accesocontroler.manage_ocupacion);
-  server.post('/api/rol', accesocontroler.manage_rol);
-  server.post('/api/sucursal', accesocontroler.manage_sucursal);
-  server.post('/api/user', accesocontroler.manage_user);
-  server.post('/api/regimen',accesocontroler.manage_cat_reg);
-};
+  router.post('/accrol',verifyAuthToken, accesocontroler.manage_acceso_rol);
+  router.post('/cliente',verifyAuthToken, accesocontroler.manage_cliente);
+  router.post('/divisa',verifyAuthToken, accesocontroler.manage_divisa);
+  router.post('/empresa',verifyAuthToken, accesocontroler.manage_empresa);
+  router.post('/grupo',verifyAuthToken, accesocontroler.manage_grupo_divisa);
+  router.post('/identificacion',verifyAuthToken, accesocontroler.manage_identificacion);
+  router.post('/menu',verifyAuthToken, accesocontroler.manage_menu);
+  router.post('/nacionalidad',verifyAuthToken, accesocontroler.manage_nacionalidad);
+  router.post('/ocupacion',verifyAuthToken, accesocontroler.manage_ocupacion);
+  router.post('/rol',verifyAuthToken, accesocontroler.manage_rol);
+  router.post('/sucursal',verifyAuthToken, accesocontroler.manage_sucursal);
+  router.post('/user',verifyAuthToken, accesocontroler.manage_user);
+  router.post('/regimen',verifyAuthToken,accesocontroler.manage_cat_reg);
 
+  module.exports = router;

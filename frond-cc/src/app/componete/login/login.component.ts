@@ -5,6 +5,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { AuthenticationService } from '../servicios/AuthenticationService';
 import Swal from 'sweetalert2';
+import { EncryptDataService } from '../servicios/encriptar';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private Auth:AuthenticationService) {
+    private Auth:AuthenticationService,
+    private key: EncryptDataService) {
     this.loginForm = this.fb.group({
       usuario: ['', Validators.required], // Crea un FormControl para el campo usuario
       contraseña: ['', Validators.required] // Crea un FormControl para el campo contraseña
@@ -39,8 +41,8 @@ export class LoginComponent {
 
         console.log('Datos cifrados:', hashedPassword);
 
-        console.log('Usuario:', usuario);
-        console.log('Contraseña:', contraseña);
+        console.log( this.key.encriptar(usuario));
+       
 
         this.Auth.Login(usuario,contraseña).subscribe(
           (data:any) => {

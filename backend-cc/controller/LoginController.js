@@ -1,10 +1,8 @@
 'use strict';
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto-js'); // Importa la biblioteca CryptoJS
 
 const loginmodel = require('./../model/loginmodel');
 const token = require('./../util/token');
-
 
 
 function login(req, res) {
@@ -19,8 +17,9 @@ console.log(req.body)
 
   loginmodel.login(req.body)
     .then(info => {
-      console.log(info.rows)
+  
       res.status(200).send({ success: true, info: info.rows, Token:token });
+      
     })
     .catch(error => {
       res.status(501).send({ success: false, message: error });

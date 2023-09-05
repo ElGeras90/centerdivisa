@@ -1,7 +1,13 @@
 const pais = require('../controller/PaisController');
 
-module.exports = function(server) {
-  server.post('/api/pais', pais.paises);
- 
-};
+const express = require('express');
+const router = express.Router();
+const { verifyAuthToken } = require('../util/token');
+
+  router.post('/pais',verifyAuthToken, pais.paises);
+
+
+ module.exports = router;
+
+
 
