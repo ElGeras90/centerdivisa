@@ -1,0 +1,9 @@
+/* Estilo para el ícono activo */
+.activo-icon {
+    color: green; /* Cambia el color según tus preferencias */
+  }
+  
+  /* Estilo para el ícono inactivo */
+  .inactivo-icon {
+    color: red; /* Cambia el color según tus preferencias */
+  }

@@ -10,6 +10,10 @@ import { EmpresasComponent } from './crud/empresas/empresas.component';
 import { SucursalesComponent } from './crud/sucursales/sucursales.component';
 import { RolesComponent } from './crud/roles/roles.component';
 import { AccesosComponent } from './crud/accesos/accesos.component';
+import { IdentificaionComponent } from './crud/identificaion/identificaion.component';
+import { GrupoComponent } from './crud/grupo/grupo.component';
+import { ClientesComponent } from './crud/clientes/clientes.component';
+import { DivisasComponent } from './crud/divisas/divisas.component';
 
 
 @NgModule({
@@ -21,7 +25,11 @@ import { AccesosComponent } from './crud/accesos/accesos.component';
         EmpresasComponent,
         SucursalesComponent,
         RolesComponent,
-        AccesosComponent
+        AccesosComponent,
+        IdentificaionComponent,
+        GrupoComponent,
+        ClientesComponent,
+        DivisasComponent
     ],
     imports:[
        CommonModule,

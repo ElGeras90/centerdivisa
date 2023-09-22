@@ -24,6 +24,10 @@ export class cp {
 
 export class rol {
 	public static URLrol = "accsosrol/rol";
+	public static UrlAcces = "accsosrol/accrol";
+	public static Urlmenu = "accsosrol/menu";
+	public static Urlident = "accsosrol/identificacion";
+	public static UrlGrupo = "accsosrol/grupo";
 }
 
 export class Sucursal {
@@ -40,4 +44,12 @@ export class regimenfiscal {
 
 export class paises {
 	public static URLpais = "pais/pais";
+	public static URLedo = "pais/estado";
+	public static URLocu = "pais/ocupacion";
+	public static URLnac = "pais/nacionalidad";
+}
+
+export class cl {
+	public static URLcliente = "accsosrol/cliente";
+	
 }

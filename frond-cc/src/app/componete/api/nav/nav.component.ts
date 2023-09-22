@@ -2,6 +2,8 @@ import { Component, HostListener, NgModule, OnInit, ViewChild } from '@angular/c
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthenticationService } from '../../servicios/AuthenticationService';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
@@ -11,7 +13,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class NavComponent  implements OnInit {
   menus: any[] | null = null;
-  constructor(private snack: MatSnackBar, private router: Router) {
+  constructor(private snack: MatSnackBar, private router: Router, private auth: AuthenticationService) {
     this.screenWidth = window.innerWidth;
 
   }
@@ -33,6 +35,13 @@ export class NavComponent  implements OnInit {
      console.log(this.menus)
       
     } 
+    if (localStorage.getItem('ID') == null) {
+      this.router.navigate(['login']);
+    }
+  }
+  logout(){
+    this.auth.logout();
+    this.router.navigate(['login']);
   }
  
 

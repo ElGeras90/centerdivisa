@@ -7,12 +7,23 @@ import Swal from 'sweetalert2';
 import { userservice } from '../../../servicios/userService';
 import { MatPaginator } from '@angular/material/paginator';
 import { cpservice } from '../../../servicios/all.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.css']
+  styleUrls: ['./usuarios.component.css'],  animations: [
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('300ms', style({ transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('300ms', style({ transform: 'translateY(-100%)' })),
+      ]),
+    ]),
+  ],
 })
 export class UsuariosComponent {
 

@@ -35,7 +35,9 @@ import {MatCardModule} from '@angular/material/card';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     declarations: [
@@ -43,6 +45,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ],
     imports: [
         CommonModule,
+        MatSlideToggleModule,
         MatSliderModule,
         MatFormFieldModule,
         MatInputModule,
@@ -67,12 +70,17 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         MatInputModule,
         MatButtonModule,
         MatCardModule,
-        ModalModule
-
+        ModalModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
     ],
     exports: [
+        
         CommonModule,
         MatSliderModule,
+        MatSlideToggleModule,
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
@@ -96,7 +104,11 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         MatInputModule,
         MatButtonModule,
         MatCardModule,
-        ModalModule
+        ModalModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
 
     ]
 })

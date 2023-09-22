@@ -46,6 +46,7 @@ export class LoginComponent {
 
         this.Auth.Login(usuario,contraseña).subscribe(
           (data:any) => {
+            console.log(data)
             if(data.info[0].login_usuario.action == 'error'){
               Swal.fire({
                 icon: data.info[0].login_usuario.action,

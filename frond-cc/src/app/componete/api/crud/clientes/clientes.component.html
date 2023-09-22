@@ -1,0 +1,300 @@
+<div class="container mt-4">
+  <div class="row align-items-center">
+    <div class="col">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+      </mat-form-field>
+    </div>
+    <div class="col" style="text-align: right;">
+      <button class="btn btn-primary mt-3" (click)="abrirwill()">Agregar Cliente</button>
+
+    </div>
+
+
+  </div>
+  <div class="table-responsive">
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- Columna Usuario -->
+      <ng-container matColumnDef="Nombre">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let row"> {{row.nombre}} {{row.paterno}} {{row.materno}}</td>
+      </ng-container>
+      <ng-container matColumnDef="Telefono">
+        <th mat-header-cell *matHeaderCellDef> Telefono </th>
+        <td mat-cell *matCellDef="let row"> {{row.relefono}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha Nacimiento </th>
+        <td mat-cell *matCellDef="let row"> {{row.fechanacimiento}} </td>
+      </ng-container>
+      <ng-container matColumnDef="correo">
+        <th mat-header-cell *matHeaderCellDef> correo </th>
+        <td mat-cell *matCellDef="let row"> {{row.correo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="calle">
+        <th mat-header-cell *matHeaderCellDef> calle </th>
+        <td mat-cell *matCellDef="let row"> {{row.calle}} {{row.nint}} </td>
+      </ng-container>
+
+
+      <!-- Columna Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button color="secundary" *ngIf="activar">
+            <mat-icon>person_check</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator *ngIf="!activar" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+  </div>
+
+</div>
+
+<div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" *ngIf="info ==true">Agregar CLIENTE</h4>
+        <h4 class="modal-title" *ngIf="info ==false">Editar CLIENTE</h4>
+
+      </div>
+      <div class="modal-body row">
+
+        <form class="form-responsive">
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Personales
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" class="form-control" name="nombres" [(ngModel)]="nombres" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="paterno">Apellido Paterno:</label>
+                  <input type="text" class="form-control" name="paterno" [(ngModel)]="paterno" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="materno">Apellido Materno:</label>
+                  <input type="text" class="form-control" name="materno" [(ngModel)]="materno" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="paisnaci">Pais de nacimiento:</label>
+                  <select class="form-control" name="paisnaci" (change)="estados($event)" [(ngModel)]="paisnaci">
+                    <option *ngFor="let item of paises
+                    " [value]="item.idpais">{{ item.nombre }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="estanaci">Estado Nacimiento</label>
+                  <select class="form-control" name="estanaci" [(ngModel)]="estanaci">
+                    <option *ngFor="let item of estadosselect
+                    " [value]="item.idcatest">{{ item.nombre }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                
+                <div class="form-group col">
+                  <label for="nacionalidad">Nacionalidad:</label>
+                  <select class="form-control" name="nacionalidad" [(ngModel)]="nacionalidad"
+                    (change)="getnacionalidad($event)">
+                    <option *ngFor="let item of nacionalidades
+                    " [value]="item.idnaci">{{ item.nacionalidad }}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <label for="fechanacimiento">fechanacimiento:</label>
+                  <input type="date" class="form-control" name="fechanacimiento"
+                    [(ngModel)]="fechanacimiento" />
+                </div>
+                
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Identificacion:</label>
+                  <select class="form-control" name="identificacion" [(ngModel)]="identificacion">
+                    <option *ngFor="let item of identificaciones
+                    " [value]="item.ididentificacion">{{ item.descripcion }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="numerodeidentificacion">Numero de Identifiacion</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion"
+                    [(ngModel)]="numerodeidentificacion" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="genero">Genero:</label>
+                  <select class="form-control" name="genero" [(ngModel)]="genero">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="31 tipo de gays">No definido</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="Ocupacion">Ocupacion:</label>
+                    <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion">
+                      <option *ngFor="let item of ocupaciones
+                    " [value]="item.idacividad">{{ item.descripcion }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="numerotelefono">Numero Telefono</label>
+                    <input type="text" class="form-control" name="numerotelefono" [(ngModel)]="numerotelefono" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="correoelectronico">Email:</label>
+                    <input type="text" class="form-control" name="correoelectronico" [(ngModel)]="correoelectronico" />
+                  </div>
+                </div>
+                <div class="row" *ngIf="sermexicano">
+                  <div class="form-group col">
+                    <label for="curp">CURP:</label>
+                    <input type="text" class="form-control" name="curp" [(ngModel)]="curp" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="rfc">RFC</label>
+                    <input type="text" class="form-control" name="rfc" [(ngModel)]="rfc" />
+                  </div>
+                </div>
+                <div class="row" *ngIf="!sermexicano">
+                  <div class="form-group col">
+                    <label for="NIF">NIF:</label>
+                    <input type="text" class="form-control" name="numeroidentificacionfiscal"
+                      [(ngModel)]="numeroidentificacionfiscal" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="pais">Nacionalidad</label>
+                    <input type="text" class="form-control" name="pais" [(ngModel)]="pais" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header">
+              Domicilio
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="cp">Codigo Postal:</label>
+                  <input type="text" class="form-control" name="cp" [(ngModel)]="codigopostal" (change)="consultarDespuesDe5Digitos($event)"/>
+                </div>
+
+                <div class="form-group col">
+                  <label for="calle">Calle:</label>
+                  <input type="text" class="form-control" name="calle" [(ngModel)]="calle"/>
+                </div>
+
+                <div class="form-group col">
+                  <label for="numerointerior">Numero Interior:</label>
+                  <input type="text" class="form-control" name="numerointerior" [(ngModel)]="numerointerior"/>
+                </div>
+                <div class="form-group col">
+                  <label for="numeroexterior">Numero Exterior:</label>
+                  <input type="text" class="form-control" name="numeroexterior" [(ngModel)]="numeroexterior"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col" *ngIf="sermexicano">
+                  <label for="colonia">Colonia:</label>
+                  <select class="form-control" name="idcp" [(ngModel)]="idcp"  (change)="seleccionarColonia($event)">
+                    <option *ngFor="let item of colonias" [value]="item.id">{{ item.colonia }}</option>
+                  </select>
+                </div>
+                <div class="form-group col" *ngIf="!sermexicano">
+                  <label for="colonia">Colonia:</label>
+                  <input type="text" class="form-control" name="colonia" [(ngModel)]="colonia"/>
+
+                </div>
+
+                <div class="form-group col">
+                  <label for="municipio">Municipio:</label>
+                  <input type="text" class="form-control" name="municipio" [(ngModel)]="municipio"/>
+                </div>
+
+                <div class="form-group col" *ngIf="sermexicano">
+                  <label for="estado">Estado:</label>
+                  <input type="text" class="form-control" name="estado" [(ngModel)]="estado"/>
+                </div>
+              </div>
+              <div class="row"  *ngIf="sermexicano">
+                <div class="form-group col">
+                  <label for="pais_">Pais:</label>
+                  <input type="text" class="form-control" name="pais_" [(ngModel)]="pais_"/>
+                </div>
+
+              </div>
+              <div class="row"  *ngIf="!sermexicano">
+                <div class="form-group col">
+                  <label for="pais_">Pais:</label>
+                  <select class="form-control" name="pais_" (change)="estados_($event)"
+                   [(ngModel)]="pais_">
+                    <option *ngFor="let item of paises
+                    " [value]="item.idpais">{{ item.nombre }}</option>
+                  </select>
+                </div>
+                <div class="form-group col" *ngIf="!sermexicano">
+                  <label for="estado">Estado:</label>
+                  <select class="form-control" name="estado" [(ngModel)]="estado">
+                    <option *ngFor="let item of estadosselect_
+                    " [value]="item.idcatest">{{ item.nombre }}</option>
+                  </select>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+
+        <div class="row">
+          <div class="col"> <button class="btn btn-primary mt-4" (click)="guardar()">Guardar</button>
+          </div>
+          <div class="col"> <button class="btn btn-primary mt-4" (click)="will.hide()">Actualizar</button>
+          </div>
+          <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
