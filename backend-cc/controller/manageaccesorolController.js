@@ -18,7 +18,7 @@ function manage_acceso_rol(req, res) {
 }
 
 function manage_cliente(req, res) {
-
+ 
     manage.manage_cliente(req.body)
         .then(resultado => {
             res.status(200).send({ success: true, resultado: resultado.rows });
@@ -33,6 +33,7 @@ function manage_cliente(req, res) {
 function manage_divisa(req, res) {
 
 
+    
 
 
     manage.manage_divisa(req.body)
@@ -185,6 +186,17 @@ function manage_cat_reg(req, res) {
             res.status(501).send({ success: false, message: error })
         })
 }
+
+function manage_cliente_empresa(req, res) {
+
+    manage.manage_cliente_empresa(req.body)
+        .then(resultado => {
+            res.status(200).send({ success: true, resultado:  resultado.rows[0].manage_cliente_empresa })
+         })
+        .catch(error => {
+            res.status(501).send({ success: false, message: error })
+        })
+}
 module.exports = {
     manage_acceso_rol,
     manage_cliente,
@@ -198,6 +210,7 @@ module.exports = {
     manage_rol,
     manage_sucursal,
     manage_user,
-    manage_cat_reg
+    manage_cat_reg,
+    manage_cliente_empresa
 
 };

@@ -308,6 +308,7 @@ export class EmpresasComponent {
   }
 
   abrirgurdar(){
+    this.clean();
     this.info = true;
     this.will.show()
   }

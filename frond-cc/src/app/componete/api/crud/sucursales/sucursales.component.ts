@@ -215,8 +215,7 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        this.clean();
-        this.consultar()
+    
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -224,11 +223,12 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        this.clean();
-        this.consultar()
+     
       }
     )
-
+    this.will.hide();
+    this.clean();
+    this.consultar()
   }
 
   actualizarsucursal() {
@@ -253,8 +253,7 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        this.clean();
-        this.consultar()
+        
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -262,20 +261,21 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        this.clean();
-        this.consultar()
+       
       }
     )
-
+    this.clean();
+    this.consultar();
   }
 
   abrirgurdar() {
+    this.clean()
     this.info = true;
     this.will.show()
   }
 
   async actualizar(datos: any) {
-
+ this.info = false;
     this.sucursalid= datos.sucursalid
     this.nombre_sucursal=datos.nombre_sucursal
       this.calle = datos.calle
@@ -314,9 +314,7 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        this.clean();
-        this.will.hide()
-        this.consultar()
+       
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -324,11 +322,12 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        this.clean();
-        this.will.hide()
-        this.consultar()
+      
       }
     )
+    this.clean();
+    this.will.hide()
+    this.consultar()
   }
   getsucursalName(empresaid: number): string {
     console.log(empresaid)

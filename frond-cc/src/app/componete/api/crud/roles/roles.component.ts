@@ -72,6 +72,7 @@ export class RolesComponent {
     )
   }
   abrirgurdar(){
+    this.limpiar();
     this.info = true;
     this.will.show();
   }
@@ -83,6 +84,10 @@ export class RolesComponent {
     this.will.show();
   }
 
+  limpiar(){
+    this.id = 0;
+    this.rol = ''
+  }
   eliminar(datos:any){
     const a = {
       descripcion:datos.descripcion,

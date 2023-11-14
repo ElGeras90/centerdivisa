@@ -53,3 +53,22 @@ export class cl {
 	public static URLcliente = "accsosrol/cliente";
 	
 }
+export class divisa {
+	public static URLdivisa = "encargado/divisa";
+	public static URLdivisai = "accsosrol/divisa";
+}
+export class Enc{
+	public static URLencargado = 'encargado/encargado'
+	public static URLencpermiso = 'encargado/permiso'
+}
+export class Divisasucursal{
+	public static URLdivsuc = 'divisa/sucursal'
+	public static UrlFormulario = 'divisa/formulario'
+	public static URLinfodivisa = 'divisa/infodivisa'
+	public static Urlinfod = 'divisa/infod'
+	public static URLsaldoida= 'divisa/saldoactual'
+	public static URLOperaciones = 'divisa/operacion'
+}
+export class clienteempresa{
+	public static URLcliemp = 'accsosrol/cliemp'
+}

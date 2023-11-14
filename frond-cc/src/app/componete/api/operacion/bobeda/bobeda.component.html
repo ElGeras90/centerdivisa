@@ -1,0 +1,138 @@
+<div class="container mt-4">
+    <div class="row align-items-center">
+        <div class="col">
+            <mat-form-field>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+            </mat-form-field>
+        </div>
+        <div class="col" style="text-align: right;">
+            <button class="btn btn-primary mt-3" (click)="abrirwill()">Agregar Movimiento</button>
+
+        </div>
+
+
+    </div>
+    <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Columna Usuario -->
+            <ng-container matColumnDef="Sucursal">
+                <th mat-header-cell *matHeaderCellDef> Sucursal </th>
+                <td mat-cell *matCellDef="let row"> {{row.nombre_sucursal}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Divisa">
+                <th mat-header-cell *matHeaderCellDef> Divisa </th>
+                <td mat-cell *matCellDef="let row"> {{row.grupo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Entrada">
+                <th mat-header-cell *matHeaderCellDef>Entrada </th>
+                <td mat-cell *matCellDef="let row"> {{row.saldo}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Salida">
+                <th mat-header-cell *matHeaderCellDef> Salida </th>
+                <td mat-cell *matCellDef="let row"> {{row.salida}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Descripcion">
+                <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+                <td mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
+            </ng-container>
+
+
+            <!-- Columna Acciones -->
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-icon-button color="primary">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator *ngIf="!activar" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+    </div>
+
+</div>
+
+<div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title" *ngIf="info ==true">AGREGAR MOVIMIENTO</h4>
+                <h4 class="modal-title" *ngIf="info ==false">EDITAR MOVIMIENTO</h4>
+
+            </div>
+
+            <div class="modal-body row">
+
+                <form class="form-responsive">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                           Entradas y Sulidas de sucursal
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="form-group col" *ngIf="sinsucursal == true">
+                                    <label for="sucursalid">Sucursal:</label>
+                                    <select class="form-control" id="sucursalid"  [(ngModel)]="idsucursalid"  [ngModelOptions]="{standalone: true}">
+                                      <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">{{ dat.nombre_sucursal }}</option>
+                                      <!-- Agrega más opciones según tus necesidades -->
+                                    </select>
+                                </div>
+
+                                <div class="form-group col">
+                                    <label for="grupodivisa">Divisa:</label>
+                                    <select class="form-control" id="grupodivisa"  [(ngModel)]="idgrupodivisa"  [ngModelOptions]="{standalone: true}">
+                                      <option *ngFor="let dat of grupodivisa" [value]="dat.idgrupo">{{ dat.grupo }}</option>
+                                      <!-- Agrega más opciones según tus necesidades -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group form-check">
+                                    <label class="form-check-label" for="exampleCheck1">Tipo de movimiento</label>
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" [checked]="isChecked" (change)="isChecked = !isChecked">
+                                    {{ isChecked ? 'Entrada' : 'Salida' }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="numero">Entrada:</label>
+                                    <input type="text" class="form-control" [(ngModel)]="entrada" [ngModelOptions]="{standalone: true}" [disabled]="!isChecked" />
+                                </div>
+                                <div class="form-group col">
+                                    <label for="numero">Salida:</label>
+                                    <input type="text" class="form-control" [(ngModel)]="salida" [ngModelOptions]="{standalone: true}" [disabled]="isChecked" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group ">
+                                    <label class="form-check-label" id = "descripcion">Descripcion</label>
+                                     <input type="text" class="form-control" [(ngModel)]="descripcion" [ngModelOptions]="{standalone: true}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <div class="row">
+                    <div class="col-6 text-left"> <!-- Alinea el primer botón a la izquierda -->
+                        <button class="btn btn-primary mt-4" (click)="guardarmovimiento()">Guardar</button>
+                    </div>
+                    <div class="col-6 text-right"> <!-- Alinea el segundo botón a la derecha -->
+                        <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

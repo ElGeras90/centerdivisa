@@ -11,6 +11,10 @@ import { ClientesComponent } from './crud/clientes/clientes.component';
 import { DivisasComponent } from './crud/divisas/divisas.component';
 import { GrupoComponent } from './crud/grupo/grupo.component';
 import { IdentificaionComponent } from './crud/identificaion/identificaion.component';
+import { EncargadoComponent } from './crud/encargado/encargado.component';
+import { CompraComponent } from './operacion/compra/compra.component';
+import { VentaComponent } from './operacion/venta/venta.component';
+import { BobedaComponent } from './operacion/bobeda/bobeda.component';
 
 const routes: Routes = [
     {
@@ -25,7 +29,10 @@ const routes: Routes = [
             {path:'Divisas',component: DivisasComponent,data: {animation: 'Divisas'}},
             {path:'GrupoDivisas',component: GrupoComponent,data: {animation: 'GrupoDivisas'}},
             {path:'Identifiacion',component: IdentificaionComponent,data: {animation: 'Identifiacion'}},
-
+            {path:'Encargado',component: EncargadoComponent},
+            {path:'Compra',component: CompraComponent},
+            {path:'Venta',component: VentaComponent},
+            {path:'Boveda',component: BobedaComponent},
         ]
     },
 ];

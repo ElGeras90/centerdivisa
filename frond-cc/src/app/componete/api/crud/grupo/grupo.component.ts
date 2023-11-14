@@ -77,6 +77,7 @@ export class GrupoComponent {
     )
   }
   abrirgurdar() {
+    this.limpiar()
     this.info = true;
     this.will.show();
   }
@@ -118,6 +119,12 @@ export class GrupoComponent {
         this.consultar();
       }
     )
+  }
+
+  limpiar(){
+    this.idgrupo =0
+    this.grupo=''
+    this.riesgo=false;
   }
   guardar() {
 

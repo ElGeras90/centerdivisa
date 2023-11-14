@@ -1,0 +1,76 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="blue-line">
+          <div class="moving-text">
+            <ul class="reverse-list">
+              <li class="rli" *ngFor="let a of divisas">Compra {{a.grupo}} : {{ a.venta }} </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1>Usuario: {{nombreusuario}}</h1>
+      </div>
+      <div class="col" style="text-align: right;">
+        <h1>{{(formattedDate)}}</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-10">
+  
+          <form>
+            <div class="form-group">
+              <label for="divisa">Selecciona la Divisa:</label>
+              <select class="form-control" id="divisa" name="divisa" [(ngModel)]="compra" (change)="captura($event)">
+                <option value="0">Seleccione una opción</option>
+                <option *ngFor="let a of divisas" [value]="a.iddivisa">{{a.grupo}}</option>
+  
+              </select>
+            </div>
+  
+            <div class="form-group">
+              <label for="cantidad">Cantidad:</label>
+              <input type="number" class="form-control" id="cantidad" name="cantidad" step="0.01" [value]="cambio"
+                (input)="convertir($event)" required>
+            </div>
+  
+            <div class="form-group">
+              <label for="cotizacion">Cotización:</label>
+              <input type="text" class="form-control" id="cotizacion" name="cotizacion" step="0.01" [value]="cotizacion"
+                required>
+            </div>
+  
+            <div class="form-group">
+              <label for="importe">Importe:</label>
+              <input type="text" class="form-control" id="importe" name="importe" [value]="resultado" readonly>
+            </div>
+  
+            <br><br>
+            <button type="submit" class="btn btn-primary" (click)="verificar()">verificar</button>
+          </form>
+        </div>
+      <div class="col-2">
+        <div>
+          <p>Saldo en Moneda Nacional : {{saldosiniciales}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+  
+  
+        </div>
+        <div class="modal-body row">
+          <app-clientes [formulario]="formulario" [status]="true" (respuestaEnviada)="manejarRespuesta($event)"></app-clientes>
+  
+        </div>
+      </div>
+    </div>
+  </div>

@@ -2,7 +2,6 @@ const {mysqlConnection,postgresClient,sqlServerPool,postgresPool} = require('./.
 
   async function login(dat) {
     const client = await postgresPool.connect();
-    console.log(dat)
     try {
       const query = 'SELECT * FROM "public"."login_usuario"($1)';
       const values = [dat];

@@ -159,6 +159,7 @@
                                     <label for="idcp">Seleccionar Colonia:</label>
                                     <select class="form-control" (change)="seleccionarColonia($event)"
                                         [(ngModel)]="idcp" [ngModelOptions]="{standalone: true}">
+                                        <option value="" selected>Seleccione una colonia</option>
                                         <option *ngFor="let item of colonia" [value]="item.id">{{ item.colonia }}
                                         </option>
                                     </select>

@@ -23,7 +23,7 @@ export class AuthenticationService {
 		return usuario;
 	}
 	
-	public loginUser(item:any,token:any){
+	public  loginUser(item:any,token:any){
 		//const agencia = JSON.stringify(item.agencia);
 		//const menus = JSON.stringify(item.menus);
 	
@@ -34,17 +34,18 @@ export class AuthenticationService {
 		  const menus = JSON.stringify(item.menus);
 		  const sucursal = JSON.stringify(item.agencia);
 
-		  localStorage.setItem('ID', item.usuario.idusario);
+		  localStorage.setItem('ID', item.usuario.idusuario);
 		  localStorage.setItem('idrol', item.usuario.idrol);
 		  localStorage.setItem('rol', item.usuario.nombre_rol);
 		  localStorage.setItem('nombre', item.usuario.nombre_usuario);
 		  localStorage.setItem('usuario', item.usuario.usuario);
+		  localStorage.setItem('encargado', item.usuario.encargado);
+		  localStorage.setItem('sucursalid', item.empresa.sucursalid);
 		  localStorage.setItem('menus', menus);
 		  localStorage.setItem('empresa',empresa);
-		  localStorage.setItem('sucursal', sucursal);
-		 
-		  
-	
+		  localStorage.setItem('nombresucursal',item.empresa.nombresucursal)
+		  localStorage.setItem('domicilio',item.empresa.domicilio)
+		  localStorage.setItem('rfc',item.empresa.rfc)
 		  
 		return true; 
 	  }
@@ -58,7 +59,10 @@ export class AuthenticationService {
 		  localStorage.removeItem('usuario');
 		  localStorage.removeItem('menus');
 		  localStorage.removeItem('empresa');
-		  localStorage.removeItem('sucursal');
+		  localStorage.removeItem('encargado');
+		  localStorage.removeItem('nombresucursal');
+		  localStorage.removeItem('domicilio')
+		  localStorage.removeItem('rfc')
 		return true;
 	  }
 }

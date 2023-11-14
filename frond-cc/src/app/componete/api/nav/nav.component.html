@@ -14,9 +14,9 @@
        
           
           <li class="nav-item dropdown" *ngFor="let a of menus">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{a.menusuperior}}</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{a.menu}}</a>
             <ul class="dropdown-menu" >
-              <li *ngFor="let b of a.menu"><a class="dropdown-item" [routerLink]="b.ruta">{{b.menu}}</a></li>
+              <li *ngFor="let b of a.submenus"><a class="dropdown-item" [routerLink]="b.componente">{{b.nombre}}</a></li>
             </ul>
           </li>
         </ul>

@@ -27,12 +27,11 @@ export class NavComponent  implements OnInit {
   }
   ngOnInit(): void {
         const dmnues = localStorage.getItem('menus');
-
+      console.log(dmnues)
     if (dmnues !== null) {
      const dmo = JSON.parse(dmnues);
 
      this.menus = dmo
-     console.log(this.menus)
       
     } 
     if (localStorage.getItem('ID') == null) {

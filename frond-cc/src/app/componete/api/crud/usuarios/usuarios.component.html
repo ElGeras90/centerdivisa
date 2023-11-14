@@ -189,9 +189,25 @@
                 </div>
               </div>
 
+              
             </div>
           </div>
          
+          <div class="card mb-4">
+            <div class="card-header">
+             Encargado
+            </div>
+            <div class="card-body">
+              <div class="row">
+          
+
+                <div class="form-group form-check col">
+                  <input type="checkbox" class="form-check-input" id="encargado" formControlName="encargado" />
+                  <label class="form-check-label" for="activo">Encargado de sucursal</label>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
 
         <div class="row">
@@ -202,7 +218,7 @@
           <div class="col">
 
           </div>
-          <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
+          <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide();limpiar()">Cerrar</button>
           </div>
 
         </div>

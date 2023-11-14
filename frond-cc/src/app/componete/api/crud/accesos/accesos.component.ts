@@ -64,6 +64,7 @@ export class AccesosComponent {
           });
 
         } else {
+          console.log(data.resultado[0].manage_acceso_rol.data)
           this.dataSource.data = data.resultado[0].manage_acceso_rol.data;
         }
       }, (error: any) => {
@@ -77,6 +78,7 @@ export class AccesosComponent {
     )
   }
   abrirgurdar() {
+    this.limpiar()
     this.info = true;
     this.will.show();
   }
@@ -155,6 +157,7 @@ export class AccesosComponent {
       idrol: this.idrol,
       idcomponete: this.rol,
       status: this.estatus,
+      idacceso:this.id,
       option: 2
     }
     this.cp.accesos(a).subscribe(
@@ -231,5 +234,9 @@ export class AccesosComponent {
       }
     )
   }
-
+limpiar(){
+  this.idrol= 0
+  this.rol=''
+  this.estatus =false
+}
 }

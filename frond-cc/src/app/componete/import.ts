@@ -31,14 +31,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginComponent } from './login/login.component';
 
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {
+    MatSlideToggleModule,
+    _MatSlideToggleRequiredValidatorModule,
+} from '@angular/material/slide-toggle';
 @NgModule({
     declarations: [
         LoginComponent
@@ -75,9 +77,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        _MatSlideToggleRequiredValidatorModule,
+        ReactiveFormsModule
     ],
     exports: [
-        
+
         CommonModule,
         MatSliderModule,
         MatSlideToggleModule,
@@ -109,6 +113,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        _MatSlideToggleRequiredValidatorModule,
+        ReactiveFormsModule
 
     ]
 })

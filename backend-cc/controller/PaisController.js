@@ -5,15 +5,41 @@ const crypto = require('crypto-js'); // Importa la biblioteca CryptoJS
 const pais = require('./../model/paismodel');
 
 function paises(req, res) {
-/** 
-    const authResult = token.middlewareDeAutenticacion(req, res);
+
+    pais.consultapais()
+      .then(info => {
+        res.status(200).send({ success: true, info:info.rows });
+      })
+      .catch(error => {
+        res.status(501).send({ success: false, message: error });
   
-    // Si el middleware devuelve una respuesta, detén el proceso
-    if (authResult) {
-      return;
-    }
-  */
-    pais.consultapais(req.body)
+      });
+  }
+  function estados(req, res) {
+
+    pais.consultaestado()
+      .then(info => {
+        res.status(200).send({ success: true, info:info.rows });
+      })
+      .catch(error => {
+        res.status(501).send({ success: false, message: error });
+  
+      });
+  }
+  function ocupaciones(req, res) {
+
+    pais.ConsultaOcupaciones()
+      .then(info => {
+        res.status(200).send({ success: true, info:info.rows });
+      })
+      .catch(error => {
+        res.status(501).send({ success: false, message: error });
+  
+      });
+  }
+  function nacionalidad(req, res) {
+
+    pais.nacionalidad()
       .then(info => {
         res.status(200).send({ success: true, info:info.rows });
       })
@@ -25,6 +51,9 @@ function paises(req, res) {
  
   module.exports = {
 
-    paises
+    paises,
+    nacionalidad,
+    estados,
+    ocupaciones
 
   };

@@ -73,6 +73,7 @@ export class IdentificaionComponent {
       )
     }
     abrirgurdar() {
+      this.limpiear();
       this.info = true;
       this.will.show();
     }
@@ -87,7 +88,7 @@ export class IdentificaionComponent {
     eliminar(datos: any) {
       const a = {
   
-        idacceso: datos.ididentificacion,
+        ididentificacion: datos.ididentificacion,
         option: 3
       }
       this.cp.ident(a).subscribe(
@@ -172,6 +173,10 @@ export class IdentificaionComponent {
           this.consultar();
         }
       )
+    }
+    limpiear(){
+      this.id = 0
+      this.descripcion= ''
     }
   }
   

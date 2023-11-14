@@ -17,5 +17,7 @@ const accesocontroler = require('../controller/manageaccesorolController');
   router.post('/sucursal',verifyAuthToken, accesocontroler.manage_sucursal);
   router.post('/user',verifyAuthToken, accesocontroler.manage_user);
   router.post('/regimen',verifyAuthToken,accesocontroler.manage_cat_reg);
+  router.post('/cliemp',verifyAuthToken,accesocontroler.manage_cliente_empresa);
+
 
   module.exports = router;

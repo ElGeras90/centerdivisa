@@ -7,10 +7,7 @@
     </div>
     <div class="col" style="text-align: right;">
       <button class="btn btn-primary mt-3" (click)="abrirwill()">Agregar Cliente</button>
-
     </div>
-
-
   </div>
   <div class="table-responsive">
 
@@ -22,7 +19,7 @@
       </ng-container>
       <ng-container matColumnDef="Telefono">
         <th mat-header-cell *matHeaderCellDef> Telefono </th>
-        <td mat-cell *matCellDef="let row"> {{row.relefono}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.telefono}} </td>
       </ng-container>
       <ng-container matColumnDef="Fecha">
         <th mat-header-cell *matHeaderCellDef> Fecha Nacimiento </th>
@@ -42,13 +39,11 @@
       <ng-container matColumnDef="acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary">
+          <button mat-icon-button color="primary" (click)="abrirupdate(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button mat-icon-button color="secundary" *ngIf="activar">
+
+          <button mat-icon-button color="secundary" *ngIf="status==true" (click)="cargardatos(row)">
             <mat-icon>person_check</mat-icon>
           </button>
         </td>
@@ -61,6 +56,693 @@
     <mat-paginator *ngIf="!activar" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
   </div>
 
+</div>
+
+<div class="modal fade" bsModal #will2="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" *ngIf="info ==true">Agregar</h4>
+        <h4 class="modal-title" *ngIf="info ==false">Editar</h4>
+
+      </div>
+      <div class="modal-body row" *ngIf="visibleemp==false">
+
+        <form class="form-responsive">
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Personales
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="razonsocial">Razon Social:</label>
+                  <input type="text" class="form-control" name="razonsocial" [(ngModel)]="razonsocial" />
+                </div>
+
+              </div>
+
+              <div class="row">
+
+                <div class="form-group col">
+                  <label for="nacionalidadempresa">Nacionalidad:</label>
+                  <select class="form-control" name="nacionalidadempresa" [(ngModel)]="nacionalidadempresa">
+                    <option *ngFor="let item of nacionalidades
+                    " [value]="item.idnaci">{{ item.nacionalidad }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="rfcempresa">RFC o NIF</label>
+                  <input type="text" class="form-control" name="rfcempresa" [(ngModel)]="rfcempresa" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="rfcserie">Numero de serie RFC</label>
+                  <input type="text" class="form-control" name="rfcserie" [(ngModel)]="rfcserie" />
+                </div>
+
+              </div>
+              <div>
+                <div class="row">
+
+                  <div class="form-group col">
+                    <label for="domiciliofiscal">Domicilio Fiscal</label>
+                    <input type="text" class="form-control" name="domiciliofiscal" [(ngModel)]="domiciliofiscal" />
+                  </div>
+                </div>
+
+                <div class="row">
+
+                  <div class="form-group col">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" class="form-control" name="telefono" [(ngModel)]="telemp" />
+                  </div>
+                  <div class="form-group col">
+                    <label for="telefono">Correo</label>
+                    <input type="text" class="form-control" name="correo" [(ngModel)]="correoempr" />
+                  </div>
+                  <div class="form-group col">
+                    <label for="telefono">Fecha de constitucion</label>
+                    <input type="date" class="form-control" name="fechaconst" [(ngModel)]="fechaconst" />
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+
+        </form>
+
+        <div class="row">
+          <div class="col-md-11 col-12">
+
+            <button class="btn btn-primary mt-4" (click)="guardarempresa()" *ngIf="info ==true">Guardar</button>
+            <button class="btn btn-primary mt-4" (click)="actualizar()" *ngIf="info ==false">Actualizar</button>
+          </div>
+
+
+          <div class="col-md-1 col-12 mt-2"><button class="btn btn-danger mt-4" (click)="cerrar(2)">Cerrar</button>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="modal-body row" *ngIf="visibleemp==true">
+
+        <form class="form-responsive">
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Personales
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" class="form-control" name="nombres" [(ngModel)]="nombres"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.nombres}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="paterno">Apellido Paterno:</label>
+                  <input type="text" class="form-control" name="paterno" [(ngModel)]="paterno"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.paterno}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="materno">Apellido Materno:</label>
+                  <input type="text" class="form-control" name="materno" [(ngModel)]="materno"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.materno}" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="paisnaci">Pais de nacimiento:</label>
+                  <select class="form-control" name="paisnaci" (change)="estados($event)" [(ngModel)]="paisnaci"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.paisnaci}">
+                    <option *ngFor="let item of paises
+                    " [value]="item.idpais">{{ item.nombre }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="estanaci">Estado Nacimiento</label>
+                  <select class="form-control" name="estanaci" [(ngModel)]="estanaci"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estanaci}">
+                    <option *ngFor="let item of estadosselect
+                    " [value]="item.idcatest">{{ item.nombre }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="form-group col">
+                  <label for="nacionalidad">Nacionalidad:</label>
+                  <select class="form-control" name="nacionalidad" [(ngModel)]="nacionalidad"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.nacionalidad}"
+                    (change)="getnacionalidad($event)">
+                    <option *ngFor="let item of nacionalidades
+                    " [value]="item.idnaci">{{ item.nacionalidad }}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <label for="fechanacimiento">fechanacimiento:</label>
+                  <input type="date" class="form-control" name="fechanacimiento"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.fechanacimiento}"
+                    [(ngModel)]="fechanacimiento" />
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Identificacion:</label>
+                  <select class="form-control" name="identificacion" [(ngModel)]="identificacion"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.identificacion}">
+                    <option *ngFor="let item of identificaciones
+                    " [value]="item.ididentificacion">{{ item.descripcion }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="numerodeidentificacion">Numero de Identifiacion</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numerodeidentificacion}"
+                    [(ngModel)]="numerodeidentificacion" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="genero">Genero:</label>
+                  <select class="form-control" name="genero" [(ngModel)]="genero"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.genero}">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="31 tipo de gays">No definido</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="Ocupacion">Ocupacion:</label>
+                    <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}">
+                      <option *ngFor="let item of ocupaciones
+                    " [value]="item.idacividad">{{ item.descripcion }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="numerotelefono">Numero Telefono</label>
+                    <input type="text" class="form-control" name="numerotelefono" [(ngModel)]="numerotelefono"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.numerotelefono}" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="correoelectronico">Email:</label>
+                    <input type="text" class="form-control" name="correoelectronico" [(ngModel)]="correoelectronico"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.correoelectronico}" />
+                  </div>
+                </div>
+                <div class="row" *ngIf="sermexicano">
+                  <div class="form-group col">
+                    <label for="curp">CURP:</label>
+                    <input type="text" class="form-control" name="curp" [(ngModel)]="curp"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.curp}" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="rfc">RFC</label>
+                    <input type="text" class="form-control" name="rfc" [(ngModel)]="rfc"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.rfc}" />
+                  </div>
+                </div>
+                <div class="row" *ngIf="!sermexicano">
+                  <div class="form-group col">
+                    <label for="NIF">NIF:</label>
+                    <input type="text" class="form-control" name="numeroidentificacionfiscal"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.numeroidentificacionfiscal}"
+                      [(ngModel)]="numeroidentificacionfiscal" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="pais">Nacionalidad</label>
+                    <input type="text" class="form-control" name="pais" [(ngModel)]="pais"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.pais}" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header">
+              Domicilio
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="cp">Codigo Postal:</label>
+                  <input type="text" class="form-control" name="cp" [(ngModel)]="codigopostal"
+                    (change)="consultarDespuesDe5Digitos($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.cp}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="calle">Calle:</label>
+                  <input type="text" class="form-control" name="calle" [(ngModel)]="calle"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.calle}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="numerointerior">Numero Interior:</label>
+                  <input type="text" class="form-control" name="numerointerior" [(ngModel)]="numerointerior"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numerointerior}" />
+                </div>
+                <div class="form-group col">
+                  <label for="numeroexterior">Numero Exterior:</label>
+                  <input type="text" class="form-control" name="numeroexterior" [(ngModel)]="numeroexterior"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numeroexterior}" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col" *ngIf="sermexicano">
+                  <label for="colonia">Colonia:</label>
+                  <select class="form-control" name="idcp" [(ngModel)]="idcp" (change)="seleccionarColonia($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.idcp}">
+                    <option *ngFor="let item of colonias" [value]="item.id">{{ item.colonia }}</option>
+                  </select>
+                </div>
+                <div class="form-group col" *ngIf="!sermexicano">
+                  <label for="colonia">Colonia:</label>
+                  <input type="text" class="form-control" name="colonia" [(ngModel)]="colonia"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.colonia}" />
+
+                </div>
+
+                <div class="form-group col">
+                  <label for="municipio">Municipio:</label>
+                  <input type="text" class="form-control" name="municipio" [(ngModel)]="municipio"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.municipio}" />
+                </div>
+
+                <div class="form-group col" *ngIf="sermexicano">
+                  <label for="estado">Estado:</label>
+                  <input type="text" class="form-control" name="estado" [(ngModel)]="estado"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estado}" />
+                </div>
+              </div>
+
+              <div class="row" *ngIf="!sermexicano">
+                <div class="form-group col">
+                  <label for="pais_">Pais:</label>
+                  <select class="form-control" name="pais_" (change)="estados_($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.pais_}" [(ngModel)]="pais_">
+                    <option *ngFor="let item of paises
+                    " [value]="item.idpais">{{ item.nombre }}</option>
+                  </select>
+                </div>
+                <div class="form-group col" *ngIf="!sermexicano">
+                  <label for="estado">Estado:</label>
+                  <select class="form-control" name="estado" [(ngModel)]="estado"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estado}">
+                    <option *ngFor="let item of estadosselect_
+                    " [value]="item.idcatest">{{ item.nombre }}</option>
+                  </select>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+
+        <div class="row">
+          <div class="col-md-11 col-12">
+            <button class="btn btn-primary mt-4" (click)="guardarcliente()" *ngIf="info ==true">Guardar</button>
+            <button class="btn btn-primary mt-4" (click)="actualizarcliente()" *ngIf="info ==false">Actualizar</button>
+          </div>
+          <div class="col-md-1 col-12 mt-2"><button class="btn btn-danger mt-4" (click)="will2.hide();limpiar()">Cerrar</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #will3="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Editar</h4>
+
+      </div>
+      <div class="modal-body row">
+
+        <div class="card mb-4">
+          <div class="card-header">
+            Datos Empresa
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col">
+                <label for="razonsocial">Razon Social:</label>
+                <input type="text" class="form-control" [disabled]="true" name="razonsocial"
+                  [(ngModel)]="razonsocial" />
+              </div>
+
+            </div>
+            <div>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-primary mt-3" (click)="abrirclienteempresa(1)">Agregar Cliente</button>
+          </div>
+        </div>
+
+
+        <div class="table-responsive tabla-scroll">
+          <table class="table table-striped table-bordered table-hover mat-elevation-z8">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Correo</th>
+                <th>Calle</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of cliempr">
+                <td>{{row.nombre}} {{row.paterno}} {{row.materno}}</td>
+                <td>{{ row.telefono }}</td>
+                <td>{{ row.fechaNacimiento }}</td>
+                <td>{{ row.correo }}</td>
+                <td> {{row.calle}} {{row.nint}} </td>
+                <td>
+                  <button mat-icon-button color="primary" (click)="abrirupdate(row)" *ngIf="status==false">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button color="secundary" *ngIf="status==true" (click)="cargardatos(row)">
+                    <mat-icon>person_check</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-md-11 col-12">
+
+          </div>
+
+
+          <div class="col-md-1 col-12 mt-2"> <button class="btn btn-danger mt-4" (click)="cerrar(3)">Cerrar</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #will4="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" *ngIf="info ==true">Agregar Representante</h4>
+        <h4 class="modal-title" *ngIf="info ==false">Editar Representante</h4>
+
+      </div>
+      <div class="modal-body row">
+
+        <form class="form-responsive">
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Personales
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="nombre">Nombre:</label>
+                  <input type="text" class="form-control" name="nombres" [(ngModel)]="nombres"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.nombres}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="paterno">Apellido Paterno:</label>
+                  <input type="text" class="form-control" name="paterno" [(ngModel)]="paterno"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.paterno}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="materno">Apellido Materno:</label>
+                  <input type="text" class="form-control" name="materno" [(ngModel)]="materno"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.materno}" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="paisnaci">Pais de nacimiento:</label>
+                  <select class="form-control" name="paisnaci" (change)="estados($event)" [(ngModel)]="paisnaci"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.paisnaci}">
+                    <option *ngFor="let item of paises
+                    " [value]="item.idpais">{{ item.nombre }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="estanaci">Estado Nacimiento</label>
+                  <select class="form-control" name="estanaci" [(ngModel)]="estanaci"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estanaci}">
+                    <option *ngFor="let item of estadosselect
+                    " [value]="item.idcatest">{{ item.nombre }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="form-group col">
+                  <label for="nacionalidad">Nacionalidad:</label>
+                  <select class="form-control" name="nacionalidad" [(ngModel)]="nacionalidad"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.nacionalidad}"
+                    (change)="getnacionalidad($event)">
+                    <option *ngFor="let item of nacionalidades
+                    " [value]="item.idnaci">{{ item.nacionalidad }}</option>
+                  </select>
+                </div>
+                <div class="form-group col">
+                  <label for="fechanacimiento">fechanacimiento:</label>
+                  <input type="date" class="form-control" name="fechanacimiento"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.fechanacimiento}"
+                    [(ngModel)]="fechanacimiento" />
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Identificacion:</label>
+                  <select class="form-control" name="identificacion" [(ngModel)]="identificacion"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.identificacion}">
+                    <option *ngFor="let item of identificaciones
+                    " [value]="item.ididentificacion">{{ item.descripcion }}</option>
+                  </select>
+                </div>
+
+                <div class="form-group col">
+                  <label for="numerodeidentificacion">Numero de Identifiacion</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numerodeidentificacion}"
+                    [(ngModel)]="numerodeidentificacion" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="genero">Genero:</label>
+                  <select class="form-control" name="genero" [(ngModel)]="genero"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.genero}">
+                    <option value="M">Masculino</option>
+                    <option value="F">Femenino</option>
+                    <option value="31 tipo de gays">No definido</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="Ocupacion">Ocupacion:</label>
+                    <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}">
+                      <option *ngFor="let item of ocupaciones
+                    " [value]="item.idacividad">{{ item.descripcion }}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="numerotelefono">Numero Telefono</label>
+                    <input type="text" class="form-control" name="numerotelefono" [(ngModel)]="numerotelefono"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.numerotelefono}" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="correoelectronico">Email:</label>
+                    <input type="text" class="form-control" name="correoelectronico" [(ngModel)]="correoelectronico"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.correoelectronico}" />
+                  </div>
+                </div>
+                <div class="row" *ngIf="sermexicano">
+                  <div class="form-group col">
+                    <label for="curp">CURP:</label>
+                    <input type="text" class="form-control" name="curp" [(ngModel)]="curp"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.curp}" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="rfc">RFC</label>
+                    <input type="text" class="form-control" name="rfc" [(ngModel)]="rfc"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.rfc}" />
+                  </div>
+                </div>
+                <div class="row" *ngIf="!sermexicano">
+                  <div class="form-group col">
+                    <label for="NIF">NIF:</label>
+                    <input type="text" class="form-control" name="numeroidentificacionfiscal"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.numeroidentificacionfiscal}"
+                      [(ngModel)]="numeroidentificacionfiscal" />
+                  </div>
+
+                  <div class="form-group col">
+                    <label for="pais">Nacionalidad</label>
+                    <input type="text" class="form-control" name="pais" [(ngModel)]="pais"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.pais}" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-header">
+              Domicilio
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="cp">Codigo Postal:</label>
+                  <input type="text" class="form-control" name="cp" [(ngModel)]="codigopostal"
+                    (change)="consultarDespuesDe5Digitos($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.cp}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="calle">Calle:</label>
+                  <input type="text" class="form-control" name="calle" [(ngModel)]="calle"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.calle}" />
+                </div>
+
+                <div class="form-group col">
+                  <label for="numerointerior">Numero Interior:</label>
+                  <input type="text" class="form-control" name="numerointerior" [(ngModel)]="numerointerior"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numerointerior}" />
+                </div>
+                <div class="form-group col">
+                  <label for="numeroexterior">Numero Exterior:</label>
+                  <input type="text" class="form-control" name="numeroexterior" [(ngModel)]="numeroexterior"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numeroexterior}" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col" *ngIf="sermexicano">
+                  <label for="colonia">Colonia:</label>
+                  <select class="form-control" name="idcp" [(ngModel)]="idcp" (change)="seleccionarColonia($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.idcp}">
+                    <option *ngFor="let item of colonias" [value]="item.id">{{ item.colonia }}</option>
+                  </select>
+                </div>
+                <div class="form-group col" *ngIf="!sermexicano">
+                  <label for="colonia">Colonia:</label>
+                  <input type="text" class="form-control" name="colonia" [(ngModel)]="colonia"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.colonia}" />
+
+                </div>
+
+                <div class="form-group col">
+                  <label for="municipio">Municipio:</label>
+                  <input type="text" class="form-control" name="municipio" [(ngModel)]="municipio"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.municipio}" />
+                </div>
+
+                <div class="form-group col" *ngIf="sermexicano">
+                  <label for="estado">Estado:</label>
+                  <input type="text" class="form-control" name="estado" [(ngModel)]="estado"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estado}" />
+                </div>
+              </div>
+
+              <div class="row" *ngIf="!sermexicano">
+                <div class="form-group col">
+                  <label for="pais_">Pais:</label>
+                  <select class="form-control" name="pais_" (change)="estados_($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.pais_}" [(ngModel)]="pais_">
+                    <option *ngFor="let item of paises
+                    " [value]="item.idpais">{{ item.nombre }}</option>
+                  </select>
+                </div>
+                <div class="form-group col" *ngIf="!sermexicano">
+                  <label for="estado">Estado:</label>
+                  <select class="form-control" name="estado" [(ngModel)]="estado"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estado}">
+                    <option *ngFor="let item of estadosselect_
+                    " [value]="item.idcatest">{{ item.nombre }}</option>
+                  </select>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+
+        <div class="row">
+          <div class="col-md-11 col-12"> <button class="btn btn-primary mt-4" (click)="guardarcliente()"
+              *ngIf="info ==true">Guardar</button><button class="btn btn-primary mt-4" (click)="actualizarcliente()"
+              *ngIf="info ==false">Actualizar</button>
+          </div>
+
+          <div class="col-md-1 col-12 mt-2"> <button class="btn btn-danger mt-4" (click)="cerrar(4)">Cerrar</button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -85,23 +767,27 @@
               <div class="row">
                 <div class="form-group col">
                   <label for="nombre">Nombre:</label>
-                  <input type="text" class="form-control" name="nombres" [(ngModel)]="nombres" />
+                  <input type="text" class="form-control" name="nombres" [(ngModel)]="nombres"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.nombres}" />
                 </div>
 
                 <div class="form-group col">
                   <label for="paterno">Apellido Paterno:</label>
-                  <input type="text" class="form-control" name="paterno" [(ngModel)]="paterno" />
+                  <input type="text" class="form-control" name="paterno" [(ngModel)]="paterno"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.paterno}" />
                 </div>
 
                 <div class="form-group col">
                   <label for="materno">Apellido Materno:</label>
-                  <input type="text" class="form-control" name="materno" [(ngModel)]="materno" />
+                  <input type="text" class="form-control" name="materno" [(ngModel)]="materno"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.materno}" />
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col">
                   <label for="paisnaci">Pais de nacimiento:</label>
-                  <select class="form-control" name="paisnaci" (change)="estados($event)" [(ngModel)]="paisnaci">
+                  <select class="form-control" name="paisnaci" (change)="estados($event)" [(ngModel)]="paisnaci"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.paisnaci}">
                     <option *ngFor="let item of paises
                     " [value]="item.idpais">{{ item.nombre }}</option>
                   </select>
@@ -109,17 +795,19 @@
 
                 <div class="form-group col">
                   <label for="estanaci">Estado Nacimiento</label>
-                  <select class="form-control" name="estanaci" [(ngModel)]="estanaci">
+                  <select class="form-control" name="estanaci" [(ngModel)]="estanaci"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estanaci}">
                     <option *ngFor="let item of estadosselect
                     " [value]="item.idcatest">{{ item.nombre }}</option>
                   </select>
                 </div>
               </div>
               <div class="row">
-                
+
                 <div class="form-group col">
                   <label for="nacionalidad">Nacionalidad:</label>
                   <select class="form-control" name="nacionalidad" [(ngModel)]="nacionalidad"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.nacionalidad}"
                     (change)="getnacionalidad($event)">
                     <option *ngFor="let item of nacionalidades
                     " [value]="item.idnaci">{{ item.nacionalidad }}</option>
@@ -128,15 +816,17 @@
                 <div class="form-group col">
                   <label for="fechanacimiento">fechanacimiento:</label>
                   <input type="date" class="form-control" name="fechanacimiento"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.fechanacimiento}"
                     [(ngModel)]="fechanacimiento" />
                 </div>
-                
+
               </div>
 
               <div class="row">
                 <div class="form-group col">
                   <label for="identificacion">Identificacion:</label>
-                  <select class="form-control" name="identificacion" [(ngModel)]="identificacion">
+                  <select class="form-control" name="identificacion" [(ngModel)]="identificacion"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.identificacion}">
                     <option *ngFor="let item of identificaciones
                     " [value]="item.ididentificacion">{{ item.descripcion }}</option>
                   </select>
@@ -145,12 +835,14 @@
                 <div class="form-group col">
                   <label for="numerodeidentificacion">Numero de Identifiacion</label>
                   <input type="text" class="form-control" name="numerodeidentificacion"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numerodeidentificacion}"
                     [(ngModel)]="numerodeidentificacion" />
                 </div>
 
                 <div class="form-group col">
                   <label for="genero">Genero:</label>
-                  <select class="form-control" name="genero" [(ngModel)]="genero">
+                  <select class="form-control" name="genero" [(ngModel)]="genero"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.genero}">
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                     <option value="31 tipo de gays">No definido</option>
@@ -162,7 +854,8 @@
                 <div class="row">
                   <div class="form-group col">
                     <label for="Ocupacion">Ocupacion:</label>
-                    <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion">
+                    <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}">
                       <option *ngFor="let item of ocupaciones
                     " [value]="item.idacividad">{{ item.descripcion }}</option>
                     </select>
@@ -170,35 +863,41 @@
 
                   <div class="form-group col">
                     <label for="numerotelefono">Numero Telefono</label>
-                    <input type="text" class="form-control" name="numerotelefono" [(ngModel)]="numerotelefono" />
+                    <input type="text" class="form-control" name="numerotelefono" [(ngModel)]="numerotelefono"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.numerotelefono}" />
                   </div>
 
                   <div class="form-group col">
                     <label for="correoelectronico">Email:</label>
-                    <input type="text" class="form-control" name="correoelectronico" [(ngModel)]="correoelectronico" />
+                    <input type="text" class="form-control" name="correoelectronico" [(ngModel)]="correoelectronico"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.correoelectronico}" />
                   </div>
                 </div>
                 <div class="row" *ngIf="sermexicano">
                   <div class="form-group col">
                     <label for="curp">CURP:</label>
-                    <input type="text" class="form-control" name="curp" [(ngModel)]="curp" />
+                    <input type="text" class="form-control" name="curp" [(ngModel)]="curp"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.curp}" />
                   </div>
 
                   <div class="form-group col">
                     <label for="rfc">RFC</label>
-                    <input type="text" class="form-control" name="rfc" [(ngModel)]="rfc" />
+                    <input type="text" class="form-control" name="rfc" [(ngModel)]="rfc"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.rfc}" />
                   </div>
                 </div>
                 <div class="row" *ngIf="!sermexicano">
                   <div class="form-group col">
                     <label for="NIF">NIF:</label>
                     <input type="text" class="form-control" name="numeroidentificacionfiscal"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.numeroidentificacionfiscal}"
                       [(ngModel)]="numeroidentificacionfiscal" />
                   </div>
 
                   <div class="form-group col">
                     <label for="pais">Nacionalidad</label>
-                    <input type="text" class="form-control" name="pais" [(ngModel)]="pais" />
+                    <input type="text" class="form-control" name="pais" [(ngModel)]="pais"
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.pais}" />
                   </div>
                 </div>
               </div>
@@ -213,65 +912,69 @@
               <div class="row">
                 <div class="form-group col">
                   <label for="cp">Codigo Postal:</label>
-                  <input type="text" class="form-control" name="cp" [(ngModel)]="codigopostal" (change)="consultarDespuesDe5Digitos($event)"/>
+                  <input type="text" class="form-control" name="cp" [(ngModel)]="codigopostal"
+                    (change)="consultarDespuesDe5Digitos($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.cp}" />
                 </div>
 
                 <div class="form-group col">
                   <label for="calle">Calle:</label>
-                  <input type="text" class="form-control" name="calle" [(ngModel)]="calle"/>
+                  <input type="text" class="form-control" name="calle" [(ngModel)]="calle"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.calle}" />
                 </div>
 
                 <div class="form-group col">
                   <label for="numerointerior">Numero Interior:</label>
-                  <input type="text" class="form-control" name="numerointerior" [(ngModel)]="numerointerior"/>
+                  <input type="text" class="form-control" name="numerointerior" [(ngModel)]="numerointerior"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numerointerior}" />
                 </div>
                 <div class="form-group col">
                   <label for="numeroexterior">Numero Exterior:</label>
-                  <input type="text" class="form-control" name="numeroexterior" [(ngModel)]="numeroexterior"/>
+                  <input type="text" class="form-control" name="numeroexterior" [(ngModel)]="numeroexterior"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.numeroexterior}" />
                 </div>
               </div>
               <div class="row">
                 <div class="form-group col" *ngIf="sermexicano">
                   <label for="colonia">Colonia:</label>
-                  <select class="form-control" name="idcp" [(ngModel)]="idcp"  (change)="seleccionarColonia($event)">
+                  <select class="form-control" name="idcp" [(ngModel)]="idcp" (change)="seleccionarColonia($event)"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.idcp}">
                     <option *ngFor="let item of colonias" [value]="item.id">{{ item.colonia }}</option>
                   </select>
                 </div>
                 <div class="form-group col" *ngIf="!sermexicano">
                   <label for="colonia">Colonia:</label>
-                  <input type="text" class="form-control" name="colonia" [(ngModel)]="colonia"/>
+                  <input type="text" class="form-control" name="colonia" [(ngModel)]="colonia"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.colonia}" />
 
                 </div>
 
                 <div class="form-group col">
                   <label for="municipio">Municipio:</label>
-                  <input type="text" class="form-control" name="municipio" [(ngModel)]="municipio"/>
+                  <input type="text" class="form-control" name="municipio" [(ngModel)]="municipio"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.municipio}" />
                 </div>
 
                 <div class="form-group col" *ngIf="sermexicano">
                   <label for="estado">Estado:</label>
-                  <input type="text" class="form-control" name="estado" [(ngModel)]="estado"/>
+                  <input type="text" class="form-control" name="estado" [(ngModel)]="estado"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estado}" />
                 </div>
               </div>
-              <div class="row"  *ngIf="sermexicano">
-                <div class="form-group col">
-                  <label for="pais_">Pais:</label>
-                  <input type="text" class="form-control" name="pais_" [(ngModel)]="pais_"/>
-                </div>
 
-              </div>
-              <div class="row"  *ngIf="!sermexicano">
+              <div class="row" *ngIf="!sermexicano">
                 <div class="form-group col">
                   <label for="pais_">Pais:</label>
                   <select class="form-control" name="pais_" (change)="estados_($event)"
-                   [(ngModel)]="pais_">
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.pais_}" [(ngModel)]="pais_">
                     <option *ngFor="let item of paises
                     " [value]="item.idpais">{{ item.nombre }}</option>
                   </select>
                 </div>
                 <div class="form-group col" *ngIf="!sermexicano">
                   <label for="estado">Estado:</label>
-                  <select class="form-control" name="estado" [(ngModel)]="estado">
+                  <select class="form-control" name="estado" [(ngModel)]="estado"
+                    [ngClass]="{'campo-rojo': formulario &&  formulario.estado}">
                     <option *ngFor="let item of estadosselect_
                     " [value]="item.idcatest">{{ item.nombre }}</option>
                   </select>
@@ -285,16 +988,19 @@
         </form>
 
         <div class="row">
-          <div class="col"> <button class="btn btn-primary mt-4" (click)="guardar()">Guardar</button>
-          </div>
-          <div class="col"> <button class="btn btn-primary mt-4" (click)="will.hide()">Actualizar</button>
-          </div>
-          <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
+          <div class="col-md-11 col-12">
+            <button class="btn btn-primary mt-4" (click)="guardar()" *ngIf="info ==true">Guardar</button>
+            <button class="btn btn-primary mt-4" (click)="actualizar()" *ngIf="info ==false">Actualizar</button>
           </div>
 
+          <div class="col-md-1 col-12 mt-2">
+            <button class="btn btn-danger" (click)="cerrar(1)">Cerrar</button>
+          </div>
         </div>
 
       </div>
     </div>
   </div>
 </div>
+
+

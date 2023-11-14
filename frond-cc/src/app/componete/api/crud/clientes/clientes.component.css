@@ -1,0 +1,8 @@
+.campo-rojo {
+    
+    border: 1px solid red; /* También puedes aplicar un borde rojo si es necesario */
+  }
+  .tabla-scroll {
+    max-height: 200px;
+    overflow: auto;
+  }

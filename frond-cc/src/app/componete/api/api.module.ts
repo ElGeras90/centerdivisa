@@ -14,6 +14,10 @@ import { IdentificaionComponent } from './crud/identificaion/identificaion.compo
 import { GrupoComponent } from './crud/grupo/grupo.component';
 import { ClientesComponent } from './crud/clientes/clientes.component';
 import { DivisasComponent } from './crud/divisas/divisas.component';
+import { EncargadoComponent } from './crud/encargado/encargado.component';
+import { CompraComponent } from './operacion/compra/compra.component';
+import { VentaComponent } from './operacion/venta/venta.component';
+import { BobedaComponent } from './operacion/bobeda/bobeda.component';
 
 
 @NgModule({
@@ -29,7 +33,11 @@ import { DivisasComponent } from './crud/divisas/divisas.component';
         IdentificaionComponent,
         GrupoComponent,
         ClientesComponent,
-        DivisasComponent
+        DivisasComponent,
+        EncargadoComponent,
+        CompraComponent,
+        VentaComponent,
+        BobedaComponent
     ],
     imports:[
        CommonModule,

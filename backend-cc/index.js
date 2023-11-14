@@ -7,6 +7,8 @@ const accesosrol = require('./routes/accesorolRoute');
 const cp = require('./routes/cpRoute');
 const auth = require('./routes/loginRoute');
 const pais = require('./routes/paisRoute');
+const enc = require('./routes/encargadoRoute')
+const env = require('./routes/cambioroute')
 
 const corsOptions = {
     origin: '*', // Cambia esto al dominio de tu aplicación front-end
@@ -25,7 +27,10 @@ app.get('/', (req, res) => {
 app.use('/accsosrol', accesosrol);
 app.use('/cp', cp);
 app.use('/auth',auth);
-app.use('/pais',pais)
+app.use('/pais',pais);
+app.use('/encargado',enc);
+app.use('/divisa',env);
+
 // Usar las rutas en la aplicación Express
 
 // Iniciar el servidor

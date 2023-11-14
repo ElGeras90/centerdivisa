@@ -73,7 +73,8 @@ export class UsuariosComponent {
       codigopostal: new FormControl(),
       municipio: new FormControl(),
       estado: new FormControl(),
-      empresa: new FormControl()
+      empresa: new FormControl(),
+      encargado : new FormControl(),
     });
 
     this.consultar();
@@ -187,8 +188,8 @@ export class UsuariosComponent {
         codigopostal: this.code,
         municipio: this.mun,
         estado: this.est,
-        empresa:  this.e
-        
+        empresa:  this.e,
+        encargado:datos.encargado
       });
   
       const infos = {
@@ -227,9 +228,6 @@ export class UsuariosComponent {
   
 
   imprimir() {
-   
-
-    console.log(this.usuarioForm.value)
     this.info = false;
     this.will.show();
   }
@@ -482,5 +480,8 @@ export class UsuariosComponent {
         });
       }
     )
+  }
+  limpiar(){
+    this.usuarioForm.reset();
   }
 }
