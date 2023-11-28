@@ -72,6 +72,11 @@
               "browserTarget": "frond-cc:build:development"
             }
           },
+          "options": {
+            "ssl": true,
+            "sslKey": "src/assets/key/localhost-key.pem",
+            "sslCert": "src/assets/key/localhost.pem"
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

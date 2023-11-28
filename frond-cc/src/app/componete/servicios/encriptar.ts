@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { privateKey, publicKey } from './key/key';
 import { JSEncrypt } from 'jsencrypt';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable()
 export class EncryptDataService {
@@ -32,7 +33,21 @@ export class EncryptDataService {
     **/
     desencriptar(data: any): any {
         this.jsencrypt.setPrivateKey(privateKey);
-        return  this.jsencrypt.decrypt(data);
+        return this.jsencrypt.decrypt(data);
+    }
+
+
+    decrypt(encryptedText: string) {
+        const secretKey = 'aB$7pQ2*Zu9!wC8xaB$7pQ2*Zu9!wC8x'; // La misma clave secreta que en Node.js
+
+        try {
+            const decryptedBytes = CryptoJS.AES.decrypt(encryptedText.toString(), secretKey).toString(CryptoJS.enc.Utf8);
+          
+            return decryptedBytes;
+          } catch (error) {
+            console.error('Error al desencriptar:', error);
+            throw error;
+          }
     }
 
 

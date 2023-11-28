@@ -3,27 +3,36 @@ const jwt = require('jsonwebtoken');
 const token = require('./../util/token');
 
 const cp = require('./../model/cpmodel');
+const encriptarjsong = require('./../util/encriptarjson');
 
 function codigopostal(req, res) {
 
-    cp.consultacp(req.body.cp)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+  console.log(resquest)
+    cp.consultacp(resquest.cp)
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows[0].search_by_cp });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows[0].search_by_cp }));
+
+        res.status(200).send({resultado:data});
       })
       .catch(error => {
-        res.status(501).send({ success: false, message: error });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+        res.status(501).send(data);
   
       });
   }
   function codigopostalid(req, res) {
-   
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
 
-        cp.consultacpid(req.body.cp)
+        cp.consultacpid(resquest.cp)
           .then(info => {
-            res.status(200).send({ success: true, info:info.rows[0].search_by_cp_id });
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows[0].search_by_cp_id }));
+
+            res.status(200).send({resultado:data});
           })
           .catch(error => {
-            res.status(501).send({ success: false, message: error });
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);
       
           });
       }

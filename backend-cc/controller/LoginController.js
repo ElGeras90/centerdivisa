@@ -1,25 +1,30 @@
 'use strict';
 const jwt = require('jsonwebtoken');
+const CryptoJS = require('crypto');
 
 const loginmodel = require('./../model/loginmodel');
 const token = require('./../util/token');
-
+const encriptarjsong = require('./../util/encriptarjson');
 
 function login(req, res) {
-  const { usuario, password } = req.body;
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+
+  const { usuario, password } = resquest;
 
   if (!usuario || !password) {
+   
     return res.status(400).json({ error: 'El usuario y la contraseña son requeridos.' });
   }
   const secretKey = 'aB$7pQ2*Zu9!wC8xaB$7pQ2*Zu9!wC8x'
 
-  const token = jwt.sign({ userId: usuario }, secretKey, { expiresIn: '2h' });
-
-  loginmodel.login(req.body)
+  loginmodel.login(resquest)
     .then(info => {
-  
-      res.status(200).send({ success: true, info: info.rows, Token:token });
+      let token = jwt.sign({ userId: info.rows[0].login_usuario.usuario }, secretKey, { expiresIn: '8h' });
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows, Token: token }));
+
       
+      res.status(200).send({resultado:data});
+
     })
     .catch(error => {
       res.status(501).send({ success: false, message: error });

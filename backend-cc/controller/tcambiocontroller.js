@@ -1,14 +1,17 @@
 'use strict';
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto-js'); // Importa la biblioteca CryptoJS
+const encriptarjsong = require('./../util/encriptarjson');
 
 const pais = require('./../model/tcambio');
 
 function tipocambio(req, res) {
-
-    pais.divisasucursal(req.body)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+    pais.divisasucursal(resquest)
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
       })
       .catch(error => {
         res.status(501).send({ success: false, message: error });
@@ -18,10 +21,12 @@ function tipocambio(req, res) {
 
   
 function formulario(req, res) {
-
-    pais.formulario(req.body)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+    pais.formulario(resquest)
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
       })
       .catch(error => {
         res.status(501).send({ success: false, message: error });
@@ -31,10 +36,12 @@ function formulario(req, res) {
 
     
 function divsuc(req, res) {
-
-  pais.divsuc(req.body)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+  pais.divsuc(resquest)
     .then(info => {
-      res.status(200).send({ success: true, info:info.rows });
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
     })
     .catch(error => {
       res.status(501).send({ success: false, message: error });
@@ -44,10 +51,12 @@ function divsuc(req, res) {
 
   
 function dicsucusu(req, res) {
-
-  pais.dicsucusu(req.body)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+  pais.dicsucusu(resquest)
     .then(info => {
-      res.status(200).send({ success: true, info:info.rows });
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
     })
     .catch(error => {
       res.status(501).send({ success: false, message: error });
@@ -56,10 +65,12 @@ function dicsucusu(req, res) {
 }
 
 function saldosdia(req, res) {
-
-  pais.saldosdia(req.body)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+  pais.saldosdia(resquest)
     .then(info => {
-      res.status(200).send({ success: true, info:info.rows });
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
     })
     .catch(error => {
       res.status(501).send({ success: false, message: error });
@@ -67,10 +78,12 @@ function saldosdia(req, res) {
     });
 }
 function operaciones(req, res) {
-
-  pais.operaciones(req.body)
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+  pais.operaciones(resquest)
     .then(info => {
-      res.status(200).send({ success: true, info:info.rows });
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
     })
     .catch(error => {
       res.status(501).send({ success: false, message: error });

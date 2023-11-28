@@ -1,42 +1,51 @@
 'use strict';
 
 const manage = require('./../model/encargadosmodel');
+const encriptarjsong = require('./../util/encriptarjson');
 
 function manage_encargados(req, res) {
 
-
-    manage.consultapermisos(req.body.user)
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    manage.consultapermisos(resquest.user)
         .then(resultado => {
-            res.status(200).send({ success: true, resultado: resultado.rows });
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado: resultado.rows }));
+
+            res.status(200).send({resultado:data});
         })
         .catch(error => {
-            res.status(501).send({ success: false, message: error });
-
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);
         });
 
 }
 function manage_encargado(req, res) {
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
 
-    manage.encargados_sp(req.body)
+    manage.encargados_sp(resquest)
         .then(resultado => {
-            res.status(200).send({ success: true, resultado: resultado.rows });
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado: resultado.rows }));
+
+            res.status(200).send({resultado:data});
         })
         .catch(error => {
-            res.status(501).send({ success: false, message: error });
-
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);
         });
 
 }
 
 function consultadivisa(req, res) {
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
 
-    manage.consultadivisa(req.body)
+    manage.consultadivisa(resquest)
         .then(resultado => {
-            res.status(200).send({ success: true, resultado: resultado.rows });
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado: resultado.rows }));
+
+            res.status(200).send({resultado:data});
         })
         .catch(error => {
-            res.status(501).send({ success: false, message: error });
-
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);
         });
 
 }

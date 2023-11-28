@@ -6,7 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test":  "ng serve --o --ssl true --ssl-key src/assets/key/localhost-key.pem --ssl-cert src/assets/key/localhost.pem"
   },
   "private": true,
   "dependencies": {
@@ -25,7 +25,7 @@
     "angular-print": "^0.3.8",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.3.2",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^4.2.0",
     "jsencrypt": "^3.3.2",
     "ngx-bootstrap": "^11.0.2",
     "ngx-printer": "^1.4.0",

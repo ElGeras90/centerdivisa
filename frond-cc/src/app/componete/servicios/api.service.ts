@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 //Constantes
-import { 
-	ConfiguracionConstante 
+import {
+  ConfiguracionConstante
 } from './constantes';
+import { EncryptDataService } from './encriptar';
+import { JsonPipe } from '@angular/common';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,8 @@ import {
 export class ApiService {
   constructor(
     public http: HttpClient,
-	private _constante : ConfiguracionConstante,
+    private _constante: ConfiguracionConstante,
+    private enc: EncryptDataService
   ) {
   }
 
@@ -25,9 +29,21 @@ export class ApiService {
   }
 
   Post(objeto: any, ruta: string) {
-    return this.http.post(this._constante.API_ENDPOINT + ruta, objeto, { headers: this.Cabeceros() });
+    return this.http.post(this._constante.API_ENDPOINT + ruta, { resultado: btoa(JSON.stringify(objeto)) }, { headers: this.Cabeceros() }).pipe(
+      map((response: any) => {
+        // Parsea y decodifica el resultado
+        const bytes = new Uint8Array(atob(response.resultado).split('').map(char => char.charCodeAt(0)));
+        const jsonDecifrado = new TextDecoder().decode(bytes);
+        let resultado = JSON.parse(jsonDecifrado);
+
+       
+
+        // Devuelve el resultado con el tipo especificado
+        return resultado;
+      })
+    );
   }
-  
+
 
   Get(ruta: string, parametros: HttpParams = new HttpParams()) {
 
@@ -49,17 +65,17 @@ export class ApiService {
 
   private Cabeceros() {
     let currentUser = localStorage.getItem('token');
-    
+
     if (currentUser) {
       return new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + currentUser 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + currentUser
       });
     }
-    
+
     // Agregar un valor de retorno predeterminado
     return new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type': 'application/json'
     });
   }
 

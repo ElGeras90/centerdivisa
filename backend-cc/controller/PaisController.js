@@ -3,15 +3,19 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto-js'); // Importa la biblioteca CryptoJS
 
 const pais = require('./../model/paismodel');
+const encriptarjsong = require('./../util/encriptarjson');
 
 function paises(req, res) {
 
     pais.consultapais()
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
       })
       .catch(error => {
-        res.status(501).send({ success: false, message: error });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
   
       });
   }
@@ -19,10 +23,13 @@ function paises(req, res) {
 
     pais.consultaestado()
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
       })
       .catch(error => {
-        res.status(501).send({ success: false, message: error });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
   
       });
   }
@@ -30,10 +37,13 @@ function paises(req, res) {
 
     pais.ConsultaOcupaciones()
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
       })
       .catch(error => {
-        res.status(501).send({ success: false, message: error });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
   
       });
   }
@@ -41,10 +51,13 @@ function paises(req, res) {
 
     pais.nacionalidad()
       .then(info => {
-        res.status(200).send({ success: true, info:info.rows });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
       })
       .catch(error => {
-        res.status(501).send({ success: false, message: error });
+        let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
   
       });
   }

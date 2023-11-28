@@ -5,7 +5,7 @@ import { Injectable } from "@angular/core";
 
 export class ConfiguracionConstante {
 	//public API_ENDPOINT = "http://127.0.0.1:3000/api/";
-	public API_ENDPOINT = "http://localhost:3000/";
+	public API_ENDPOINT = "https://localhost:3000/";
 
 }
 

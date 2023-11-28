@@ -47,7 +47,9 @@ export class LoginComponent {
     private router: Router,
     private Auth:AuthenticationService,
     private key: EncryptDataService,
-    private d: ChangeDetectorRef) {
+    private d: ChangeDetectorRef,
+    private x: EncryptDataService
+    ) {
     this.loginForm = this.fb.group({
       usuario: ['', Validators.required], // Crea un FormControl para el campo usuario
       contraseña: ['', Validators.required] // Crea un FormControl para el campo contraseña
@@ -70,8 +72,6 @@ export class LoginComponent {
         const contraseña = contraseñaControl;
   
         if (usuario !== null && contraseña !== null) {
-          const hashedPassword = await this.hashPassword(contraseña);
-          console.log('Datos cifrados:', hashedPassword);
   
           this.Auth.Login(usuario, contraseña).subscribe(
             (data: any) => {
