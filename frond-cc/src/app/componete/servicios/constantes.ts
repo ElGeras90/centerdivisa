@@ -4,11 +4,13 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfiguracionConstante {
-	//public API_ENDPOINT = "http://127.0.0.1:3000/api/";
-	public API_ENDPOINT = "https://localhost:3000/";
-
+	public API_ENDPOINT = "http://localhost:3001/";
+	//public API_ENDPOINT = "http://172.17.10.23:3001/";
 }
-
+export class pld_data {
+	public API_ENDPOINT_PLD = "http://localhost:3000/";
+	//public API_ENDPOINT_PLD = "http://172.17.10.23:3001/";
+}
 export class LoginConstante {
 	public static URLLogin = "auth/login";
 }
@@ -71,4 +73,21 @@ export class Divisasucursal{
 }
 export class clienteempresa{
 	public static URLcliemp = 'accsosrol/cliemp'
+	public static URLv = 'accsosrol/v'
+}
+export class pld{
+	public static URLpld = 'api/buscar'
+}
+export class matrizriesgo{
+	public static URLpro = 'matriz/productos'
+	public static URLorigen = 'matriz/paisorigen'
+	public static URLmonto = 'matriz/montomes'
+	public static URLinst = 'matriz/instrumento'
+	public static URLfre = 'matriz/frecuenciames'
+	public static URLtipouser = 'matriz/tipousuario'
+	public static URLocupacion = 'matriz/ocupacion'
+	public static URLestados = 'matriz/estados'
+	public static URLpaises = 'matriz/paises'
+
+	
 }

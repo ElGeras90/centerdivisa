@@ -597,7 +597,7 @@
                   <div class="form-group col">
                     <label for="Ocupacion">Ocupacion:</label>
                     <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion"
-                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}">
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}" (change)="ocupacionvalidar($event)">
                       <option *ngFor="let item of ocupaciones
                     " [value]="item.idacividad">{{ item.descripcion }}</option>
                     </select>
@@ -752,7 +752,7 @@
 
         <h4 class="modal-title" *ngIf="info ==true">Agregar CLIENTE</h4>
         <h4 class="modal-title" *ngIf="info ==false">Editar CLIENTE</h4>
-
+        <button class="btn btn-warning" (click)="riesgo.show()">Riesgo: {{riesgos}}</button>
       </div>
       <div class="modal-body row">
 
@@ -855,7 +855,7 @@
                   <div class="form-group col">
                     <label for="Ocupacion">Ocupacion:</label>
                     <select class="form-control" name="ocupacion" [(ngModel)]="ocupacion"
-                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}">
+                      [ngClass]="{'campo-rojo': formulario &&  formulario.ocupacion}" (change)="ocupacionvalidar($event)">
                       <option *ngFor="let item of ocupaciones
                     " [value]="item.idacividad">{{ item.descripcion }}</option>
                     </select>
@@ -1003,4 +1003,96 @@
   </div>
 </div>
 
+<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title" *ngIf="info ==true">{{riesgos}}</h4>
+
+      </div>
+      <div class="modal-body row">
+
+        <form class="form-responsive">
+
+
+          <div class="card mb-4">
+            <div class="card-header">
+              Datos Personales
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Montos habitualmente operados por operación:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="500.00"
+                   />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Montos habitualmente acumulados por mes:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="1000.00" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Numero de operaciones por mes:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="2"
+                    />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Tipo de operación: Compra/Venta:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="Compra"
+                    />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Naturaleza:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="Efectivo"
+                    />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Frecuencia de las operaciones:</label>
+                    <ul>
+                      <li>Diaria:<b>0.6</b></li>
+                      <li>Semanal:0.5</li>
+                      <li>Quincenal:1</li>
+                      <li>Mensual:2</li>
+                    </ul>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Actividad Economica:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="Agricultor"
+                    />
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col">
+                  <label for="identificacion">Destino de los recursos:</label>
+                  <input type="text" class="form-control" name="numerodeidentificacion" value="Prestamos"
+                    />
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+        <div class="row">
+          <div class="col-md-1 col-12 mt-2">
+            <button class="btn btn-danger" (click)="cerrar(1)">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 

@@ -1,6 +1,6 @@
 express = require('express');
 const app = express();
-const port = 3000;
+const port = 3001;
 const cors = require('cors'); // Importa el paquete cors
 const path = require('path'); // Importa el módulo 'path'
 const accesosrol = require('./routes/accesorolRoute');
@@ -10,6 +10,7 @@ const pais = require('./routes/paisRoute');
 const enc = require('./routes/encargadoRoute')
 const env = require('./routes/cambioroute')
 const naproxeno = require('./routes/resetpass')
+const diclofenaco = require('./routes/matrizroute')
 var helmet = require('helmet');
 const https = require('https');
 const fs = require('fs');
@@ -77,6 +78,7 @@ app.use('/pais',pais);
 app.use('/encargado',enc);
 app.use('/divisa',env);
 app.use('/app',naproxeno);
+app.use('/matriz',diclofenaco)
 // para restablecer la contraseña 
 
 // Configurar opciones SSL
@@ -86,9 +88,9 @@ const options = {
 };
 
 // Crear servidor HTTPS
-const server = https.createServer(options, app);
+//const server = https.createServer(options, app);
 
 // Iniciar el servidor
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Servidor HTTPS escuchando en el puerto ${port}`);
 });

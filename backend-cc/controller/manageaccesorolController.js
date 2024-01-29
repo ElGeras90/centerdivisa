@@ -252,9 +252,7 @@ function dll(req, res) {
 
     manage.dll(resquest)
         .then(resultado => {
-            res.status(200).send({ success: true, resultado:  resultado.rows[0].valida_saldo_dia })
             let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado:  resultado.rows[0].valida_saldo_dia }));
-
             res.status(200).send({resultado:data});
          })
         .catch(error => {

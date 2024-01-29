@@ -66,6 +66,7 @@ function dicsucusu(req, res) {
 
 function saldosdia(req, res) {
   let resquest = encriptarjsong.decrypt(req.body.resultado)
+  console.log(resquest)
   pais.saldosdia(resquest)
     .then(info => {
       let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));

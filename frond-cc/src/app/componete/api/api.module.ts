@@ -18,6 +18,20 @@ import { EncargadoComponent } from './crud/encargado/encargado.component';
 import { CompraComponent } from './operacion/compra/compra.component';
 import { VentaComponent } from './operacion/venta/venta.component';
 import { BobedaComponent } from './operacion/bobeda/bobeda.component';
+import { RiesgoComponent } from './riesgo/riesgo.component';
+import { RelevantesComponent } from './regulatorios/relevantes/relevantes.component';
+import { MontosComponent } from './regulatorios/montos/montos.component';
+import { DolaresComponent } from './regulatorios/dolares/dolares.component';
+import { Reporte24Component } from './regulatorios/reporte24/reporte24.component';
+import { OperacionesinusualesComponent } from './regulatorios/operacionesinusuales/operacionesinusuales.component';
+import { MovimientosComponent } from './reporte/movimientos/movimientos.component';
+import { PepsComponent } from './reporte/peps/peps.component';
+import { AltoriesgoComponent } from './reporte/altoriesgo/altoriesgo.component';
+import { InusualesComponent } from './reporte/inusuales/inusuales.component';
+import { OpeinternaspreocupantesComponent } from './reporte/opeinternaspreocupantes/opeinternaspreocupantes.component';
+import { AnonimoComponent } from './anonimo/anonimo.component';
+import { AnonimosComponent } from './alertas/anonimos/anonimos.component';
+import { MovComponent } from './alertas/mov/mov.component';
 
 
 @NgModule({
@@ -37,7 +51,21 @@ import { BobedaComponent } from './operacion/bobeda/bobeda.component';
         EncargadoComponent,
         CompraComponent,
         VentaComponent,
-        BobedaComponent
+        BobedaComponent,
+        RiesgoComponent,
+        RelevantesComponent,
+        MontosComponent,
+        DolaresComponent,
+        Reporte24Component,
+        OperacionesinusualesComponent,
+        MovimientosComponent,
+        PepsComponent,
+        AltoriesgoComponent,
+        InusualesComponent,
+        OpeinternaspreocupantesComponent,
+        AnonimoComponent,
+        AnonimosComponent,
+        MovComponent
     ],
     imports:[
        CommonModule,

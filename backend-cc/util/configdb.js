@@ -9,7 +9,7 @@ module.exports = {
       database: 'binmtec01'
     },*/
     postgres: {
-      host: '172.17.10.22',
+      host: 'localhost',
       port: 5432,
       user: 'geras',
       password: 'geras',

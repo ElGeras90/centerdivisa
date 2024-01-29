@@ -104,7 +104,7 @@ export class VentaComponent {
 
       const a =  codigoValue/this.cotizacion ;
 
-      this.resultado = a.toFixed(0);
+      this.resultado = Math.floor(a);
 
     }
 
@@ -136,6 +136,16 @@ export class VentaComponent {
     const data2: any = await this.cp.Formulario(data).toPromise(); // Convertir el observable a una promesa
 
     this.formulario = data2.info[0].valida_formulario.data.formulario
+
+    if (data2.info[0].valida_formulario.data.info == 'no') {
+      Swal.fire({
+        icon: 'warning',
+        title: data2.info[0].valida_formulario.data.messagge,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+      return;
+    }
     if (data2.info[0].valida_formulario.data.info == 1) {
       Swal.fire({
         title: 'Registro',
@@ -163,10 +173,30 @@ export class VentaComponent {
 
   i: any;
 
-  manejarRespuesta(respuesta: any) {
-    console.log('respuesta');
-    console.log(respuesta)
+  async manejarRespuesta(respuesta: any) {
     this.i = respuesta;
+
+    const data = {
+      tipo: this.i.tipopersona,
+      clienteid: this.i.idcliente,
+      mn: this.cambio
+    }
+
+    const data2: any = await this.cp.dll(data).toPromise(); // Convertir el observable a una promesa
+
+    console.log(data2.resultado.action);
+    if(data2.resultado.action == false){
+      Swal.fire({
+        icon: 'warning',
+        title: data2.resultado.messagge,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+     // this.limpiar();
+      this.will.hide();
+      return;
+    }
+
     this.json = this.crearjson();
     if(this.i.idcliente>0){
       this.json.clienteid = this.i.idcliente;
@@ -292,4 +322,12 @@ export class VentaComponent {
     this.printTicket(numeroFormateado);
   }
 
+  limpiar(){
+    this.cambio = 0;
+    this.resultado = 0;
+    this.cotizacion = 0;
+    this.tdivisa = 0;
+    this.tipodivisa = 0;
+  }
+  
 }

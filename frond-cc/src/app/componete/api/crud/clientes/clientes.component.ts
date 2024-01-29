@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 })
 export class ClientesComponent {
 
-
   /** paginador y modal*/
   @ViewChild("will", { static: false })
   will: any;
@@ -26,6 +25,10 @@ export class ClientesComponent {
   @ViewChild("will4", { static: false })
   will4: any;
 
+  @ViewChild("riesgo", { static: false })
+  riesgo: any;
+
+  riesgos:any;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
@@ -36,7 +39,6 @@ export class ClientesComponent {
   activar: boolean = false;
 
   //variables de formulario para cliente fisico y extranjero
-
   paterno: any;
   materno: any
   nombres: any
@@ -186,6 +188,7 @@ export class ClientesComponent {
       (data: any) => {
 
         this.paises = data.info;
+        console.log(this.paises);
 
       }, (error: any) => {
         Swal.fire({
@@ -200,8 +203,20 @@ export class ClientesComponent {
 
     this.datos.ocupacion(info).subscribe(
       (data: any) => {
-
-        this.ocupaciones = data.info;
+        const datosOrdenados = data.info.slice().sort((a:any, b:any) => {
+          const descripcionA = a.descripcion.toUpperCase();
+          const descripcionB = b.descripcion.toUpperCase();
+    
+          if (descripcionA < descripcionB) {
+            return -1;
+          }
+          if (descripcionA > descripcionB) {
+            return 1;
+          }
+    
+          return 0;
+        });
+        this.ocupaciones = datosOrdenados;
 
       }, (error: any) => {
         Swal.fire({
@@ -309,7 +324,38 @@ export class ClientesComponent {
   }
 
   estados_(dat: any) {
-    const selectedValue = dat.target.value;;
+    const selectedValue = dat.target.value;
+    let v = this.paises.filter((item: any) => item.idpais == selectedValue);
+
+    console.log(v[0])
+    if (v[0].paraisofiscal == true){
+
+      Swal.fire({
+       // icon: 'warning',
+       imageUrl:'../../../../assets/img/unnamed.png', 
+       title: 'Alerta de posible operación inusual y/o de alto riesgo. <br>'+ 
+       'El usuario pertenece a un país incluido en la lista de paraísos fiscales :' + v[0].nombre +
+       '<br> Esperar autorización del oficial de cumplimiento para '+   'realizar la operación.',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+
+    }
+
+    
+    if (v[0].bloqueado == true){
+      Swal.fire({
+        imageUrl:'../../../../assets/img/unnamed.png',
+        title:'Alerta de posible operación inusual y/o de alto riesgo.<br>'+
+        'El usuario pertenece a un país incluido en la lista negra: '+v[0].nombre +
+        '<br>No operar con este usuario, esperar indicaciones del Oficial de Cumplimiento.',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+
+      return;
+    }
+
     this.estadosselect_ = this.estadospais.filter((item: any) => item.idcatpais == selectedValue);
 
   }
@@ -424,6 +470,8 @@ export class ClientesComponent {
   }
 
   async clienteupdate(data: any) {
+    console.log(data)
+    this.riesgos = data.riesgo;
     this.idcliente = data.idcliente;
     this.paterno = data.paterno;
     this.materno = data.materno;
@@ -448,14 +496,14 @@ export class ClientesComponent {
     this.colonia = data.colonia;
     this.municipio = data.municipio;
     this.estado = data.estado;
-    this.pais_ = data.idpais;
+    this.pais_ = data.pais;
     this.codigopostal = data.cp;
     this.idcp = data.idcp;
     this.info = false;
 
 
     this.estadosselect = this.estadospais.filter((item: any) => item.idcatpais == this.paisnaci);
-
+if(data.idcp>0){
     const info2 = {
       cp: data.idcp
     };
@@ -467,6 +515,10 @@ export class ClientesComponent {
     this.municipio = data2.info.data[0].municipio;
 
     this.consultarCodigosPostales(this.codigopostal);
+  }else{
+   // this.pais_ = data.idpais;
+    this.estadosselect_ = this.estadospais.filter((item: any) => item.idcatpais == this.pais_);
+  }
     const dataa = this.nacionalidades.filter((item: any) => item.idnaci == this.nacionalidad)
     if (dataa[0].clave === "MEX") {
       this.sermexicano = true;
@@ -535,7 +587,46 @@ export class ClientesComponent {
       ...info,
       option: 1
     }
+    const name = {
+      nombre:info.nombre,
+      paterno:info.paterno,
+      materno:info.materno
+    };
 
+    console.log(name)
+    this.datos.buscarlistado(name).subscribe(
+      (data: any) => {
+       
+        console.log(data)
+        if(data.info[0].buscar_listado?.message == 'sin coincidencias.'){
+            this.save(info);
+        }else{
+
+        Swal.fire({
+          //icon: 'warning',
+          imageUrl:'../../../../assets/img/unnamed.png', 
+          title: 'El usuario <b>'+data.info[0].buscar_listado.Nombre+'</b> pertenece a la lista <b>'+  data.info[0].buscar_listado.lista +'</b>'+
+          '<br> Esperar autorización del oficial de cumplimiento para '+   'realizar la operación.',
+           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+         });
+        return;
+        }
+      }, (error: any) => {
+        this.consultar();
+        this.limpiar();
+        this.will.hide();
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
+
+  }
+  save(info:any){
     this.datos.clientes(info).subscribe(
       (data: any) => {
         this.consultar();
@@ -560,8 +651,6 @@ export class ClientesComponent {
         });
       }
     )
-
-
   }
 
   actualizar() {
@@ -597,7 +686,7 @@ export class ClientesComponent {
       }
     )
   }
-  cargardatos(d: any) {
+  async cargardatos(d: any) {
     if (d?.idcliente == 1) {
       Swal.fire({
         icon: 'warning',
@@ -608,6 +697,7 @@ export class ClientesComponent {
       return;
     } else if(d?.idcliente > 0) {
       this.shared.setSelectedData(d)
+      
       this.respuestaEnviada.emit(d);
       this.will.hide();
       this.will3.hide();
@@ -821,4 +911,21 @@ export class ClientesComponent {
       this.will4.hide()
     }
   }
+
+  ocupacionvalidar(event: any) {
+   const selectedValue =  event.target.value;
+    let v = this.ocupaciones.filter((item: any) => item.idacividad == selectedValue);
+    console.log(v)
+    if(v[0].nivel == 10){
+      Swal.fire({
+        // icon: 'warning',
+        imageUrl:'../../../../assets/img/unnamed.png', 
+        title: 'Alerta de posible operación inusual y/o de alto riesgo. <br>'+ 
+        'El usuario mantiene una actividad económica de alto riesgo. :' + v[0].descripcion +
+        '<br> Esperar autorización del oficial de cumplimiento para '+   'realizar la operación.',
+         allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+         allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+       });
+    }
+    }
 }

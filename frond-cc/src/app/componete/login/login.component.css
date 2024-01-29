@@ -33,10 +33,10 @@ mat-form-field {
   background: #000000;
   
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-linear-gradient(to right, #ed1b24, #d8363a, #3b6caf, rgb(34,90,167));
+  background: -webkit-linear-gradient(to right, #050000, #000000, #949596, rgb(226, 233, 243));
   
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background: linear-gradient(to right, #ed1b24, #d8363a, #3b6caf, #225aa7);
+  background: linear-gradient(to right, #888686, #acabab, #434444, #000000);
   }
   
   @media (min-width: 768px) {

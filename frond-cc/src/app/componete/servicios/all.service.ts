@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { cp,rol,Sucursal,Empresa,regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa } from "./constantes"; // Importa LoginConstante directamente
+import { cp,rol,Sucursal,Empresa,regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo } from "./constantes"; // Importa LoginConstante directamente
 
 @Injectable({
   providedIn: 'root'
@@ -90,5 +90,39 @@ export class cpservice {
   }
   empresacliente(data:any){
     return this._apiServicio.Post(data, clienteempresa.URLcliemp);
+  }
+  dll(data:any){
+    return this._apiServicio.Post(data, clienteempresa.URLv);
+  }
+  buscarlistado(data:any){
+    return this._apiServicio.search(data, pld.URLpld);
+
+  }
+  crudprod(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLpro);
+  }
+  crudorigen(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLorigen);
+  }
+  crudmonto(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLmonto);
+  }
+  crudinstrumento(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLinst);
+  }
+  crudfrecuencia(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLfre);
+  }
+  crudtiposuer(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLtipouser);
+  }
+  crudocupacion(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLocupacion);
+  }
+  crudestados(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLestados);
+  }
+  crudpaises(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLpaises);
   }
 }

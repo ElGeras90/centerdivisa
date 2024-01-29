@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { cpservice } from 'src/app/componete/servicios/all.service';
 import Swal from 'sweetalert2';
-import { NgxPrinterService } from 'ngx-printer';
+
 
 @Component({
   selector: 'app-compra',
@@ -56,7 +56,7 @@ export class CompraComponent {
   }
 
   constructor(private cp: cpservice,
-    private printerService: NgxPrinterService) {
+   ) {
   }
 
   async consultadivisas() {
@@ -65,7 +65,7 @@ export class CompraComponent {
       tdivisa: 1,
       sucursal: this.sucursalid
     }
-
+    console.log(s);
     this.saldomn = await this.cp.saldoactual(s).toPromise(); // Convertir el observable a una promesa
     this.saldomn = this.saldomn.info[0].saldosdia.saldosfinales;
 
@@ -136,7 +136,16 @@ export class CompraComponent {
     }
 
     const data2: any = await this.cp.Formulario(data).toPromise(); // Convertir el observable a una promesa
-
+    console.log(data2);
+    if (data2.info[0].valida_formulario.data.info == 'no') {
+      Swal.fire({
+        icon: 'warning',
+        title: data2.info[0].valida_formulario.data.messagge,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+      return;
+    }
     this.formulario = data2.info[0].valida_formulario.data.formulario
     if (data2.info[0].valida_formulario.data.info == 1) {
       Swal.fire({
@@ -146,7 +155,7 @@ export class CompraComponent {
         confirmButtonText: 'Continuar',
         cancelButtonText: 'Registrar',
         showCloseButton: false,
-      }).then((result) => {
+      }).then((result:any) => {
         if (result.isConfirmed) {
           this.continuar = true
           this.json = this.crearjson();
@@ -165,10 +174,31 @@ export class CompraComponent {
 
   i: any;
 
-  manejarRespuesta(respuesta: any) {
-    console.log('respuesta');
-    console.log(respuesta)
+  async manejarRespuesta(respuesta: any) {
+
     this.i = respuesta;
+
+    const data = {
+      tipo: this.i.tipopersona,
+      clienteid: this.i.idcliente,
+      mn: this.resultado
+    }
+
+    const data2: any = await this.cp.dll(data).toPromise(); // Convertir el observable a una promesa
+
+    console.log(data2.resultado.action);
+    if(data2.resultado.action == false){
+      Swal.fire({
+        icon: 'warning',
+        title: data2.resultado.messagge,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+      this.limpiar();
+      this.will.hide();
+      return;
+    }
+
     this.json = this.crearjson();
     this.json.clienteid = this.i.idcliente;
     this.guardar(this.json);
@@ -188,7 +218,6 @@ export class CompraComponent {
     // Usar la expresión condicional para asignar un valor predeterminado si x es null o undefined
     resultado = z !== null && z !== undefined ? z : 'xxxx';
 
-    console.log(this.i)
 
     const ticketContent = `
      
@@ -279,17 +308,31 @@ export class CompraComponent {
   ticket: any;
 
   async guardar(r: any) {
-    this.ticket = await this.cp.operaciones(r).toPromise();
 
-    console.log(this.ticket)
+  /**   Swal.fire({
+      // icon: 'warning',
+      imageUrl:'../../../../assets/img/unnamed.png', 
+      title: 'Alerta de Posible Operación Inusual, el comportamiento transaccional del usuario se separa de su perfil transaccional habitual, las operaciones realizadas rebasan en un 200% el perfil habitual del Usuario.',
+       allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+       allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+     });
+*/
+
+    this.ticket = await this.cp.operaciones(r).toPromise();
 
     const numeroRecibido: Number = this.ticket.info[0].manage_operaciones.operacion;
 
     // Convierte el número a una cadena y aplica el relleno con ceros
     const numeroFormateado: string = numeroRecibido.toString().padStart(10, '0');
 
-    console.log(numeroFormateado);
     this.printTicket(numeroFormateado);
+  }
+
+  limpiar(){
+
+    this.cambio = 0;
+    this.resultado = 0;
+    this.i ={};
   }
 
 }

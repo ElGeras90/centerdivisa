@@ -71,6 +71,7 @@ async function divisabancomexico() {
       const result = await client.query('select * from saldosdia($1)',[monto]);
       return result;
     } catch (error) {
+      console.log(error)
       throw error;
     } finally {
       client.release();

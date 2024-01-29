@@ -8,7 +8,6 @@ const encriptarjsong = require('./../util/encriptarjson');
 function codigopostal(req, res) {
 
   let resquest = encriptarjsong.decrypt(req.body.resultado)
-  console.log(resquest)
     cp.consultacp(resquest.cp)
       .then(info => {
         let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows[0].search_by_cp }));

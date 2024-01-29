@@ -15,6 +15,16 @@ import { EncargadoComponent } from './crud/encargado/encargado.component';
 import { CompraComponent } from './operacion/compra/compra.component';
 import { VentaComponent } from './operacion/venta/venta.component';
 import { BobedaComponent } from './operacion/bobeda/bobeda.component';
+import { RiesgoComponent } from './riesgo/riesgo.component';
+import { RelevantesComponent } from './regulatorios/relevantes/relevantes.component';
+import { DolaresComponent } from './regulatorios/dolares/dolares.component';
+import { OperacionesinusualesComponent } from './regulatorios/operacionesinusuales/operacionesinusuales.component';
+import { MontosComponent } from './regulatorios/montos/montos.component';
+import { Reporte24Component } from './regulatorios/reporte24/reporte24.component';
+import { AltoriesgoComponent } from './reporte/altoriesgo/altoriesgo.component';
+import { AnonimoComponent } from './anonimo/anonimo.component';
+import { AnonimosComponent } from './alertas/anonimos/anonimos.component';
+import { MovComponent } from './alertas/mov/mov.component';
 
 const routes: Routes = [
     {
@@ -33,6 +43,17 @@ const routes: Routes = [
             {path:'Compra',component: CompraComponent},
             {path:'Venta',component: VentaComponent},
             {path:'Boveda',component: BobedaComponent},
+            {path:'Riesgo',component:RiesgoComponent},
+            {path:'Relevantes',component:RelevantesComponent},
+            {path:'Inusuales',component:OperacionesinusualesComponent},
+            {path:'Montos',component:MontosComponent},
+            {path:'Reporte',component:Reporte24Component},
+            {path:'AltoRiesgo',component:AltoriesgoComponent},
+            {path:'Dolar',component:DolaresComponent},
+            {path:'Enviomensaje',component:AnonimoComponent},
+            {path:'AlertaAnonimas',component:AnonimosComponent},
+            {path:'AlertasGenerales',component:MovComponent},
+
         ]
     },
 ];

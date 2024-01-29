@@ -10,6 +10,7 @@ import { AuthenticationService } from './componete/servicios/AuthenticationServi
 import { LoginService } from './componete/servicios/loginService';
 import { EncryptDataService } from './componete/servicios/encriptar';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { pld_data } from './componete/servicios/constantes';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     HttpClientModule,
     NoopAnimationsModule
   ],
-  providers: [EncryptDataService
+  providers: [EncryptDataService,pld_data
 ],
 
   bootstrap: [AppComponent]
