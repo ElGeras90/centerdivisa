@@ -75,7 +75,6 @@ export class LoginComponent {
   
           this.Auth.Login(usuario, contraseña).subscribe(
             (data: any) => {
-              console.log(data)
               if (data.info[0].login_usuario.action == 'error') {
                 Swal.fire({
                   icon: data.info[0].login_usuario.action,
@@ -84,6 +83,7 @@ export class LoginComponent {
                   allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
                 });
               } else {
+                console.log(data.info[0].login_usuario)
                 this.Auth.loginUser(data.info[0].login_usuario, data.Token)
                 this.router.navigate(['api']);
               }

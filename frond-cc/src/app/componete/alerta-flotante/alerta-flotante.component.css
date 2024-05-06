@@ -1,0 +1,22 @@
+.alert {
+    position: relative; /* Necesario para posicionar el botón de cierre */
+    position: fixed;
+    top: 50px; /* Ajusta según sea necesario */
+    right: 20px; /* Ajusta según sea necesario */
+    width: 25%; /* Tamaño del 25% del ancho de la pantalla */
+ 
+    border-radius: 4px; /* Radio del borde de la alerta */
+    padding: 10px; /* Espaciado interno de la alerta */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra de la alerta */
+    z-index: -9999; /* Asegura que la alerta esté encima de otros elementos */
+  }
+  
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }

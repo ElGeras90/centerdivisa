@@ -39,17 +39,15 @@
 
 
             <!-- Columna Acciones -->
-            <ng-container matColumnDef="acciones">
+            <!--<ng-container matColumnDef="acciones">
                 <th mat-header-cell *matHeaderCellDef> Acciones </th>
                 <td mat-cell *matCellDef="let row">
-                    <button mat-icon-button color="primary">
+                    <button mat-icon-button color="primary" (click)="abrirwill2(row)">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn">
-                        <mat-icon>delete</mat-icon>
-                    </button>
+                    
                 </td>
-            </ng-container>
+            </ng-container>-->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -125,7 +123,7 @@
 
                 <div class="row">
                     <div class="col-6 text-left"> <!-- Alinea el primer botón a la izquierda -->
-                        <button class="btn btn-primary mt-4" (click)="guardarmovimiento()">Guardar</button>
+                        <button class="btn btn-primary mt-4"  *ngIf="info ==true" (click)="guardarmovimiento()">Guardar</button>
                     </div>
                     <div class="col-6 text-right"> <!-- Alinea el segundo botón a la derecha -->
                         <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>

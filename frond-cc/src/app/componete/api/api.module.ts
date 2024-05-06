@@ -32,6 +32,10 @@ import { OpeinternaspreocupantesComponent } from './reporte/opeinternaspreocupan
 import { AnonimoComponent } from './anonimo/anonimo.component';
 import { AnonimosComponent } from './alertas/anonimos/anonimos.component';
 import { MovComponent } from './alertas/mov/mov.component';
+import { AlertaFlotanteComponent } from '../alerta-flotante/alerta-flotante.component';
+import { GalertComponent } from './alertas/galert/galert.component';
+import { PieComponent } from './pie/pie.component';
+
 
 
 @NgModule({
@@ -65,7 +69,10 @@ import { MovComponent } from './alertas/mov/mov.component';
         OpeinternaspreocupantesComponent,
         AnonimoComponent,
         AnonimosComponent,
-        MovComponent
+        MovComponent,
+        AlertaFlotanteComponent,
+        GalertComponent,
+        PieComponent
     ],
     imports:[
        CommonModule,

@@ -1,14 +1,41 @@
-<div class="content">
+<div class="conten">
+
+
+<div class="container-fluid">
+  <br>
+        <div class="blue-line">
+          <div class="moving-text">
+            <ul class="reverse-list">
+              <li class="rli" *ngFor="let a of divisas">  {{a.grupo}} Compra: {{ a.compra }} , Venta: {{ a.venta }}  </li>
+            </ul>
+          </div>
+        </div>
+  </div>
+  <div class="container d-flex justify-content-center align-items-center">
+  <div class="card">
+    <p class="card-title">Centro Cambiario {{dmo.razonsocial}}</p>
+    <p class="small-desc">
+      Sucursal: {{dmo.nombresucursal}} <br>
+      Domicilio: {{dmo.domicilio}}
+    </p>
+    <div class="go-corner">
+      <div class="go-arrow">→</div>
+    </div>
+  </div>
+</div>
+<div class="content container mt-4 ">
     <div class="content__container">
       <p class="content__container__text">
         Hola
       </p>
       
       <ul class="content__container__list">
-        <li class="content__container__list__item">world !</li>
+        <li class="content__container__list__item">wellcome !</li>
         <li class="content__container__list__item">{{name}} !</li>
-        <li class="content__container__list__item"><img src="../../../../assets/img/inmtec.png" style="height: 40px; width: 40px;" class="txt"></li>
         <li class="content__container__list__item"><img src="../../../../assets/img/unnamed.png" style="height: 50px; width: auto;" class="txt"></li>
+        <li class="content__container__list__item">Bienvenido !</li>
       </ul>
     </div>
-  </div>
+</div>
+
+</div>

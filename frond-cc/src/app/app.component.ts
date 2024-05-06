@@ -12,5 +12,5 @@ import { slideInAnimation } from './componete/servicios/animations';
   ]
 })
 export class AppComponent {
-  title = 'frond-cc';
+  title = 'CENTRO CAMBIARIO';
 }

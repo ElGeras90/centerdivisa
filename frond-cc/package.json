@@ -35,6 +35,7 @@
     "ngx-printer": "^1.4.0",
     "pdfmake": "^0.2.9",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.7.4",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.6.13",
     "tslib": "^2.3.0",

@@ -41,6 +41,8 @@ import {
     MatSlideToggleModule,
     _MatSlideToggleRequiredValidatorModule,
 } from '@angular/material/slide-toggle';
+import {MatBadgeModule} from '@angular/material/badge';
+
 @NgModule({
     declarations: [
         LoginComponent
@@ -78,7 +80,8 @@ import {
         MatDatepickerModule,
         MatNativeDateModule,
         _MatSlideToggleRequiredValidatorModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatBadgeModule
     ],
     exports: [
 
@@ -114,8 +117,9 @@ import {
         MatDatepickerModule,
         MatNativeDateModule,
         _MatSlideToggleRequiredValidatorModule,
-        ReactiveFormsModule
-
+        ReactiveFormsModule,
+        MatCardModule,
+        MatBadgeModule
     ]
 })
 export class imports { }

@@ -18,7 +18,7 @@ export class BobedaComponent {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['Sucursal', 'Divisa', 'Entrada', 'Salida', 'Descripcion', 'acciones'];
+  displayedColumns: string[] = ['Sucursal', 'Divisa', 'Entrada', 'Salida', 'Descripcion'];
 
   dataSource = new MatTableDataSource<any>([]);
   info: boolean = false;
@@ -85,7 +85,13 @@ export class BobedaComponent {
     this.info = true;
     this.will.show();
   }
-  consultar() {
+
+  abrirwill2(row:any) {
+    this.info = false;
+    this.llenarcampos(row)
+    this.will.show();
+  }
+  async consultar() {
 
 
     const info = {
@@ -94,7 +100,6 @@ export class BobedaComponent {
 
     this.datos.infosuc(info).subscribe(
       (data: any) => {
-        console.log(data)
         this.dataSource.data = data.info[0].divisas_suc_usuario;
       }, (error: any) => {
         Swal.fire({
@@ -106,62 +111,6 @@ export class BobedaComponent {
       }
     )
 
-  }
-
-  guardar() {
-
-    let info = this.crearjson();
-
-     info.option=1;
-
-    this.datos.clientes(info).subscribe(
-      (data: any) => {
-
-        Swal.fire({
-          icon: data.resultado[0].manage_cliente.action,
-          title: data.resultado[0].manage_cliente.message,
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }, (error: any) => {
-
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
-
-
-  }
-
-  actualizar() {
-
-    let info = this.crearjson();
-
-    info.option=2;
-    
-    this.datos.clientes(info).subscribe(
-      (data: any) => {
-
-        Swal.fire({
-          icon: data.resultado[0].manage_cliente.action,
-          title: data.resultado[0].manage_cliente.message,
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }, (error: any) => {
-
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
   }
 
   crearjson(){
@@ -250,29 +199,52 @@ export class BobedaComponent {
   }
 
 
-  guardarmovimiento() {
-   const a = this.crearjson();
-   a.option = 1;
-   console.log(a);
-    this.datos.infosucdiv(a).subscribe(
-      (data: any) => {
-          Swal.fire({
-            icon: data.info[0].manage_saldo_dvisas.action,
-            title: data.info[0].manage_saldo_dvisas.message,
-            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-          });
+  async guardarmovimiento() {
 
-      
-      }, (error: any) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
+  
+      Swal.fire({
+        imageUrl: '../../../../assets/img/unnamed.png',
+        title: '¿Desea Realizar el registro?',
+        text: 'puede verificar antes de aceptar',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar',
+        showCloseButton: false,
+      }).then((result:any) => {
+        if (result.isConfirmed) {
+          const a = this.crearjson();
+          a.option = 1;
+           this.datos.infosucdiv(a).subscribe(
+             (data: any) => { 
+               this.consultar()
+       
+                 Swal.fire({
+                   icon: data.info[0].manage_saldo_dvisas.action,
+                   title: data.info[0].manage_saldo_dvisas.message,
+                   allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+                   allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+                 });
+             
+             }, (error: any) => {
+               Swal.fire({
+                 icon: 'error',
+                 title: 'Ocurrio un problema al intentar realizar la accion ',
+                 allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+                 allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+               });
+             }
+             
+           )
+           this.limpiar()
+           this.will.hide();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+         
+        }
+      });
+ 
+
+
+
   }
 
   
@@ -281,13 +253,15 @@ export class BobedaComponent {
     a.option = 2;
      this.datos.infosucdiv(a).subscribe(
        (data: any) => {
+        this.dataSource.data = [];
+        
+
            Swal.fire({
              icon: data.info[0].manage_saldo_dvisas.action,
              title: data.info[0].manage_saldo_dvisas.message,
              allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
              allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
            });
- 
        
        }, (error: any) => {
          Swal.fire({
@@ -298,6 +272,28 @@ export class BobedaComponent {
          });
        }
      )
+     this.consultar()
+     this.limpiar()
+
+     this.will.hide();
+   }
+
+   limpiar(){
+    this.idsucursalid=0
+      this.idgrupodivisa=0
+      this.entrada=0
+     this.salida=0
+       this.descripcion='';
+   }
+   llenarcampos(row : any){
+    this.idsucursalid = row.idsucursalid,
+    this.idgrupodivisa=row.idgrupodivisa
+    this.entrada = row.entrada
+    this.salida = row.salida
+    this.idusuario = row.idusuario
+    this.tipo = row.tipo
+    this.idsaldos = row.idsaldos
+    this.descripcion = row.descripcion
    }
 
 }

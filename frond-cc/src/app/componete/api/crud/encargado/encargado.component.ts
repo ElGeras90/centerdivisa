@@ -102,7 +102,6 @@ export class EncargadoComponent {
 
     this.cp.Encargados(a).subscribe(
       (data: any) => {
-        console.log(data)
         this.dataSource.data  = data.resultado; // Llenar dataSource con los datos
         this.resultado=true;
       }, (error: any) => {
@@ -116,5 +115,7 @@ export class EncargadoComponent {
     )
 
   }
-
+limpiarcampo(){
+  this.dataSource.data= []
+}
 }

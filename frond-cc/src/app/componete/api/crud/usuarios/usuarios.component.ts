@@ -60,7 +60,7 @@ export class UsuariosComponent {
       calle: new FormControl(''),
       numero: new FormControl(''),
       idcp: new FormControl(),
-      correo: new FormControl('', [Validators.required, Validators.email]),
+      correo: new FormControl('', [Validators.required]),
       telefono: new FormControl(''),
       activo: new FormControl(true),
       fecharegistro: new FormControl(new Date()),

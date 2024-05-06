@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -48,7 +48,8 @@ export class SucursalesComponent {
 
   constructor(
     private user: userservice,
-    private cp: cpservice) { }
+    private cp: cpservice,
+    private _cdr: ChangeDetectorRef) { }
 
 
   ngOnInit(): void {
@@ -177,7 +178,9 @@ export class SucursalesComponent {
           });
 
         } else {
+          this._cdr.detectChanges();
           this.dataSource.data = data.resultado[0].manage_sucursal.data;
+          this._cdr.detectChanges();
         }
       }, (error: any) => {
         Swal.fire({
@@ -187,7 +190,9 @@ export class SucursalesComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
       }
+      
     )
+    
   }
 
   guardarsucursal() {
@@ -226,9 +231,10 @@ export class SucursalesComponent {
      
       }
     )
-    this.will.hide();
     this.clean();
     this.consultar()
+    this.will.hide();
+    
   }
 
   actualizarsucursal() {
@@ -265,7 +271,8 @@ export class SucursalesComponent {
       }
     )
     this.clean();
-    this.consultar();
+    this.consultar()
+    this.will.hide();
   }
 
   abrirgurdar() {

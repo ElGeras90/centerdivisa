@@ -1,0 +1,98 @@
+
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Alertas de Registro del dia</h2>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Usuario</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Fecha</th>
+              <th scope="col" colspan="2">Autorizar/Rechazar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let registro of registros">
+              <td>{{ registro.usuario }}</td>
+              <td>{{ registro.alerta }}</td>
+              <td>{{ registro.fecha }}</td>
+              
+              <td>
+                <button class="btn btn-outline-success" (click)="autorizar(registro)">
+                  <mat-icon>done</mat-icon>
+                </button>
+              </td>
+              <td>                <button class="btn btn-outline-danger" (click)="denegar(registro)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  
+  <!-- app.component.html 
+
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <h2>Buscar Cliente</h2>
+        <form>
+          <div class="mb-3">
+            <label for="clienteBuscar" class="form-label">ID del Cliente:</label>
+            <input type="text" class="form-control" id="clienteBuscar" [(ngModel)]="clienteIdBuscar">
+          </div>
+          <button type="button" class="btn btn-primary" (click)="buscarCliente()">Buscar Cliente</button>
+        </form>
+      </div>
+  
+      <div class="col-md-6" *ngIf="beni==true">
+        <h2>Datos del Beneficiario</h2>
+        <form>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" value="PRUEBAS" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="calle" class="form-label">Calle:</label>
+            <input type="text" class="form-control" id="calle" value="CALLE PRUEBAS" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="numero" class="form-label">Número:</label>
+            <input type="text" class="form-control" id="numero" value="125" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="colonia" class="form-label">Colonia:</label>
+            <input type="text" class="form-control" id="colonia" value="COLONIA PRUEBAS" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="municipio" class="form-label">Municipio:</label>
+            <input type="text" class="form-control" id="municipio" value="SAN MIGUEL ALLENDE" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="estado" class="form-label">Estado:</label>
+            <input type="text" class="form-control" id="estado" value="GUANAJUATO" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="monto" class="form-label">Documento:</label>
+            <input type="text" class="form-control" id="monto" value="INE">
+          </div>
+          <div class="mb-3">
+            <label for="monto" class="form-label">NUMERO ID:</label>
+            <input type="text" class="form-control" id="monto" value="ASDFASDFADFS">
+          </div>
+          <div class="mb-3">
+            <label for="monto" class="form-label">Monto a Enviar:</label>
+            <input type="text" class="form-control" id="monto" [(ngModel)]="montoEnviar">
+          </div>
+          <button type="button" class="btn btn-success" (click)="enviarMonto()">Enviar Monto</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  -->

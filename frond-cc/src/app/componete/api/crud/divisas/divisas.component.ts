@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { cpservice } from 'src/app/componete/servicios/all.service';
@@ -47,7 +47,8 @@ export class DivisasComponent {
   encargado: any;
   id: any;
   constructor(
-    private datos: cpservice) { }
+    private datos: cpservice,
+    private _cdr: ChangeDetectorRef) { }
   /**fin del paginador y modal */
   ngOnInit(): void {
 

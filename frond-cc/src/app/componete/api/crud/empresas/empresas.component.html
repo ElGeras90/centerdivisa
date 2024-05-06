@@ -88,9 +88,12 @@
                                         [ngModelOptions]="{standalone: true}" />
                                 </div>
                                 <div class="form-group form-check col">
-                                    <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="activo"
-                                        [ngModelOptions]="{standalone: true}" />
-                                    <label class="form-check-label" for="activo">Activo</label>
+                                    <label for="activo">Estatus:</label>
+                                    <label class="container">
+                                        <input checked="checked" type="checkbox" id="activo" [(ngModel)]="activo" [ngModelOptions]="{standalone: true}">
+                                        <div class="checkmark"></div>
+                                      </label>
+
                                 </div>
 
                             </div>

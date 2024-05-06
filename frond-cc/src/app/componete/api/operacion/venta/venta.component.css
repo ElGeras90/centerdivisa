@@ -1,35 +1,36 @@
 .blue-line {
-    background: linear-gradient(to left, blue, black);
-    height: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .moving-text {
-    position: absolute;
-    white-space: nowrap;
-    animation: moveText 20s linear infinite;
-    color: white;
-    right: 100%; /* Comienza fuera del área visible a la derecha */
-    top: 50%; /* Centra verticalmente el texto */
-    transform: translateY(-50%); /* Alinea el texto en el centro */
-  }
-  
-  @keyframes moveText {
-    0% {
-      right: -100%; /* Comienza fuera del área visible a la derecha */
-    }
-    100% {
-      right: 100%; /* Termina fuera del área visible a la izquierda */
-    }
-  }
+  background: linear-gradient(to left,rgb(0, 0, 0) , rgb(0, 0, 0));
+  height: 60px;
+  position: relative;
+  overflow: hidden;
+}
 
-  .reverse-list {
-    list-style: none; /* Quita los puntos de viñetas predeterminados */
-    
+.moving-text {
+  position: absolute;
+  white-space: nowrap;
+  animation: moveText 20s linear infinite;
+  color: rgb(255, 255, 255);
+  font-size: xx-large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  right: 100%; /* Comienza fuera del área visible a la derecha */
+  top: 75%; /* Centra verticalmente el texto */
+  transform: translateY(-50%); /* Alinea el texto en el centro */
+}
+
+@keyframes moveText {
+  0% {
+    right: -100%; /* Comienza fuera del área visible a la derecha */
+  }
+  100% {
+    right: 100%; /* Termina fuera del área visible a la izquierda */
+  }
+}
+
+.reverse-list {
+  list-style: none; /* Quita los puntos de viñetas predeterminados */
+  
 }
 .rli {
-  display: inline; /* Muestra los elementos de la lista en una sola línea */
-  margin-right: 10px; /* Agrega un espacio entre los elementos si lo deseas */
+display: inline; /* Muestra los elementos de la lista en una sola línea */
+margin-right: 10px; /* Agrega un espacio entre los elementos si lo deseas */
 }
-  

@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { cpservice } from 'src/app/componete/servicios/all.service';
+import { usuarios } from 'src/app/componete/servicios/constantes';
 import { SharedDataService } from 'src/app/componete/servicios/request.info';
+import { SocketService } from 'src/app/socket.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -28,7 +31,7 @@ export class ClientesComponent {
   @ViewChild("riesgo", { static: false })
   riesgo: any;
 
-  riesgos:any;
+  riesgos: any;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
@@ -115,16 +118,42 @@ export class ClientesComponent {
   @Input() formulario: any;
   @Input() status: boolean = false;
   @Output() respuestaEnviada = new EventEmitter<string>();
+  messages: any;
 
   constructor(
     private datos: cpservice,
     private shared: SharedDataService,
+    private socketService: SocketService,
+    private router: Router
   ) { }
   /**fin del paginador y modal */
+  user: any;
   ngOnInit(): void {
     this.activar = this.shared.getActivo();
     this.catalogos();
     this.consultar();
+    this.user = localStorage.getItem('usuario');
+    // Escuchar mensajes del servidor
+    this.socketService.onMessageReceived().subscribe((data: any) => {
+      console.log(data);
+      if(data.message == '1'){
+        Swal.close();
+        Swal.fire('Operación autorizada!', '', 'success');
+      }else if(data.message == '2'){
+        Swal.close();
+        this.router.navigate(['api']);
+        Swal.fire('Operación cancelada', '', 'error');
+      }else if(data.message = '3'){
+        let info = this.estructuraguardar();
+
+        info = {
+          ...info,
+          option: 1
+        }
+        this.save(info);
+      }
+
+    });
 
   }
 
@@ -203,17 +232,17 @@ export class ClientesComponent {
 
     this.datos.ocupacion(info).subscribe(
       (data: any) => {
-        const datosOrdenados = data.info.slice().sort((a:any, b:any) => {
+        const datosOrdenados = data.info.slice().sort((a: any, b: any) => {
           const descripcionA = a.descripcion.toUpperCase();
           const descripcionB = b.descripcion.toUpperCase();
-    
+
           if (descripcionA < descripcionB) {
             return -1;
           }
           if (descripcionA > descripcionB) {
             return 1;
           }
-    
+
           return 0;
         });
         this.ocupaciones = datosOrdenados;
@@ -328,30 +357,58 @@ export class ClientesComponent {
     let v = this.paises.filter((item: any) => item.idpais == selectedValue);
 
     console.log(v[0])
-    if (v[0].paraisofiscal == true){
+    if (v[0].paraisofiscal == true) {
+      this.socketService.sendPrivateMessage('cc-PLD', 'Alerta de posible operación inusual y/o de alto riesgo. <br>' +
+        'El usuario pertenece a un país incluido en la lista de paraísos fiscales :' + v[0].nombre);
+      this.cargardata(this.user, ('Alerta de posible operación inusual y/o de alto riesgo. ' +
+        'El usuario pertenece a un país incluido en la lista de paraísos fiscales :' + v[0].nombre))
+
 
       Swal.fire({
-       // icon: 'warning',
-       imageUrl:'../../../../assets/img/unnamed.png', 
-       title: 'Alerta de posible operación inusual y/o de alto riesgo. <br>'+ 
-       'El usuario pertenece a un país incluido en la lista de paraísos fiscales :' + v[0].nombre +
-       '<br> Esperar autorización del oficial de cumplimiento para '+   'realizar la operación.',
-        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-      });
+        // icon: 'warning',
+        imageUrl: '../../../../assets/img/unnamed.png',
+        title: 'Alerta de posible operación inusual y/o de alto riesgo. <br>' +
+          'El usuario pertenece a un país incluido en la lista de paraísos fiscales :' + v[0].nombre +
+          '<br> Esperar autorización del oficial de cumplimiento para ' + 'realizar la operación.',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          showConfirmButton: false,
+          showCancelButton: false,
+         // cancelButtonText: "Cancelar",
+          showLoaderOnConfirm: true,
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.cancel) {
+            // Si se cancela la operación, cerrar la alerta y mostrar mensaje de cancelación
+            Swal.fire('Operación cancelada', '', 'error');
+          }
+        });
 
     }
 
-    
-    if (v[0].bloqueado == true){
+
+    if (v[0].bloqueado == true) {
+      this.socketService.sendPrivateMessage('cc-PLD', 'Alerta de posible operación inusual y/o de alto riesgo.' +
+      'El usuario pertenece a un país incluido en la lista negra: ' + v[0].nombre);
+    this.cargardata(this.user, ('Alerta de posible operación inusual y/o de alto riesgo.' +
+    'El usuario pertenece a un país incluido en la lista negra: ' + v[0].nombre))
+
       Swal.fire({
-        imageUrl:'../../../../assets/img/unnamed.png',
-        title:'Alerta de posible operación inusual y/o de alto riesgo.<br>'+
-        'El usuario pertenece a un país incluido en la lista negra: '+v[0].nombre +
-        '<br>No operar con este usuario, esperar indicaciones del Oficial de Cumplimiento.',
-        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-      });
+        imageUrl: '../../../../assets/img/unnamed.png',
+        title: 'Alerta de posible operación inusual y/o de alto riesgo.<br>' +
+          'El usuario pertenece a un país incluido en la lista negra: ' + v[0].nombre +
+          '<br>No operar con este usuario, esperar indicaciones del Oficial de Cumplimiento.',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          showConfirmButton: false,
+          showCancelButton: false,
+          //cancelButtonText: "Cancelar",
+          showLoaderOnConfirm: true,
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.cancel) {
+            // Si se cancela la operación, cerrar la alerta y mostrar mensaje de cancelación
+            Swal.fire('Operación cancelada', '', 'error');
+          }
+        });
 
       return;
     }
@@ -503,22 +560,22 @@ export class ClientesComponent {
 
 
     this.estadosselect = this.estadospais.filter((item: any) => item.idcatpais == this.paisnaci);
-if(data.idcp>0){
-    const info2 = {
-      cp: data.idcp
-    };
+    if (data.idcp > 0) {
+      const info2 = {
+        cp: data.idcp
+      };
 
-    const data2: any = await this.datos.codigopostar(info2).toPromise(); // Convertir el observable a una promesa
+      const data2: any = await this.datos.codigopostar(info2).toPromise(); // Convertir el observable a una promesa
 
-    this.codigopostal = data2.info.data[0].cp;
-    this.estado = data2.info.data[0].estado;
-    this.municipio = data2.info.data[0].municipio;
+      this.codigopostal = data2.info.data[0].cp;
+      this.estado = data2.info.data[0].estado;
+      this.municipio = data2.info.data[0].municipio;
 
-    this.consultarCodigosPostales(this.codigopostal);
-  }else{
-   // this.pais_ = data.idpais;
-    this.estadosselect_ = this.estadospais.filter((item: any) => item.idcatpais == this.pais_);
-  }
+      this.consultarCodigosPostales(this.codigopostal);
+    } else {
+      // this.pais_ = data.idpais;
+      this.estadosselect_ = this.estadospais.filter((item: any) => item.idcatpais == this.pais_);
+    }
     const dataa = this.nacionalidades.filter((item: any) => item.idnaci == this.nacionalidad)
     if (dataa[0].clave === "MEX") {
       this.sermexicano = true;
@@ -588,344 +645,385 @@ if(data.idcp>0){
       option: 1
     }
     const name = {
-      nombre:info.nombre,
-      paterno:info.paterno,
-      materno:info.materno
+      nombre: info.nombre,
+      paterno: info.paterno,
+      materno: info.materno
     };
 
-    console.log(name)
     this.datos.buscarlistado(name).subscribe(
       (data: any) => {
-       
-        console.log(data)
-        if(data.info[0].buscar_listado?.message == 'sin coincidencias.'){
-            this.save(info);
-        }else{
+        if (data.info[0].buscar_listado?.message == 'sin coincidencias.') {
+          this.save(info);
+          this.consultar();
+          this.limpiar();
+          this.will.hide();
+        } else {
+          this.socketService.sendPrivateMessage('cc-PLD', 'El usuario <b>' + data.info[0].buscar_listado.Nombre + '</b> pertenece a la lista <b>' + data.info[0].buscar_listado.lista + '</b>');
+          this.cargardata(this.user, ('El usuario ' + data.info[0].buscar_listado.Nombre + ' pertenece a la lista ' + data.info[0].buscar_listado.lista))
 
-        Swal.fire({
-          //icon: 'warning',
-          imageUrl:'../../../../assets/img/unnamed.png', 
-          title: 'El usuario <b>'+data.info[0].buscar_listado.Nombre+'</b> pertenece a la lista <b>'+  data.info[0].buscar_listado.lista +'</b>'+
-          '<br> Esperar autorización del oficial de cumplimiento para '+   'realizar la operación.',
-           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-         });
-        return;
-        }
-      }, (error: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
+          Swal.fire({
+            //icon: 'warning',
+            imageUrl: '../../../../assets/img/unnamed.png',
+            title: 'El usuario <b>' + data.info[0].buscar_listado.Nombre + '</b> pertenece a la lista <b>' + data.info[0].buscar_listado.lista + '</b>' +
+              '<br> Esperar autorización del oficial de cumplimiento para ' + 'realizar la operación.',
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+            showConfirmButton: false,
+            showCancelButton: false,
+            //cancelButtonText: "Cancelar",
+            showLoaderOnConfirm: true,
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+              // Si se cancela la operación, cerrar la alerta y mostrar mensaje de cancelación
+              Swal.fire('Operación cancelada', '', 'error');
+            }
+          });
+    return;
+  }
+}, (error: any) => {
+
+  Swal.fire({
+    icon: 'error',
+    title: 'Ocurrio un problema al intentar realizar la accion ',
+    allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+    allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+  });
+}
     )
 
   }
-  save(info:any){
-    this.datos.clientes(info).subscribe(
-      (data: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
+save(info: any) {
+  this.datos.clientes(info).subscribe(
+    (data: any) => {
+      this.consultar();
+      this.limpiar();
+      this.will.hide();
 
-        Swal.fire({
-          icon: data.resultado[0].manage_cliente.action,
-          title: data.resultado[0].manage_cliente.message,
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }, (error: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
-  }
-
-  actualizar() {
-
-    let info = this.estructuraguardar();
-
-    info = {
-      ...info,
-      option: 2
-    }
-
-    this.datos.clientes(info).subscribe(
-      (data: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
-        Swal.fire({
-          icon: data.resultado[0].manage_cliente.action,
-          title: data.resultado[0].manage_cliente.message,
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }, (error: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
-  }
-  async cargardatos(d: any) {
-    if (d?.idcliente == 1) {
       Swal.fire({
-        icon: 'warning',
-        title: 'No puede seleccionar PUBLICO EN GENERAL selecciona otro',
+        icon: data.resultado[0].manage_cliente.action,
+        title: data.resultado[0].manage_cliente.message,
         allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
         allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
       });
-      return;
-    } else if(d?.idcliente > 0) {
-      this.shared.setSelectedData(d)
-      
-      this.respuestaEnviada.emit(d);
+    }, (error: any) => {
+      this.consultar();
+      this.limpiar();
       this.will.hide();
-      this.will3.hide();
-    }else{
-      this.clienteempresa(d)
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
     }
+  )
+}
+
+actualizar() {
+
+  let info = this.estructuraguardar();
+
+  info = {
+    ...info,
+    option: 2
   }
 
-  crearjsonempresa() {
-    const a = {
-      razonsocial: this.razonsocial,
-      rfc: this.rfcempresa,
-      rfcserie: this.rfcserie,
-      nacionalidad: this.nacionalidadempresa,
-      domicilio: this.domiciliofiscal,
-      idempresa: 0,
-      option: 0,
-      telefono: this.telemp,
-      correo: this.correoempr,
-      fechaconstitucion: this.fechaconst
-    };
-    return a;
+  this.datos.clientes(info).subscribe(
+    (data: any) => {
+      this.consultar();
+      this.limpiar();
+      this.will.hide();
+      Swal.fire({
+        icon: data.resultado[0].manage_cliente.action,
+        title: data.resultado[0].manage_cliente.message,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+    }, (error: any) => {
+      this.consultar();
+      this.limpiar();
+      this.will.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+    }
+  )
+}
+  async cargardatos(d: any) {
+  if (d?.idcliente == 1) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'No puede seleccionar PUBLICO EN GENERAL selecciona otro',
+      allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+      allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+    });
+    return;
+  } else if (d?.idcliente > 0) {
+    this.shared.setSelectedData(d)
+
+    this.respuestaEnviada.emit(d);
+    this.will.hide();
+    this.will3.hide();
+  } else {
+    this.clienteempresa(d)
   }
-  resultado: any;
-  visibleemp: boolean = false;
-  idempresa: number = 0;
+}
+
+crearjsonempresa() {
+  const a = {
+    razonsocial: this.razonsocial,
+    rfc: this.rfcempresa,
+    rfcserie: this.rfcserie,
+    nacionalidad: this.nacionalidadempresa,
+    domicilio: this.domiciliofiscal,
+    idempresa: 0,
+    option: 0,
+    telefono: this.telemp,
+    correo: this.correoempr,
+    fechaconstitucion: this.fechaconst
+  };
+  return a;
+}
+resultado: any;
+visibleemp: boolean = false;
+idempresa: number = 0;
   async guardarempresa() {
-    const d = this.crearjsonempresa();
-    d.option = 1;
-    this.resultado = await this.datos.empresacliente(d).toPromise(); // Convertir el observable a una promesa
+  const d = this.crearjsonempresa();
+  d.option = 1;
+  this.resultado = await this.datos.empresacliente(d).toPromise(); // Convertir el observable a una promesa
 
-    if (this.resultado.resultado.action === "success") {
-      this.idempresa = this.resultado.idempresa;
-      this.visibleemp = true;
+  if (this.resultado.resultado.action === "success") {
+    this.idempresa = this.resultado.idempresa;
+    this.visibleemp = true;
 
-    } else {
-      this.visibleemp = false;
-    }
-
-
+  } else {
+    this.visibleemp = false;
   }
 
-  guardarclienteempresa() {
 
-    let info = this.estructuraguardar();
-    info.idempresa = this.idempresa
-    info = {
-      ...info,
-      option: 3
-    }
+}
 
-    this.datos.empresacliente(info).subscribe(
-      (data: any) => {
-        this.consultar();
-        this.limpiarempresa();
-        this.will2.hide();
+guardarclienteempresa() {
 
-        Swal.fire({
-          icon: data.action,
-          title: data.message,
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }, (error: any) => {
-        this.consultar();
-        this.limpiarempresa();
-        this.will2.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
+  let info = this.estructuraguardar();
+  info.idempresa = this.idempresa
+  info = {
+    ...info,
+    option: 3
   }
 
-  consultarclientesempresa() {
+  this.datos.empresacliente(info).subscribe(
+    (data: any) => {
+      this.consultar();
+      this.limpiarempresa();
+      this.will2.hide();
 
-
-    const info = {
-      option: 5,
-      idempresa: this.idempresa
+      Swal.fire({
+        icon: data.action,
+        title: data.message,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+    }, (error: any) => {
+      this.consultar();
+      this.limpiarempresa();
+      this.will2.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
     }
+  )
+}
 
-    this.datos.clientes(info).subscribe(
-      (data: any) => {
-        if (data.resultado[0].manage_cliente.action == 'error') {
-          Swal.fire({
-            icon: data.resultado[0].manage_cliente.action,
-            title: data.resultado[0].manage_cliente.message,
-            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-          });
+consultarclientesempresa() {
 
-        } else {
-          this.cliempr = data.resultado[0].manage_cliente.data;
-        }
-      }, (error: any) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
 
+  const info = {
+    option: 5,
+    idempresa: this.idempresa
   }
 
-  guardarcliente() {
-
-    let info = this.estructuraguardar();
-    info.idempresa = this.idempresa
-    info.tipopersona = 2
-    info = {
-      ...info,
-      option: 3
-    }
-
-    this.datos.empresacliente(info).subscribe(
-      (data: any) => {
-        this.consultarclientesempresa();
-        this.limpiar();
-        this.will4.hide();
-
-        /** Swal.fire({
-           icon: data.resultado[0].manage_cliente.action,
-           title: data.resultado[0].manage_cliente.message,
-           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-         });*/
-      }, (error: any) => {
-        this.consultarclientesempresa();
-        this.limpiar();
-        this.will4.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
-      }
-    )
-
-
-  }
-
-  actualizarcliente() {
-
-    let info = this.estructuraguardar();
-
-    info = {
-      ...info,
-      option: 2
-    }
-
-    this.datos.clientes(info).subscribe(
-      (data: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
+  this.datos.clientes(info).subscribe(
+    (data: any) => {
+      if (data.resultado[0].manage_cliente.action == 'error') {
         Swal.fire({
           icon: data.resultado[0].manage_cliente.action,
           title: data.resultado[0].manage_cliente.message,
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-      }, (error: any) => {
-        this.consultar();
-        this.limpiar();
-        this.will.hide();
-        Swal.fire({
-          icon: 'error',
-          title: 'Ocurrio un problema al intentar realizar la accion ',
-          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-        });
+
+      } else {
+        this.cliempr = data.resultado[0].manage_cliente.data;
       }
-    )
-  }
-
-  abrirclienteempresa(e: any) {
-
-    if (e == 1) {
-      this.info = true
-      this.will4.show()
-    } else {
-      this.info = false
-      this.will4.show()
-    }
-
-  }
-
-  cerrar(valor: any) {
-
-    if (valor == 1) {
-      this.limpiar();
-      this.will.hide();
-    }
-    if (valor == 2) {
-      this.limpiarempresa();
-      this.will2.hide();
-    }
-    if (valor == 3) {
-      this.limpiarempresa();
-      this.will3.hide();
-    }
-    if (valor == 4) {
-      this.limpiar();
-      this.will4.hide()
-    }
-  }
-
-  ocupacionvalidar(event: any) {
-   const selectedValue =  event.target.value;
-    let v = this.ocupaciones.filter((item: any) => item.idacividad == selectedValue);
-    console.log(v)
-    if(v[0].nivel == 10){
+    }, (error: any) => {
       Swal.fire({
-        // icon: 'warning',
-        imageUrl:'../../../../assets/img/unnamed.png', 
-        title: 'Alerta de posible operación inusual y/o de alto riesgo. <br>'+ 
-        'El usuario mantiene una actividad económica de alto riesgo. :' + v[0].descripcion +
-        '<br> Esperar autorización del oficial de cumplimiento para '+   'realizar la operación.',
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+    }
+  )
+
+}
+
+guardarcliente() {
+
+  let info = this.estructuraguardar();
+  info.idempresa = this.idempresa
+  info.tipopersona = 2
+  info = {
+    ...info,
+    option: 3
+  }
+
+  this.datos.empresacliente(info).subscribe(
+    (data: any) => {
+      this.consultarclientesempresa();
+      this.limpiar();
+      this.will4.hide();
+
+      /** Swal.fire({
+         icon: data.resultado[0].manage_cliente.action,
+         title: data.resultado[0].manage_cliente.message,
          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-       });
+       });*/
+    }, (error: any) => {
+      this.consultarclientesempresa();
+      this.limpiar();
+      this.will4.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
     }
+  )
+
+
+}
+
+actualizarcliente() {
+
+  let info = this.estructuraguardar();
+
+  info = {
+    ...info,
+    option: 2
+  }
+
+  this.datos.clientes(info).subscribe(
+    (data: any) => {
+      this.consultar();
+      this.limpiar();
+      this.will.hide();
+      Swal.fire({
+        icon: data.resultado[0].manage_cliente.action,
+        title: data.resultado[0].manage_cliente.message,
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+    }, (error: any) => {
+      this.consultar();
+      this.limpiar();
+      this.will.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
     }
+  )
+}
+
+abrirclienteempresa(e: any) {
+
+  if (e == 1) {
+    this.info = true
+    this.will4.show()
+  } else {
+    this.info = false
+    this.will4.show()
+  }
+
+}
+
+cerrar(valor: any) {
+
+  if (valor == 1) {
+    this.limpiar();
+    this.will.hide();
+  }
+  if (valor == 2) {
+    this.limpiarempresa();
+    this.will2.hide();
+  }
+  if (valor == 3) {
+    this.limpiarempresa();
+    this.will3.hide();
+  }
+  if (valor == 4) {
+    this.limpiar();
+    this.will4.hide()
+  }
+}
+
+ocupacionvalidar(event: any) {
+  const selectedValue = event.target.value;
+  let v = this.ocupaciones.filter((item: any) => item.idacividad == selectedValue);
+  console.log(v)
+  if (v[0].nivel == 10) {
+    this.socketService.sendPrivateMessage('cc-PLD', 'El usuario mantiene una actividad económica de alto riesgo. :' + v[0].descripcion);
+    this.cargardata(this.user, ('El usuario mantiene una actividad económica de alto riesgo. :' + v[0].descripcion))
+    Swal.fire({
+      // icon: 'warning',
+      imageUrl: '../../../../assets/img/unnamed.png',
+      title: 'Alerta de posible operación inusual y/o de alto riesgo. <br>' +
+        'El usuario mantiene una actividad económica de alto riesgo. :' + v[0].descripcion +
+        '<br> Esperar autorización del oficial de cumplimiento para ' + 'realizar la operación.',
+      allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+      allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      showConfirmButton: false,
+      showCancelButton: false,
+      //cancelButtonText: "Cancelar",
+      showLoaderOnConfirm: true,
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.cancel) {
+        // Si se cancela la operación, cerrar la alerta y mostrar mensaje de cancelación
+        Swal.fire('Operación cancelada', '', 'error');
+      }
+    });
+  }
+}
+
+cargardata(usuario: any, alerta: any) {
+  const a = {
+    option: 1,
+    usuario: usuario,
+    alerta: alerta,
+    accion: 0
+  }
+  this.datos.alertas(a).subscribe(
+    (data: any) => {
+
+    }, (error: any) => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Ocurrio un problema al intentar realizar la accion ',
+        allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+        allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+      });
+    }
+  )
+}
 }

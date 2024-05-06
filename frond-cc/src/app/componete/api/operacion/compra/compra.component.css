@@ -1,6 +1,6 @@
 .blue-line {
-    background: linear-gradient(to left, blue, black);
-    height: 40px;
+    background: linear-gradient(to left,rgb(0, 0, 0) , rgb(0, 0, 0));
+    height: 60px;
     position: relative;
     overflow: hidden;
   }
@@ -9,9 +9,11 @@
     position: absolute;
     white-space: nowrap;
     animation: moveText 20s linear infinite;
-    color: white;
+    color: rgb(255, 255, 255);
+    font-size: xx-large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     right: 100%; /* Comienza fuera del área visible a la derecha */
-    top: 50%; /* Centra verticalmente el texto */
+    top: 75%; /* Centra verticalmente el texto */
     transform: translateY(-50%); /* Alinea el texto en el centro */
   }
   

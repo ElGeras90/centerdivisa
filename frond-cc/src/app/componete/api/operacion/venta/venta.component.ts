@@ -6,7 +6,7 @@ import { NgxPrinterService } from 'ngx-printer';
 @Component({
   selector: 'app-venta',
   templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css']
+  styleUrls: ['./venta.component.css','venta.component.scss']
 })
 export class VentaComponent {
   currentDate!: Date;
@@ -17,12 +17,14 @@ export class VentaComponent {
   divisas: any;
   compra: any = '{}';
   cambio: number = 0.00;
-  resultado: any//number = 0.00;
+  resultado: any= 0.00;
   cotizacion: number = 0.00;
   clienteid: number = 1;
   @ViewChild("will", { static: false })
   will: any;
   fechaYHoraActual!: Date;
+  @ViewChild("enviocorrecto", { static: false })
+  enviocorrecto:any;
 
   async ngOnInit() {
     this.fechaYHoraActual = new Date();
@@ -130,7 +132,7 @@ export class VentaComponent {
     }
 
     const data = {
-      info: this.resultado
+      info: this.cambio
     }
 
     const data2: any = await this.cp.Formulario(data).toPromise(); // Convertir el observable a una promesa
@@ -161,7 +163,7 @@ export class VentaComponent {
           this.json.clienteid = 1;
           this.guardar(this.json);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-
+          this.continuar = false
           this.will.show();
         }
       });
@@ -212,13 +214,17 @@ export class VentaComponent {
     let rfc = localStorage.getItem('rfc');
     const fechaFormateada: string = this.fechaYHoraActual.toISOString(); // o el formato que desees
     let nombres = localStorage.getItem('nombre')
-    let z: any = this.i.rfc;
+    let z: any = this.i?.rfc;
     let resultado: any;
 
     // Usar la expresión condicional para asignar un valor predeterminado si x es null o undefined
     resultado = z !== null && z !== undefined ? z : 'xxxx';
-
-    console.log(this.i)
+    let nombre : any;
+    if (this.continuar == true) {
+      nombre ='PUBLICO EN GENERAL'
+    } else {
+      nombre = this.i.nombre+' '+ this.i.paterno+' '+this.i.materno
+    }
 
     const ticketContent = `
      
@@ -240,8 +246,8 @@ export class VentaComponent {
     <p>Monto de la operación:${this.cambio} - MXN </p>
     <p>Tipo de cambio: ${this.cotizacion} - MXN</p>
     <p>Contravalor:  ${this.resultado}- ${this.tipodivisa} </p>
-    <p>Usuario: ${this.i.nombre} ${this.i.paterno} ${this.i.materno}</p>
-    <p>RFC: ${z}</p>
+    <p>Usuario: ${nombre}</p>
+    <p>RFC: ${resultado}</p>
     <p>Cajero:${nombres}</p>
   </div>
 
@@ -307,7 +313,7 @@ export class VentaComponent {
   }
 
   ticket: any;
-
+  numeroFormateado : any;
   async guardar(r: any) {
     this.ticket = await this.cp.operaciones(r).toPromise();
 
@@ -316,11 +322,9 @@ export class VentaComponent {
     const numeroRecibido: Number = this.ticket.info[0].manage_operaciones.operacion;
 
     // Convierte el número a una cadena y aplica el relleno con ceros
-    const numeroFormateado: string = numeroRecibido.toString().padStart(10, '0');
+     this.numeroFormateado = numeroRecibido.toString().padStart(10, '0');
 
-    console.log(numeroFormateado);
-    this.printTicket(numeroFormateado);
-  }
+    this.enviocorrecto.show();  }
 
   limpiar(){
     this.cambio = 0;
@@ -329,5 +333,10 @@ export class VentaComponent {
     this.tdivisa = 0;
     this.tipodivisa = 0;
   }
-  
+
+  cerrar1(){
+    this.enviocorrecto.hide();
+    this.limpiar()
+
+  }
 }

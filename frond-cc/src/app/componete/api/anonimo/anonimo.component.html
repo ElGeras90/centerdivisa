@@ -1,15 +1,19 @@
 <!-- app.component.html -->
 
-<div class="container mt-4">
-    <div class="row">
-      <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-        <div id="mensajes" class="mb-3">
-            <p>Envio de mensajes anonimos a oficial de cumplimiento</p>
-        </div>
-  
-        <textarea  class="form-control mb-2" placeholder="Escribe tu mensaje..." rows="4"></textarea>
-        <button class="btn btn-primary">Enviar Mensaje</button>
+<div class="container mt-4" >
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div id="mensajes" class="mb-3">
+        <p>Envío de mensajes anónimos a oficial de cumplimiento</p>
       </div>
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="textContent">Contenido:</label>
+          <textarea class="form-control" id="textContent" name="textContent" [(ngModel)]="textContent" rows="5" placeholder="Escribe aquí..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </form>
     </div>
   </div>
-  
+</div>

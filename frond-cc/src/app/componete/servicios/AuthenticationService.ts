@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { LoginService } from './loginService';
+import { SocketService } from './mensajeriaservice';
 
 @Injectable({
 	providedIn: 'root'
@@ -46,6 +47,7 @@ export class AuthenticationService {
 		  localStorage.setItem('nombresucursal',item.empresa.nombresucursal)
 		  localStorage.setItem('domicilio',item.empresa.domicilio)
 		  localStorage.setItem('rfc',item.empresa.rfc)
+		  localStorage.setItem('emp', item.empresa.idempresa)
 		  
 		return true; 
 	  }
@@ -63,6 +65,7 @@ export class AuthenticationService {
 		  localStorage.removeItem('nombresucursal');
 		  localStorage.removeItem('domicilio')
 		  localStorage.removeItem('rfc')
+		  localStorage.removeItem('emp')
 		return true;
 	  }
 }

@@ -11,6 +11,7 @@ import { LoginService } from './componete/servicios/loginService';
 import { EncryptDataService } from './componete/servicios/encriptar';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { pld_data } from './componete/servicios/constantes';
+import { AlertaFlotanteComponent } from './componete/alerta-flotante/alerta-flotante.component';
 
 @NgModule({
   declarations: [

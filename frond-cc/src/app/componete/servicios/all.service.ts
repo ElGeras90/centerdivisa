@@ -125,4 +125,13 @@ export class cpservice {
   crudpaises(data:any){
     return this._apiServicio.Post(data, matrizriesgo.URLpaises);
   }
+  alertas(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLalert);
+  }
+  anonimus(data:any){
+    return this._apiServicio.Post(data, matrizriesgo.URLanonimo);
+  }
+  alertar (){
+    return this._apiServicio.Post('', matrizriesgo.URLcantidad);
+  }
 }

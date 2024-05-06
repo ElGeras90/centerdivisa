@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-compra',
   templateUrl: './compra.component.html',
-  styleUrls: ['./compra.component.css']
+  styleUrls: ['./compra.component.css','./compra.component.Scss']
 })
 export class CompraComponent {
 
@@ -19,12 +19,15 @@ export class CompraComponent {
   divisas: any;
   compra: any = '{}';
   cambio: number = 0.00;
-  resultado: any//number = 0.00;
+  resultado: any= 0.00;
   cotizacion: number = 0.00;
   clienteid: number = 1;
   @ViewChild("will", { static: false })
   will: any;
   fechaYHoraActual!: Date;
+
+  @ViewChild("enviocorrecto", { static: false })
+  enviocorrecto:any;
 
   async ngOnInit() {
     this.fechaYHoraActual = new Date();
@@ -65,9 +68,8 @@ export class CompraComponent {
       tdivisa: 1,
       sucursal: this.sucursalid
     }
-    console.log(s);
     this.saldomn = await this.cp.saldoactual(s).toPromise(); // Convertir el observable a una promesa
-    this.saldomn = this.saldomn.info[0].saldosdia.saldosfinales;
+    this.saldomn = this.saldomn?.info[0]?.saldosdia?.saldosfinales;
 
     const a = {
       sucursal: this.sucursalid
@@ -75,7 +77,7 @@ export class CompraComponent {
 
     this.cp.Divisasucursal(a).subscribe(
       (data: any) => {
-        this.divisas = data.info[0].divisas_sucursal.data;
+        this.divisas = data?.info[0]?.divisas_sucursal?.data;
         if (this.divisas == null) {
           Swal.fire({
             icon: 'warning',
@@ -106,7 +108,7 @@ export class CompraComponent {
 
       const a = this.cotizacion * codigoValue;
 
-      this.resultado = a.toFixed(0);
+      this.resultado = Math.floor(a);
 
     }
 
@@ -136,7 +138,6 @@ export class CompraComponent {
     }
 
     const data2: any = await this.cp.Formulario(data).toPromise(); // Convertir el observable a una promesa
-    console.log(data2);
     if (data2.info[0].valida_formulario.data.info == 'no') {
       Swal.fire({
         icon: 'warning',
@@ -150,7 +151,7 @@ export class CompraComponent {
     if (data2.info[0].valida_formulario.data.info == 1) {
       Swal.fire({
         title: 'Registro',
-        text: 'Elige una opción:',
+        text: 'Seleccione una opción continuar para hacer el movimiento o registrar al cliente',
         showCancelButton: true,
         confirmButtonText: 'Continuar',
         cancelButtonText: 'Registrar',
@@ -162,7 +163,7 @@ export class CompraComponent {
           this.json.clienteid = 1;
           this.guardar(this.json);
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-
+          this.continuar = false;
           this.will.show();
         }
       });
@@ -186,7 +187,6 @@ export class CompraComponent {
 
     const data2: any = await this.cp.dll(data).toPromise(); // Convertir el observable a una promesa
 
-    console.log(data2.resultado.action);
     if(data2.resultado.action == false){
       Swal.fire({
         icon: 'warning',
@@ -212,9 +212,16 @@ export class CompraComponent {
     let rfc = localStorage.getItem('rfc');
     const fechaFormateada: string = this.fechaYHoraActual.toISOString(); // o el formato que desees
     let nombres = localStorage.getItem('nombre')
-    let z: any = this.i.rfc;
+    let z: any = this.i?.rfc;
     let resultado: any;
-
+    let nombre:any;
+    if (this.continuar == true) {
+      nombre ='PUBLICO EN GENERAL'
+    } else {
+      nombre = this.i.nombre+' '+ this.i.paterno+' '+this.i.materno
+    }
+ 
+  
     // Usar la expresión condicional para asignar un valor predeterminado si x es null o undefined
     resultado = z !== null && z !== undefined ? z : 'xxxx';
 
@@ -239,8 +246,8 @@ export class CompraComponent {
     <p>Monto de la operación: ${this.cambio} - ${this.tipodivisa} </p>
     <p>Tipo de cambio: ${this.cotizacion} - MXN</p>
     <p>Contravalor: ${this.resultado} - MXN</p>
-    <p>Usuario: ${this.i.nombre} ${this.i.paterno} ${this.i.materno}</p>
-    <p>RFC: ${z}</p>
+    <p>Usuario: ${nombre}</p>
+    <p>RFC: ${resultado}</p>
     <p>Cajero:${nombres}</p>
   </div>
 
@@ -249,7 +256,7 @@ export class CompraComponent {
 </html>
     `;
 
-    const popupWin = window.open('', '_blank', 'width=600,height=600');
+    const popupWin = window.open('', '_blank', 'width=600,height=800');
     if (popupWin) {
       popupWin.document.open();
       popupWin.document.write(ticketContent);
@@ -260,7 +267,6 @@ export class CompraComponent {
       };
     } else {
       // Manejo de errores, por ejemplo, si el navegador bloquea la ventana emergente.
-      console.error('No se pudo abrir la ventana de impresión');
     }
   }
 
@@ -272,8 +278,6 @@ export class CompraComponent {
     const filterValue = (event.target as HTMLInputElement).value;
 
     const x = this.divisas.find((item: any) => item.iddivisa == filterValue);
-
-    console.log(this.divisas)
 
     this.cotizacion = x.compra;
     this.tdivisa = x.grupoid;
@@ -306,7 +310,7 @@ export class CompraComponent {
   }
 
   ticket: any;
-
+  numeroFormateado : any;
   async guardar(r: any) {
 
   /**   Swal.fire({
@@ -323,16 +327,22 @@ export class CompraComponent {
     const numeroRecibido: Number = this.ticket.info[0].manage_operaciones.operacion;
 
     // Convierte el número a una cadena y aplica el relleno con ceros
-    const numeroFormateado: string = numeroRecibido.toString().padStart(10, '0');
+    this.numeroFormateado = numeroRecibido.toString().padStart(10, '0');
 
-    this.printTicket(numeroFormateado);
+    this.enviocorrecto.show();
+
+    
   }
 
   limpiar(){
-
+    this.consultadivisas();
     this.cambio = 0;
     this.resultado = 0;
     this.i ={};
   }
+  cerrar1(){
+    this.enviocorrecto.hide();
+    this.limpiar()
 
+  }
 }

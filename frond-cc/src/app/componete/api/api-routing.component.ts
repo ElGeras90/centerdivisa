@@ -25,6 +25,7 @@ import { AltoriesgoComponent } from './reporte/altoriesgo/altoriesgo.component';
 import { AnonimoComponent } from './anonimo/anonimo.component';
 import { AnonimosComponent } from './alertas/anonimos/anonimos.component';
 import { MovComponent } from './alertas/mov/mov.component';
+import { GalertComponent } from './alertas/galert/galert.component';
 
 const routes: Routes = [
     {
@@ -53,7 +54,7 @@ const routes: Routes = [
             {path:'Enviomensaje',component:AnonimoComponent},
             {path:'AlertaAnonimas',component:AnonimosComponent},
             {path:'AlertasGenerales',component:MovComponent},
-
+            {path:'AlertasRegistros',component:GalertComponent},
         ]
     },
 ];

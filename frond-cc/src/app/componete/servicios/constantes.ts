@@ -4,12 +4,12 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfiguracionConstante {
-	public API_ENDPOINT = "http://localhost:3001/";
-	//public API_ENDPOINT = "http://172.17.10.23:3001/";
+	//public API_ENDPOINT = "http://192.168.1.49:3004/";
+	public API_ENDPOINT = "http://binmtec.co:3004/";
 }
 export class pld_data {
-	public API_ENDPOINT_PLD = "http://localhost:3000/";
-	//public API_ENDPOINT_PLD = "http://172.17.10.23:3001/";
+	//public API_ENDPOINT_PLD = "http://localhost:3000/";
+	public API_ENDPOINT_PLD = "http://binmtec.co:3002/";
 }
 export class LoginConstante {
 	public static URLLogin = "auth/login";
@@ -70,6 +70,7 @@ export class Divisasucursal{
 	public static Urlinfod = 'divisa/infod'
 	public static URLsaldoida= 'divisa/saldoactual'
 	public static URLOperaciones = 'divisa/operacion'
+	public static URLreporte = 'divisa/moneda'
 }
 export class clienteempresa{
 	public static URLcliemp = 'accsosrol/cliemp'
@@ -88,6 +89,7 @@ export class matrizriesgo{
 	public static URLocupacion = 'matriz/ocupacion'
 	public static URLestados = 'matriz/estados'
 	public static URLpaises = 'matriz/paises'
-
-	
+	public static URLalert = 'matriz/alert'
+	public static URLanonimo = 'matriz/anonimus'
+	public static URLcantidad = 'matriz/contar'
 }
