@@ -10,6 +10,7 @@ const accesocontroler = require('../controller/tcambiocontroller');
   router.post('/infod',verifyAuthToken, accesocontroler.divsuc);
   router.post('/saldoactual',verifyAuthToken, accesocontroler.saldosdia);
   router.post('/operacion',verifyAuthToken, accesocontroler.operaciones);
+  router.post('/moneda',verifyAuthToken, accesocontroler.tipo);
 
   module.exports = router;
    

@@ -147,16 +147,59 @@ function tipousuario(req, res) {
 
         });
 }
-module.exports = {
-    paisorigen,
-    ocupacion,
-    montomes,
-    instrumento,
-    frecuenciames,
-    paises,
-    tipousuario,
-    estados,
-    productos,
+function alertas(req, res) {
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
 
+    matriz.alertas(resquest)
+        .then(info => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows }));
+
+            res.status(200).send({ resultado: data });
+        })
+        .catch(error => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
+
+        });
+}
+function anonimus(req, res) {
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
+
+    matriz.anonimus(resquest)
+        .then(info => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows }));
+
+            res.status(200).send({ resultado: data });
+        })
+        .catch(error => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
+
+        });
+}
+
+function cantidad(req, res) {
+    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    console.log('entre')
+    matriz.cantidad()
+        .then(info => {
+            console.log(info.rows)
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows }));
+
+            res.status(200).send({ resultado: data });
+        })
+        .catch(error => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
+
+        });
+}
+module.exports = {
+    paisorigen, ocupacion,
+    montomes, instrumento,
+    frecuenciames, paises,
+    tipousuario, estados,
+    productos, alertas,
+    anonimus, cantidad
 
 };

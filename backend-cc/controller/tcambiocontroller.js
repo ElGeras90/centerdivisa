@@ -92,8 +92,22 @@ function operaciones(req, res) {
     });
 }
 
+
+function tipo(req, res) {
+  let resquest = encriptarjsong.decrypt(req.body.resultado)
+  pais.tipo(resquest)
+    .then(info => {
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info:info.rows }));
+
+            res.status(200).send({resultado:data});
+    })
+    .catch(error => {
+      res.status(501).send({ success: false, message: error });
+
+    });
+}
   module.exports = {
 
-   tipocambio,formulario,divsuc,dicsucusu,saldosdia,operaciones
+   tipocambio,formulario,divsuc,dicsucusu,saldosdia,operaciones,tipo
 
   };

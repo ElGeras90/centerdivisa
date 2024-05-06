@@ -1,6 +1,6 @@
 express = require('express');
 const app = express();
-const port = 3001;
+const port = 3004;
 const cors = require('cors'); // Importa el paquete cors
 const path = require('path'); // Importa el módulo 'path'
 const accesosrol = require('./routes/accesorolRoute');
@@ -20,7 +20,7 @@ const encriptarjsong = require('./util/encriptarjson');
 app.use(helmet());
 
 const corsOptions = {
-  origin: '*', // Cambia esto al dominio de tu aplicación front-end
+  origin: '*', 
   methods: 'GET,POST,PUT,DELETE',
 };
 

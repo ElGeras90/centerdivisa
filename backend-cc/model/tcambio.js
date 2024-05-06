@@ -90,6 +90,19 @@ async function divisabancomexico() {
         client.release();
       }
     }
+
+    async function tipo(data) {
+      const client = await postgresPool.connect();
+      try {
+        const result = await client.query('select * from manage_tipo($1)',[data]);
+        return result;
+      } catch (error) {
+        throw error;
+      } finally {
+        client.release();
+      }
+    }
+
   module.exports = {
     divisabancomexico,
     divisasucursal,
@@ -97,5 +110,5 @@ async function divisabancomexico() {
     divsuc,
     dicsucusu,
     saldosdia,
-    operaciones 
+    operaciones,tipo
   }; 

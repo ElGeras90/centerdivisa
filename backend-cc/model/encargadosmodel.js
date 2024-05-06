@@ -6,7 +6,7 @@ const {postgresPool} = require('./../util/condb');
     const client = await postgresPool.connect();
   
     try {
-      const query = 'select a.sucursalid,a.nombre_sucursal,a.fecharegistro, (SELECT EXISTS (SELECT * FROM encargadosucursal   WHERE  encargado ='+id+'  and sucursalid=a.sucursalid  ))as datos,(SELECT idenc FROM encargadosucursal   WHERE  encargado ='+id+' and sucursalid=a.sucursalid  )as idencargado  FROM sucursales as a';
+      const query = 'select a.sucursalid,a.nombre_sucursal,a.fecharegistro, (SELECT EXISTS (SELECT * FROM encargadosucursal   WHERE  encargado ='+id+'  and sucursalid=a.sucursalid  ))as datos,(SELECT idenc FROM encargadosucursal   WHERE  encargado ='+id+' and sucursalid=a.sucursalid  )as idencargado  FROM sucursales as a where empresaid = (select empresaid from sucursales where sucursalid = (select sucursalid from usuarios where userid = '+id+'))';
       const result = await client.query(query);
       return result;
     } catch (error) {

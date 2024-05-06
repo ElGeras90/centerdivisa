@@ -103,7 +103,49 @@ const {postgresPool} = require('./../util/condb');
           client.release();
         }
       }
+
+      async function alertas(data) {
+        const client = await postgresPool.connect();
+        try {
+          const result = await client.query('select * from manage_alertasregistros($1)',[data]);
+          return result;
+        } catch (error) {
+          throw error;
+        } finally {
+          client.release();
+        }
+      }
+      async function anonimus(data) {
+        const client = await postgresPool.connect();
+        try {
+          const result = await client.query('select * from manage_anonimosmsj($1)',[data]);
+          return result;
+        } catch (error) {
+          throw error;
+        } finally {
+          client.release();
+        }
+      }
+      async function cantidad() {
+        const client = await postgresPool.connect();
+        try {
+          const result = await client.query('SELECT SUM(total_count) AS total_alertas'+
+          ' FROM ('+
+             'select "count"(*) AS total_count from anonimosmsj where fecha::date = current_date'+
+              ' UNION ALL'+
+             ' SELECT COUNT(*) AS total_count'+
+             ' FROM alertasregistros where fecha::date = current_Date and accion = 0'+
+          ') AS subquery;');
+
+          return result;
+        } catch (error) {
+          console.log(error)
+          throw error;
+        } finally {
+          client.release();
+        }
+      }
   module.exports = {
 
-    productos ,paisorigen,montomes,instrumento,frecuenciames,tipousuario,ocupacion,estados,paises
+    productos ,paisorigen,montomes,instrumento,frecuenciames,tipousuario,ocupacion,estados,paises,alertas,anonimus,cantidad
   }; 

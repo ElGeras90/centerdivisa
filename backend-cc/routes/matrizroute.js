@@ -15,6 +15,8 @@ router.post('/tipousuario',verifyAuthToken, xl3.tipousuario);
 router.post('/ocupacion', xl3.ocupacion);
 router.post('/estados',verifyAuthToken, xl3.estados);
 router.post('/paises',verifyAuthToken, xl3.paises);
-
+router.post('/alert',verifyAuthToken, xl3.alertas);
+router.post('/anonimus',verifyAuthToken, xl3.anonimus);
+router.post('/contar',verifyAuthToken, xl3.cantidad);
  module.exports = router;
 
