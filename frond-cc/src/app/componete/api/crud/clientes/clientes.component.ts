@@ -518,6 +518,7 @@ export class ClientesComponent {
   }
 
   abrirupdate(data: any) {
+    console.log(data)
     if (data?.idcliente) {
       this.clienteupdate(data);
     } else {

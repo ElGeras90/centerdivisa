@@ -35,3 +35,8 @@
   margin-right: 10px; /* Agrega un espacio entre los elementos si lo deseas */
 }
   
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  min-height: 70vh;
+}

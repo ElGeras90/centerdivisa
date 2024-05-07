@@ -13,7 +13,7 @@ module.exports = {
       port: 5432,
       user: 'geras',
       password: 'geras',
-      database: 'cc'
+      database: 'cccc'
     },
     sqlServer: {
       server: 'localhost',

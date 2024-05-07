@@ -6,3 +6,8 @@
     max-height: 200px;
     overflow: auto;
   }
+  .cuerpo {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+}

@@ -34,3 +34,8 @@
 display: inline; /* Muestra los elementos de la lista en una sola línea */
 margin-right: 10px; /* Agrega un espacio entre los elementos si lo deseas */
 }
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+}

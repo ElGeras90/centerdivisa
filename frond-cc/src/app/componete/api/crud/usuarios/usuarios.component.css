@@ -34,3 +34,8 @@
   border-radius: 6px;
   transition: all 0.375s;
 }
+.cuerpo {
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+}

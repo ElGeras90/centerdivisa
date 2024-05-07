@@ -1,5 +1,5 @@
 
-<div class="container mt-4">
+<div class="container mt-4 cuerpo">
     <div class="row align-items-center">
         <div class="col">
             <select class="form-control" id="perfilid" [(ngModel)]="user" [ngModelOptions]="{standalone: true}" (change)="limpiarcampo()">
@@ -12,7 +12,7 @@
             </button>
         </div>
     </div>
-</div>
+
 <div class="container mt-4" *ngIf="resultado == true">
     <div class="row align-items-center">
         <div class="col">
@@ -54,4 +54,5 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
     </div>
 
+</div>
 </div>
