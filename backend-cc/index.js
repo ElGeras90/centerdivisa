@@ -15,7 +15,7 @@ var helmet = require('helmet');
 const https = require('https');
 const fs = require('fs');
 const encriptarjsong = require('./util/encriptarjson');
-
+const { json2xml } = require('json2xml');
 // Configurar cabeceras y cors
 app.use(helmet());
 
@@ -69,6 +69,17 @@ app.post('/e', (req, res) => {
   console.log(x)
   let encrypted = Buffer.from(x).toString('base64');
   res.status(200).send({ success: true, info:encrypted });;
+});
+app.post('/convert', (req, res) => {
+  const json = req.body;
+  
+  try {
+      const xml = json2xml(json);
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+  } catch (error) {
+      res.status(500).send('Error converting JSON to XML');
+  }
 });
 // Cargar las rutas
 app.use('/accsosrol', accesosrol);

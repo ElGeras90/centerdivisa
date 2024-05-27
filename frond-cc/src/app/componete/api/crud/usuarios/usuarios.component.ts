@@ -46,6 +46,8 @@ export class UsuariosComponent {
   est: any;
   mun: any;
   e: any;
+  empresa: any;
+  idrol:any;
   constructor(
     private user: userservice,
     private cp: cpservice) { }
@@ -76,10 +78,16 @@ export class UsuariosComponent {
       empresa: new FormControl(),
       encargado : new FormControl(),
     });
-
+    this.empresa = localStorage.getItem('emp')
+    this.idrol = localStorage.getItem('idrol')
     this.consultar();
     this.consultarol();
+    console.log(this.empresa +' '+ this.idrol)
+    if(this.idrol == 1){
     this.Empresas();
+    }else{
+      this.suc(this.empresa)
+    }
   }
   //para llenar el paginador
   ngAfterViewInit(): void {
@@ -208,7 +216,6 @@ export class UsuariosComponent {
   
           } else {
             this.sucursales = data.resultado[0].manage_sucursal.data;
-            console.log(this.sucursales)
           }
         }, (error: any) => {
           Swal.fire({
@@ -280,7 +287,9 @@ export class UsuariosComponent {
   consultar() {
 
     const info = {
-      option: 5
+      option: 5,
+      empresa: this.empresa,
+      rol: this.idrol
     }
     this.user.User(info).subscribe(
       (data: any) => {
@@ -396,7 +405,8 @@ export class UsuariosComponent {
   consultarol() {
 
     const info = {
-      option: 5
+      option: 5,
+      rol: this.idrol 
     }
     this.cp.roles(info).subscribe(
       (data: any) => {
@@ -451,7 +461,13 @@ export class UsuariosComponent {
     )
   }
   suc(event: any) {
-    const selectedValue = event.target.value;
+    let selectedValue:any;
+    if(this.idrol == 1){
+      selectedValue = event.target.value;
+    }else{
+      selectedValue = event;
+    }
+
 
     const info = {
       option: 6,

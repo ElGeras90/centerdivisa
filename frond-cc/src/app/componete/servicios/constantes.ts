@@ -4,8 +4,8 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfiguracionConstante {
-	//public API_ENDPOINT = "http://192.168.1.49:3004/";
-	public API_ENDPOINT = "http://binmtec.co:3004/";
+	public API_ENDPOINT = "http://localhost:3004/";
+	//public API_ENDPOINT = "http://binmtec.co:3004/";
 }
 export class pld_data {
 	//public API_ENDPOINT_PLD = "http://localhost:3000/";

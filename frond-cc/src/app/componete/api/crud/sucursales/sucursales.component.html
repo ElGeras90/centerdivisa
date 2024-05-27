@@ -15,19 +15,12 @@
     <div class="table-responsive">
        
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <!-- Columna Usuario -->
-            <ng-container matColumnDef="empresas">
-                <th mat-header-cell *matHeaderCellDef> Empresa </th>
-                <td mat-cell *matCellDef="let row"> {{getsucursalName(row.empresaid)}} </td>
-            </ng-container>
 
-            <!-- Columna Correo -->
             <ng-container matColumnDef="sucursales">
                 <th mat-header-cell *matHeaderCellDef> Sucursal </th>
                 <td mat-cell *matCellDef="let row"> {{row.nombre_sucursal}} </td>
             </ng-container>
 
-            <!-- Columna Correo -->
             <ng-container matColumnDef="Activo">
                 <th mat-header-cell *matHeaderCellDef> Activo </th>
                 <td mat-cell *matCellDef="let row">
@@ -82,7 +75,7 @@
                                         [ngModelOptions]="{standalone: true}" />
                                 </div>
 
-                                <div class="form-group col">
+                                <div class="form-group col" *ngIf="idrol==1">
                                     <label for="perfilid">Empresa a la que pertenece:</label>
                                     <select class="form-control" [(ngModel)]="empresaid"
                                         [ngModelOptions]="{standalone: true}">

@@ -31,15 +31,16 @@ export class EncargadoComponent {
     private cp: cpservice) { }
 
 
-
+    empresa:any;
     ngOnInit(): void {
       this.consultar();
     }
 
   consultar() {
-
+    this.empresa = localStorage.getItem('emp')
     const info = {
-      option: 6
+      option: 6,
+      empresa: this.empresa
     }
     this.us.User(info).subscribe(
       (data: any) => {

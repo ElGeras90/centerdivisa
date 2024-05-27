@@ -1,0 +1,123 @@
+
+<reporte>
+<trimestre_reportado>2024-1</trimestre_reportado> 
+    <sujeto_obligado>
+        <clave_organo_regulador>99-999</clave_organo_regulador>
+        <clave_sujeto_obligado>89-20001</clave_sujeto_obligado>
+        <operaciones>
+            <operacion>
+                <folio_consecutivo>2024-100</folio_consecutivo>
+                <modificatorio>2024-101</modificatorio><!--en caso de que modifique  una operacion-->
+                <folio_previo>2024-100</folio_previo><!--en caso de que este la etiqueta anterior-->
+                <fecha_hora>20240527121355</fecha_hora><!--formato de fecha aaaammddhhmmss-->
+                <tipo_operacion></tipo_operacion>
+                <cuenta_contrato></cuenta_contrato>
+                <monto_operacion>500.00</monto_operacion> <!--OPERACIONES EN DOLARES-->
+                <moneda>EUR</moneda>
+                <instrumento_monetario></instrumento_monetario>
+                <liquidacion></liquidacion> <!--ANEXAR SIEMPRE Y CUANDO TIPO OPERACION SEA COMPRA DIVISAS O VENDTA DE VALORES-->
+                <cuenta_contrato_liquidacion></cuenta_contrato_liquidacion><!--OPCIONAL-->
+                <monto_operacion_liquidacion>500.00</monto_operacion_liquidacion><!--OBLIGATORIA EN CASO DE ESTAR LA ETIQUETA LIQUIDACION-->
+                <moneda_liquidacion>MXN</moneda_liquidacion> <!--OBLIGATORIA EN CASO DE ESTAR LA ETIQUETA LIQUIDACION-->
+                <instrumento_monetario_liquidacion></instrumento_monetario_liquidacion>
+                <sucursal_ubicacion>
+                    <clave_sucursal>BINMTEC1</clave_sucursal><!--SOLO PUEDE IR UNA CLAVE O CODIGO POSTAL-->
+                    <codigo_postal>37800</codigo_postal>  
+                </sucursal_ubicacion> 
+                <persona_reportada>
+                    <persona> 
+                        <usuario> 
+                            <tipo_persona>
+                                <persona_fisica>
+                                    <nombre>juan gerardo</nombre>
+                                    <apellido_paterno>Garcia</apellido_paterno> 
+                                    <apellido_materno>Salazar</apellido_materno>
+                                    <fecha_nacimiento>19900211</fecha_nacimiento> 
+                                    <curp>GASJ900211HGTRLN05</curp><!--Opcional-->
+                                    <rfc>GASJ900211MW7</rfc><!--Opcional-->
+                                    <pais_nacimiento></pais_nacimiento><!--Opcional-->
+                                    <pais_nacionalidad>MX</pais_nacionalidad>
+                                    <actividad_economica></actividad_economica> <!--Opcional-->
+                                    <correo_electronico><correo_electronico> <!--Opcional-->
+                                    <fiel></fiel> <!--opcional-->
+                                </persona_fisica>
+                                <persona_moral>
+                                    <denominacion_razon>EL PERCHERON SA DE CV</denominacion_razon>
+                                    <fecha_constitucion></fecha_constitucion><!--Opcional-->
+                                    <rfc></rfc><!--Opcional-->
+                                    <pais_nacionalidad>mx</pais_nacionalidad> 
+                                    <giro_mercantil></giro_mercantil><!--Opcional-->
+                                    <correo_electronico><correo_electronico> <!--Opcional-->
+                                    <fiel></fiel><!--Opcional-->
+                                    <apoderado_legal>
+                                        <nombre_apoderado_legal></nombre_apoderado_legal>
+                                        <apellido_paterno_apoderado_legal></apellido_paterno_apoderado_legal>
+                                        <apellido_materno_apoderado_legal></apellido_materno_apoderado_legal>
+                                    </apoderado_legal>
+                                </persona_moral>
+                            </tipo_persona>
+                        </usuario>
+                        <cliente>
+                            <tipo_persona>
+                                <persona_fisica>
+                                    <nombre>x</nombre>
+                                    <apellido_paterno>x</apellido_paterno>
+                                    <apellido_materno>m</apellido_materno>
+                                    <fecha_nacimiento>19900211</fecha_nacimiento> 
+                                    <curp>GASJ900211HGTRLN05</curp><!--Opcional-->
+                                    <rfc>GASJ900211MW7</rfc><!--Opcional-->
+                                    <pais_nacimiento></pais_nacimiento><!--Opcional-->
+                                    <pais_nacionalidad>MX</pais_nacionalidad>
+                                    <actividad_economica>8219025</actividad_economica> 
+                                    <correo_electronico><correo_electronico> <!--Opcional-->
+                                    <fiel></fiel> <!--opcional-->
+                                </persona_fisica>
+                                <persona_moral>
+                                    <denominacion_razon>EL PERCHERON SA DE CV</denominacion_razon>
+                                    <fecha_constitucion></fecha_constitucion><!--Opcional-->
+                                    <rfc></rfc><!--Opcional-->
+                                    <pais_nacionalidad>mx</pais_nacionalidad> 
+                                    <giro_mercantil></giro_mercantil>
+                                    <correo_electronico><correo_electronico> <!--Opcional-->
+                                    <fiel></fiel><!--Opcional-->
+                                    <apoderado_legal>
+                                        <nombre_apoderado_legal></nombre_apoderado_legal>
+                                        <apellido_paterno_apoderado_legal></apellido_paterno_apoderado_legal>
+                                        <apellido_materno_apoderado_legal></apellido_materno_apoderado_legal>3.1.11.1.2.1.2.8.3
+                                    </apoderado_legal>3.1.11.1.2.1.2.8.
+                                </persona_moral> 3.1.11.1.2.1.2
+                            </tipo_persona> 3.1.11.1.2.1
+                        </cliente>  3.1.11.1.2
+                    </persona>
+                     <domicilio> 
+                        <nacional>
+                            <entidad_federativa></entidad_federativa>
+                            <codigo_postal>37800</codigo_postal>
+                            <ciudad_poblacion>dolores hidalgo</ciudad_poblacion>
+                            <delegacion_municipio></delegacion_municipio> <!--duda-->
+                            <colonia>lomas del parque</colonia>
+                            <calle>Paseo de las lomas</calle> 
+                            <numero_exterior>112 a</numero_exterior>
+                            <numero_interior> </numero_interior><!--opcional--> 
+                        </nacional>
+                        <extranjero>
+                            <pais>US</pais>
+                            <estado_provincia>WASHINTON</estado_provincia>
+                            <codigo_postal>000000000000</codigo_postal> 
+                            <ciudad_poblacion>ddddd</ciudad_poblacion>
+                            <colonia>asdfasdf</colonia> 
+                            <calle>aaaaaaaa</calle> 
+                            <numero_exterior>112 a</numero_exterior>
+                            <numero_interior> </numero_interior><!--opcional--> 
+                        </extranjero>
+                    </domicilio>
+                    <telefono><!--opcional si no es cliente y/o moral--> 
+                        <clave_pais></clave_pais><!--opcional-->
+                        <numero_telefono>014181121602</numero_telefono>
+                        <extension></extension><!--opcional-->
+                    </telefono> 
+                </persona_reportada>
+            </operacion>
+        </operaciones>
+    </sujeto_obligado> 
+</reporte> 

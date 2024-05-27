@@ -34,7 +34,7 @@ export class SucursalesComponent {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['empresas', 'sucursales', 'Activo', 'acciones'];
+  displayedColumns: string[] = ['sucursales', 'Activo', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
 
   /**fin del paginador y modal */
@@ -45,6 +45,8 @@ export class SucursalesComponent {
   municipio: any;
   paises: any;
   codigopostal: any;
+  empresa: any;
+  idrol:any;
 
   constructor(
     private user: userservice,
@@ -53,8 +55,20 @@ export class SucursalesComponent {
 
 
   ngOnInit(): void {
-    this.consultar_empresas();
-    this.consultar()
+    this.empresa = localStorage.getItem('emp')
+    console.log(this.empresa)
+    this.idrol = localStorage.getItem('idrol')
+    
+   // this.consultar_empresas();
+    //this.consultar()
+
+    if(this.idrol == 1){
+      this.consultar_empresas();
+      this.consultar()
+      }else{
+        
+        this.suc(this.empresa)
+      }
   }
 
   ngAfterViewInit(): void {
@@ -194,9 +208,47 @@ export class SucursalesComponent {
     )
     
   }
+  suc(event: any) {
+    let selectedValue:any;
+    if(this.idrol == 1){
+      selectedValue = event.target.value;
+    }else{
+      selectedValue = event;
+    }
 
+
+    const info = {
+      option: 6,
+      empresaid: selectedValue
+    }
+    this.cp.sucursal(info).subscribe(
+      (data: any) => {
+        if (data.resultado[0].manage_sucursal.action == 'error') {
+          Swal.fire({
+            icon: data.info.action,
+            title: data.info.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+
+        } else {
+          this._cdr.detectChanges();
+          this.dataSource.data = data.resultado[0].manage_sucursal.data;
+          this._cdr.detectChanges();
+        
+        }
+      }, (error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
+  }
   guardarsucursal() {
-
+    this.empresaid =this.empresa;
     const a = {
 
       //sucursalid: sucursalid
@@ -232,12 +284,24 @@ export class SucursalesComponent {
       }
     )
     this.clean();
-    this.consultar()
-    this.will.hide();
+    if(this.idrol == 1){
+      this.consultar_empresas();
+      this.consultar()
+      }else{
+        
+        this.suc(this.empresa)
+      }    this.will.hide();
     
   }
 
   actualizarsucursal() {
+    if(this.idrol == 1 ){
+      
+    }else{
+      this.empresaid = this.empresa
+
+    }
+
     const a = {
       sucursalid: this.sucursalid,
       nombre_sucursal: this.nombre_sucursal,
@@ -271,8 +335,13 @@ export class SucursalesComponent {
       }
     )
     this.clean();
-    this.consultar()
-    this.will.hide();
+    if(this.idrol == 1){
+      this.consultar_empresas();
+      this.consultar()
+      }else{
+        
+        this.suc(this.empresa)
+      }    this.will.hide();
   }
 
   abrirgurdar() {
@@ -333,8 +402,14 @@ export class SucursalesComponent {
       }
     )
     this.clean();
+    if(this.idrol == 1){
+      this.consultar_empresas();
+      this.consultar()
+      }else{
+        
+        this.suc(this.empresa)
+      }
     this.will.hide()
-    this.consultar()
   }
   getsucursalName(empresaid: number): string {
     console.log(empresaid)

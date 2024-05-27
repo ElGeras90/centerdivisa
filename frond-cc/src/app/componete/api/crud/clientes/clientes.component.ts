@@ -119,7 +119,7 @@ export class ClientesComponent {
   @Input() status: boolean = false;
   @Output() respuestaEnviada = new EventEmitter<string>();
   messages: any;
-
+  empresa:any;
   constructor(
     private datos: cpservice,
     private shared: SharedDataService,
@@ -129,6 +129,8 @@ export class ClientesComponent {
   /**fin del paginador y modal */
   user: any;
   ngOnInit(): void {
+    this.empresa = localStorage.getItem('emp')
+
     this.activar = this.shared.getActivo();
     this.catalogos();
     this.consultar();
@@ -494,7 +496,7 @@ export class ClientesComponent {
   abrirwill() {
     Swal.fire({
       title: 'Registro',
-      text: 'Elige una opción:',
+      text: 'Que deseas registrar un :',
       showCancelButton: true,
       confirmButtonText: 'Persona',
       cancelButtonText: 'Empresa',
@@ -609,7 +611,8 @@ export class ClientesComponent {
 
 
     const info = {
-      option: 4
+      option: 4,
+      empresa : this.empresa
     }
 
     this.datos.clientes(info).subscribe(
@@ -643,7 +646,8 @@ export class ClientesComponent {
 
     info = {
       ...info,
-      option: 1
+      option: 1,
+      empresa:this.empresa
     }
     const name = {
       nombre: info.nombre,
@@ -784,7 +788,8 @@ crearjsonempresa() {
     option: 0,
     telefono: this.telemp,
     correo: this.correoempr,
-    fechaconstitucion: this.fechaconst
+    fechaconstitucion: this.fechaconst,
+    empresa : this.empresa
   };
   return a;
 }
@@ -794,6 +799,7 @@ idempresa: number = 0;
   async guardarempresa() {
   const d = this.crearjsonempresa();
   d.option = 1;
+  d.empresa = this.empresa
   this.resultado = await this.datos.empresacliente(d).toPromise(); // Convertir el observable a una promesa
 
   if (this.resultado.resultado.action === "success") {
@@ -813,7 +819,8 @@ guardarclienteempresa() {
   info.idempresa = this.idempresa
   info = {
     ...info,
-    option: 3
+    option: 3,
+    empresa:this.empresa
   }
 
   this.datos.empresacliente(info).subscribe(

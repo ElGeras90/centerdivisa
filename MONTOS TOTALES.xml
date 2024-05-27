@@ -1,0 +1,32 @@
+<reporte></reporte> 
+<trimestre_reportado>2024-1</trimestre_reportado>
+<clave_organo_supervisor>99-999</clave_organo_supervisor>
+<clave_sujeto>DATOS POR LA CNBV</clave_sujeto> 
+<codigo_postal></codigo_postal>
+<operacion>
+    <moneda>USD</moneda>
+    <numero_operaciones_compra>212</numero_operaciones_compra>
+    <monto_compra>251852.70</monto_compra> 
+    <numero_operaciones_venta>150</numero_operaciones_venta>
+    <monto_venta>15002</monto_venta>
+</operacion>
+<operacion>
+    <moneda>EUR</moneda>
+    <numero_operaciones_compra>212</numero_operaciones_compra>
+    <monto_compra>251852.70</monto_compra> 
+    <numero_operaciones_venta>150</numero_operaciones_venta>
+    <monto_venta>15002</monto_venta>
+</operacion>
+<contraparte_opero><!-- ES OPCIONAL -->
+    <tipo_contraparte><!-- OBLIGATORIA EN CASO DE TENER LA ETIQUTA ANTERIOR -->
+        <nacional> <!-- SI ES NACIONAL NO PUEDE EXISTIR LA EXTRANJERA -->
+            <clave_contraparte>040004</clave_contraparte> 
+        </nacional> 
+        <extranjera><!-- SI ES EXTRANJERA NO PUEDE EXISTIR NACIONAL -->
+            <nombre_contraparte>EL PERCHERON 2</nombre_contraparte>
+        </extranjera>
+    </tipo_contraparte>
+    <moneda_operada>USD</moneda_operada><!-- ES OBLIGATORIA SI EXISTA NACIONAL O ESTRANJERA -->
+    <monto_operado_compra>5000.00</monto_operado_compra>
+    <monto_operado_venta>0.00</monto_operado_venta> 
+</contraparte_opero>

@@ -108,7 +108,7 @@
                     </select>
                 </div>
 
-                <div class="form-group col">
+                <div class="form-group col" *ngIf="idrol==1">
                     <label for="empresa">Empresa:</label>
                     <select class="form-control" id="empresa" formControlName="empresa" (change)="suc($event)">
                       <option *ngFor="let item of empre" [value]="item.idempresa">{{ item.razonsocial }}</option>

@@ -27,10 +27,12 @@ export class AccesosComponent {
   idrol: any;
   roles: any;
   menus: any;
+  idr:any;
   constructor(
     private cp: cpservice) { }
   /**fin del paginador y modal */
   ngOnInit(): void {
+    this.idr = localStorage.getItem('idrol')
     this.consulstarrolesmenus();
     this.consultar();
   }
@@ -51,7 +53,8 @@ export class AccesosComponent {
 
   consultar() {
     const a = {
-      option: 5
+      option: 5,
+      rol:this.idr
     }
     this.cp.accesos(a).subscribe(
       (data: any) => {
@@ -186,7 +189,8 @@ export class AccesosComponent {
 
   consulstarrolesmenus(){
     const a = {
-      option:5
+      option:5,
+      rol:this.idr
     }
     this.cp.roles(a).subscribe(
       (data: any) => {
