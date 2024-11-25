@@ -1,59 +1,41 @@
-<section class="xd">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-xl-10">
-          <div class="card rounded-3 text-black">
-            <div class="row g-0">
-              <div class="col-lg-6">
-                <div class="
-                 p-md-5 mx-md-4">
-  
-                  <div class="text-center">
-                    <img src="../../../assets/img/unnamed (1).png"
-                      class="img-fluid" alt="logo">
-                    
-                  </div>
-  
-                  <form [formGroup]="loginForm" (submit)="onSubmit()">
-                    <div class="form-outline mb-4">
-                      <mat-form-field>
-                        <mat-label>Usuario</mat-label>
-                        <input matInput placeholder="Geras" formControlName="usuario" required>
-                      </mat-form-field>
-                    </div>
-                  
-                    <div class="form-outline mb-4">
-                      <mat-form-field>
-                        <mat-label>Enter your password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="contraseña" required>
-                        <button mat-icon-button matSuffix (click)="togglePasswordVisibility($event)" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                      </mat-form-field>
-                    </div>
-                  
-                    <div class="form-outline mb-4 text-center">
-                      <button type="submit" class="botonx">Iniciar Sesion</button>
-                    </div>
-                    <div class="form-outline mb-4 text-center">
-                      <!--<a href="">Olvidaste tu contraseña </a>-->
-                    </div>
-                  </form>
-                  
-  
-                </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                  <h3 class="mb-4">Centro Cambiario Inmtec</h3>
-                  <p class=" mb-0">
-                    {{motivationalQuote}}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+<div class="container-fluid centered-div ">
+  <div class="row split-div">
+    <div class="col-md-6 col-sm-12 d curva">
+      <div class="p-3">
+        <div class="text-center">
+          <img src="../../../assets/img/unnamed (1).png" class="img-fluid"
+            alt="logo">
         </div>
+
+        <form [formGroup]="loginForm" (submit)="onSubmit()">
+          <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" placeholder="Usuario" class="form-control"
+              formControlName="usuario" required>
+          </div>
+
+          <div class="form-group">
+            <label>Enter your password</label>
+            <input type="password" class="form-control"
+              formControlName="contraseña" required>
+          </div>
+
+          <div class="text-center">
+            <br>
+            <button type="submit" class="btn btn btn-outline-primary">Iniciar
+              Sesion</button>
+          </div>
+          <div class="form-outline mb-4 text-center">
+            <!--<a href="">Olvidaste tu contraseña </a>-->
+          </div>
+        </form>
       </div>
     </div>
-  </section>
+    <div class="col-md-6 col-sm-12 fondoblue2 colorgray semibold curva2">
+      <div class="content-div">
+        <h3 class="mb-4">Centro Cambiario Inmtec</h3>
+        <p class="mb-0">{{motivationalQuote}}</p>
+      </div>
+    </div>
+  </div>
+</div>

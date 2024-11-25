@@ -1,66 +1,90 @@
 <div>
-  <app-alerta-flotante class="alserts" *ngFor="let a of messages; let i = index" [message]="a" (closed)="closeAlert(i)"></app-alerta-flotante>
+  <app-alerta-flotante class="alserts" *ngFor="let a of messages; let i = index"
+    [message]="a" (closed)="closeAlert(i)"></app-alerta-flotante>
 </div>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded" aria-label="Eleventh navbar example">
-    <div class="container-fluid">
-      <a class="navbar-brand" aria-current="page" routerLink="./"><img src="../../../../assets/img/inmtec.png" style="height: 25px; width: 25px;" class="txt"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  
-      <div class="collapse navbar-collapse" id="navbarsExample09">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!--<li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="./" >Home</a>
-          </li>-->
-       
-          
-          <li class="nav-item dropdown" *ngFor="let a of menus">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">{{a.menu}}</a>
-            <ul class="dropdown-menu" >
-              <li *ngFor="let b of a.submenus"><a class="dropdown-item" [routerLink]="b.componente">{{b.nombre}}</a></li>
-            </ul>
-          </li>
-        </ul>
-        
 
-        <div class="demo-section" *ngIf="rol=='PLD'">
-          <button class="d-flex btn btn-outline-info" (click)="riesgo.show()" >
-            <mat-icon [matBadge]="calert" matBadgeColor="warn">notifications</mat-icon>
-          </button>
-          
-            <!-- Include text description of the icon's meaning for screen-readers -->
-          
-        </div>
+<div class="container-fluid fondoblue2 ">
 
-        <button class="d-flex btn btn-outline-danger" (click)="logout()">
-          <mat-icon>logout</mat-icon>
-        </button>
-        
-      </div>
+  <div class="row flex-container tm">
+    <div class="col-md-6">
+      <img src="../../../../assets/img/Centro cambiario logo-03.png"
+        class="image">
     </div>
-  </nav>
+    <div class="col-md-6 derecha">
+      <div class="demo-section img" *ngIf="rol=='PLD'">
+        <button class="d-flex btn btn-outline-info" (click)="riesgo.show()">
+          <mat-icon [matBadge]="calert"
+            matBadgeColor="warn">notifications</mat-icon>
+        </button>
 
+      </div>
 
-  <div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-  
-          <h4 class="modal-title">Alertas</h4>
-  
-        </div>
-        <div class="modal-body row">
-          
-  
-          <div class="row">
-            <div class="col-md-1 col-12 mt-2">
-              <button class="btn btn-danger" (click)="riesgo.hide()">Cerrar</button>
-            </div>
+      <button class="d-flex btn btn-outline-light derecha img"
+        (click)="logout()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="container-fluid">
+  <br>
+  <div class="blue-line">
+    <div class="moving-text">
+      <ul class="reverse-list">
+        <li class="rli colorblue2" *ngFor="let a of divisas"> <span
+            class="bold">{{a.grupo}}</span> Compra : {{
+          a.compra }} Venta : {{ a.venta }} </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-gray fondogray semibold ">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarsExample08"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-md-center"
+      id="navbarsExample08">
+      <ul class="navbar-nav colorblue2 bold">
+
+        <li class="nav-item dropdown" *ngFor="let a of menus">
+          <a class="nav-link dropdown-toggle" href="#"
+            data-bs-toggle="dropdown" aria-expanded="false">{{a.menu}}</a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let b of a.submenus"><a class="dropdown-item"
+                [routerLink]="b.componente">{{b.nombre}}</a></li>
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Alertas</h4>
+
+      </div>
+      <div class="modal-body row">
+
+        <div class="row">
+          <div class="col-md-1 col-12 mt-2">
+            <button class="btn btn-danger"
+              (click)="riesgo.hide()">Cerrar</button>
           </div>
-  
         </div>
+
       </div>
     </div>
   </div>
-  
+</div>

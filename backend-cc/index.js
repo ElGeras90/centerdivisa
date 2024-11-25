@@ -12,15 +12,17 @@ const env = require('./routes/cambioroute')
 const naproxeno = require('./routes/resetpass')
 const diclofenaco = require('./routes/matrizroute')
 var helmet = require('helmet');
-const https = require('https');
+//const https = require('https');
 const fs = require('fs');
 const encriptarjsong = require('./util/encriptarjson');
-const { json2xml } = require('json2xml');
+const { js2xml } = require('xml-js');
+const regulatorios = require('./routes/regulatorioRoute')
+const conta = require('./routes/reportecontables');
 // Configurar cabeceras y cors
 app.use(helmet());
 
 const corsOptions = {
-  origin: '*', 
+  origin: '*',
   methods: 'GET,POST,PUT,DELETE',
 };
 
@@ -63,33 +65,20 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-app.post('/e', (req, res) => {
-  console.log(req.body)
-  let x = JSON.stringify(req.body)
-  console.log(x)
-  let encrypted = Buffer.from(x).toString('base64');
-  res.status(200).send({ success: true, info:encrypted });;
-});
-app.post('/convert', (req, res) => {
-  const json = req.body;
-  
-  try {
-      const xml = json2xml(json);
-      res.header('Content-Type', 'application/xml');
-      res.send(xml);
-  } catch (error) {
-      res.status(500).send('Error converting JSON to XML');
-  }
-});
+
+
+
 // Cargar las rutas
 app.use('/accsosrol', accesosrol);
 app.use('/cp', cp);
-app.use('/auth',auth);
-app.use('/pais',pais);
-app.use('/encargado',enc);
-app.use('/divisa',env);
-app.use('/app',naproxeno);
-app.use('/matriz',diclofenaco)
+app.use('/auth', auth);
+app.use('/pais', pais);
+app.use('/encargado', enc);
+app.use('/divisa', env);
+app.use('/app', naproxeno);
+app.use('/matriz', diclofenaco)
+app.use('/rg', regulatorios)
+app.use('/conta', conta)
 // para restablecer la contraseña 
 
 // Configurar opciones SSL

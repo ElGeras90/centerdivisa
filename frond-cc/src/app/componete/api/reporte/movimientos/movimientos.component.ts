@@ -11,18 +11,18 @@ export class MovimientosComponent {
   displayedColumns: string[] = ['Cliente', 'Tipo', 'Fecha', 'Divisa', 'Cambio', 'acciones'];
 
   dataSource = new MatTableDataSource<any>([]);
-  
+
   constructor(
     private datos: cpservice,
-   
+
   ) { }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
 
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  abrirwill(){
+  abrirwill() {
 
   }
-  abrirupdate(dato:any){}
+  abrirupdate(dato: any) { }
 }

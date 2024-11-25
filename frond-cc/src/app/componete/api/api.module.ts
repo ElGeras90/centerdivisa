@@ -24,7 +24,6 @@ import { MontosComponent } from './regulatorios/montos/montos.component';
 import { DolaresComponent } from './regulatorios/dolares/dolares.component';
 import { Reporte24Component } from './regulatorios/reporte24/reporte24.component';
 import { OperacionesinusualesComponent } from './regulatorios/operacionesinusuales/operacionesinusuales.component';
-import { MovimientosComponent } from './reporte/movimientos/movimientos.component';
 import { PepsComponent } from './reporte/peps/peps.component';
 import { AltoriesgoComponent } from './reporte/altoriesgo/altoriesgo.component';
 import { InusualesComponent } from './reporte/inusuales/inusuales.component';
@@ -35,11 +34,12 @@ import { MovComponent } from './alertas/mov/mov.component';
 import { AlertaFlotanteComponent } from '../alerta-flotante/alerta-flotante.component';
 import { GalertComponent } from './alertas/galert/galert.component';
 import { PieComponent } from './pie/pie.component';
+import { MovimientosComponent } from './contable/movimientos/movimientos.component';
 
 
 
 @NgModule({
-    declarations:[
+    declarations: [
         ApiComponent,
         InicioComponent,
         UsuariosComponent,
@@ -74,12 +74,12 @@ import { PieComponent } from './pie/pie.component';
         GalertComponent,
         PieComponent
     ],
-    imports:[
-       CommonModule,
-       imports ,
-       ApiRoutingModule
+    imports: [
+        CommonModule,
+        imports,
+        ApiRoutingModule
     ]
 })
-export class ApiMdoule{
-    
+export class ApiMdoule {
+
 }

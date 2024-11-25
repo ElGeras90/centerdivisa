@@ -1,12 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { cpservice } from 'src/app/componete/servicios/all.service';
 import Swal from 'sweetalert2';
-import { NgxPrinterService } from 'ngx-printer';
 
 @Component({
   selector: 'app-venta',
   templateUrl: './venta.component.html',
-  styleUrls: ['./venta.component.css','venta.component.scss']
+  styleUrls: ['./venta.component.css', 'venta.component.scss']
 })
 export class VentaComponent {
   currentDate!: Date;
@@ -17,14 +16,14 @@ export class VentaComponent {
   divisas: any;
   compra: any = '{}';
   cambio: number = 0.00;
-  resultado: any= 0.00;
+  resultado: any = 0.00;
   cotizacion: number = 0.00;
   clienteid: number = 1;
   @ViewChild("will", { static: false })
   will: any;
   fechaYHoraActual!: Date;
   @ViewChild("enviocorrecto", { static: false })
-  enviocorrecto:any;
+  enviocorrecto: any;
 
   async ngOnInit() {
     this.fechaYHoraActual = new Date();
@@ -55,8 +54,7 @@ export class VentaComponent {
     return date.toLocaleDateString('es-ES', options);
   }
 
-  constructor(private cp: cpservice,
-    private printerService: NgxPrinterService) {
+  constructor(private cp: cpservice) {
   }
 
   async consultadivisas() {
@@ -104,7 +102,7 @@ export class VentaComponent {
 
     if (codigoValue && codigoValue.length > 0) {
 
-      const a =  codigoValue/this.cotizacion ;
+      const a = codigoValue / this.cotizacion;
 
       this.resultado = Math.floor(a);
 
@@ -187,20 +185,20 @@ export class VentaComponent {
     const data2: any = await this.cp.dll(data).toPromise(); // Convertir el observable a una promesa
 
     console.log(data2.resultado.action);
-    if(data2.resultado.action == false){
+    if (data2.resultado.action == false) {
       Swal.fire({
         icon: 'warning',
         title: data2.resultado.messagge,
         allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
         allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
       });
-     // this.limpiar();
+      // this.limpiar();
       this.will.hide();
       return;
     }
 
     this.json = this.crearjson();
-    if(this.i.idcliente>0){
+    if (this.i.idcliente > 0) {
       this.json.clienteid = this.i.idcliente;
     }
     this.guardar(this.json);
@@ -219,11 +217,11 @@ export class VentaComponent {
 
     // Usar la expresión condicional para asignar un valor predeterminado si x es null o undefined
     resultado = z !== null && z !== undefined ? z : 'xxxx';
-    let nombre : any;
+    let nombre: any;
     if (this.continuar == true) {
-      nombre ='PUBLICO EN GENERAL'
+      nombre = 'PUBLICO EN GENERAL'
     } else {
-      nombre = this.i.nombre+' '+ this.i.paterno+' '+this.i.materno
+      nombre = this.i.nombre + ' ' + this.i.paterno + ' ' + this.i.materno
     }
 
     const ticketContent = `
@@ -313,7 +311,7 @@ export class VentaComponent {
   }
 
   ticket: any;
-  numeroFormateado : any;
+  numeroFormateado: any;
   async guardar(r: any) {
     this.ticket = await this.cp.operaciones(r).toPromise();
 
@@ -322,11 +320,12 @@ export class VentaComponent {
     const numeroRecibido: Number = this.ticket.info[0].manage_operaciones.operacion;
 
     // Convierte el número a una cadena y aplica el relleno con ceros
-     this.numeroFormateado = numeroRecibido.toString().padStart(10, '0');
+    this.numeroFormateado = numeroRecibido.toString().padStart(10, '0');
 
-    this.enviocorrecto.show();  }
+    this.enviocorrecto.show();
+  }
 
-  limpiar(){
+  limpiar() {
     this.cambio = 0;
     this.resultado = 0;
     this.cotizacion = 0;
@@ -334,7 +333,7 @@ export class VentaComponent {
     this.tipodivisa = 0;
   }
 
-  cerrar1(){
+  cerrar1() {
     this.enviocorrecto.hide();
     this.limpiar()
 

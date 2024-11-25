@@ -1,8 +1,8 @@
-<reporte></reporte> 
+<reporte>
 <trimestre_reportado>2024-1</trimestre_reportado>
 <clave_organo_supervisor>99-999</clave_organo_supervisor>
 <clave_sujeto>DATOS POR LA CNBV</clave_sujeto> 
-<codigo_postal></codigo_postal>
+<codigo_postal>37800</codigo_postal>
 <operacion>
     <moneda>USD</moneda>
     <numero_operaciones_compra>212</numero_operaciones_compra>
@@ -30,3 +30,4 @@
     <monto_operado_compra>5000.00</monto_operado_compra>
     <monto_operado_venta>0.00</monto_operado_venta> 
 </contraparte_opero>
+</reporte> 

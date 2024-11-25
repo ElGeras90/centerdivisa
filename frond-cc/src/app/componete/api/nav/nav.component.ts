@@ -7,24 +7,26 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { SocketService } from 'src/app/socket.service';
 import { cp } from '../../servicios/constantes';
 import { cpservice } from '../../servicios/all.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css', './nav.component.scss']
 })
-export class NavComponent  implements OnInit {
+export class NavComponent implements OnInit {
   menus: any[] | null = null;
+  divisas: any;
   constructor(private snack: MatSnackBar, private router: Router, private auth: AuthenticationService,
-    private socketService: SocketService,private xd : cpservice) {
+    private socketService: SocketService, private xd: cpservice,) {
     this.screenWidth = window.innerWidth;
 
   }
 
   @ViewChild('sidenav', { static: true }) sidenav!: MatSidenav; // <- Agregamos "{ static: true }" aquí
   screenWidth: number | undefined;
-  messagess:  boolean = false;
+  messagess: boolean = false;
   enviar: any;
   @HostListener('window:resize', ['$event'])
   calert: any = 0;
@@ -38,54 +40,63 @@ export class NavComponent  implements OnInit {
 
   mensaje: string = '';
   showChat: boolean = false;
-  user:any;
+  user: any;
   usuariosEnLinea: string[] = [];
   conversacion: any[] = [];
   nuevoMensaje: string = '';
   mostrarLista: boolean = true;
-  usuarioSeleccionado!: string ;
+  usuarioSeleccionado!: string;
   messages: any[] = [];
-  rol:any;
+  rol: any;
   inactividadTemporizador: any;
-
+  sucursalid: any;
   @ViewChild("riesgo", { static: false })
   riesgo: any;
   ngOnInit(): void {
-        const dmnues = localStorage.getItem('menus');
+    const dmnues = localStorage.getItem('menus');
     if (dmnues !== null) {
-     const dmo = JSON.parse(dmnues);
+      const dmo = JSON.parse(dmnues);
 
-     this.menus = dmo
-     this.user = localStorage.getItem('usuario') ;
-     this.rol=localStorage.getItem('rol');
-    } 
+      this.menus = dmo
+      this.user = localStorage.getItem('usuario');
+      this.rol = localStorage.getItem('rol');
+    }
     if (localStorage.getItem('ID') == null) {
       this.router.navigate(['login']);
     }
     this.detectarInactividad();
     this.socketService.initializeSocket();
-    if(this.rol=='PLD'){
+    if (this.rol == 'PLD') {
       this.xdalert();
       this.socketService.authenticate('cc-PLD');
       this.socketService.onMessageReceived().subscribe((data: any) => {
-        console.log(data);
         this.xdalert();
         this.messages.push(data);
       });
-    }else{
-      this.socketService.authenticate('cc-'+this.user);
+    } else {
+      this.socketService.authenticate('cc-' + this.user);
     }
-    
+    const d = localStorage.getItem('empresa');
+
+    if (d !== null) {
+      const dd = JSON.parse(d);
+
+
+      this.sucursalid = dd.sucursalid;
+
+    }
+    this.consultadivisas();
+
   }
-  logout(){
+  logout() {
     this.auth.logout();
     this.router.navigate(['login']);
   }
- 
 
-  noti(mensaje: string,usuario: string) {
+
+  noti(mensaje: string, usuario: string) {
     // Agregar una nueva notificación a la lista
-    const nuevaNotificacion = { mensaje,usuario:usuario, tiempoRestante: 5 }; // 5 segundos
+    const nuevaNotificacion = { mensaje, usuario: usuario, tiempoRestante: 5 }; // 5 segundos
     this.notificaciones.unshift(nuevaNotificacion);
 
     // Iniciar un temporizador para actualizar el tiempo restante
@@ -107,7 +118,7 @@ export class NavComponent  implements OnInit {
   closeAlert(index: number): void {
     this.messages.splice(index, 1); // Eliminar la alerta del array
   }
-   xdalert() {
+  xdalert() {
     this.xd.alertar().subscribe({
       next: (data: any) => {
         console.log("Datos recibidos:", data);
@@ -121,7 +132,7 @@ export class NavComponent  implements OnInit {
       }
     });
   }
-  
+
 
   ngOnDestroy(): void {
     clearTimeout(this.inactividadTemporizador);
@@ -131,14 +142,44 @@ export class NavComponent  implements OnInit {
     this.resetearInactividadTemporizador();
 
     document.addEventListener('mousemove', this.resetearInactividadTemporizador.bind(this));
-  document.addEventListener('keypress', this.resetearInactividadTemporizador.bind(this));
-  document.addEventListener('click', this.resetearInactividadTemporizador.bind(this));
+    document.addEventListener('keypress', this.resetearInactividadTemporizador.bind(this));
+    document.addEventListener('click', this.resetearInactividadTemporizador.bind(this));
   }
 
   resetearInactividadTemporizador(): void {
     clearTimeout(this.inactividadTemporizador);
     this.inactividadTemporizador = setTimeout(() => {
       this.logout();
-    }, 50 * 60 * 1000); 
+    }, 50 * 60 * 1000);
+  }
+
+  async consultadivisas() {
+
+    const a = {
+      sucursal: this.sucursalid
+    }
+
+    this.xd.Divisasucursal(a).subscribe(
+      (data: any) => {
+        this.divisas = data?.info[0]?.divisas_sucursal?.data;
+        if (this.divisas == null) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'No hay divisas Registradas al dia de hoy, Registre una o pidale al encargado que la ingrese',
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+        }
+
+      }, (error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ocurrio un problema al intentar realizar la accion ',
+          allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+          allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+        });
+      }
+    )
+
   }
 }

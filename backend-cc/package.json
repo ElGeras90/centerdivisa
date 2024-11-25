@@ -26,8 +26,8 @@
     "nodemailer": "^6.9.7",
     "nodemon": "^3.0.1",
     "pg": "^8.11.3",
-  
     "socket.io": "^4.7.4",
+    "xml-js": "^1.6.11",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {

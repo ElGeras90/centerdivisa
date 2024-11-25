@@ -46,7 +46,7 @@ export class SucursalesComponent {
   paises: any;
   codigopostal: any;
   empresa: any;
-  idrol:any;
+  idrol: any;
 
   constructor(
     private user: userservice,
@@ -55,20 +55,17 @@ export class SucursalesComponent {
 
 
   ngOnInit(): void {
-    this.empresa = localStorage.getItem('emp')
-    console.log(this.empresa)
-    this.idrol = localStorage.getItem('idrol')
-    
-   // this.consultar_empresas();
-    //this.consultar()
 
-    if(this.idrol == 1){
+    this.idrol = localStorage.getItem('idrol')
+
+
+    if (this.idrol == 1) {
       this.consultar_empresas();
       this.consultar()
-      }else{
-        
-        this.suc(this.empresa)
-      }
+    } else {
+      this.empresa = localStorage.getItem('emp')
+      this.suc(this.empresa)
+    }
   }
 
   ngAfterViewInit(): void {
@@ -204,15 +201,15 @@ export class SucursalesComponent {
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
       }
-      
+
     )
-    
+
   }
   suc(event: any) {
-    let selectedValue:any;
-    if(this.idrol == 1){
+    let selectedValue: any;
+    if (this.idrol == 1) {
       selectedValue = event.target.value;
-    }else{
+    } else {
       selectedValue = event;
     }
 
@@ -235,7 +232,7 @@ export class SucursalesComponent {
           this._cdr.detectChanges();
           this.dataSource.data = data.resultado[0].manage_sucursal.data;
           this._cdr.detectChanges();
-        
+
         }
       }, (error: any) => {
         Swal.fire({
@@ -248,7 +245,13 @@ export class SucursalesComponent {
     )
   }
   guardarsucursal() {
-    this.empresaid =this.empresa;
+    if (this.idrol == 1) {
+      console.log(this.empresaid)
+    }
+    else {
+      this.empresaid = this.empresa;
+    }
+
     const a = {
 
       //sucursalid: sucursalid
@@ -264,6 +267,8 @@ export class SucursalesComponent {
 
     }
 
+    console.log(a)
+
     this.cp.sucursal(a).subscribe(
       (data: any) => {
         Swal.fire({
@@ -272,7 +277,7 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-    
+
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -280,24 +285,24 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-     
+
       }
     )
     this.clean();
-    if(this.idrol == 1){
+    if (this.idrol == 1) {
       this.consultar_empresas();
       this.consultar()
-      }else{
-        
-        this.suc(this.empresa)
-      }    this.will.hide();
-    
+    } else {
+
+      this.suc(this.empresa)
+    } this.will.hide();
+
   }
 
   actualizarsucursal() {
-    if(this.idrol == 1 ){
-      
-    }else{
+    if (this.idrol == 1) {
+
+    } else {
       this.empresaid = this.empresa
 
     }
@@ -315,6 +320,7 @@ export class SucursalesComponent {
       option: 2
     }
 
+    console.log(a)
     this.cp.sucursal(a).subscribe(
       (data: any) => {
         Swal.fire({
@@ -323,7 +329,7 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-        
+
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -331,17 +337,17 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-       
+
       }
     )
     this.clean();
-    if(this.idrol == 1){
+    if (this.idrol == 1) {
       this.consultar_empresas();
       this.consultar()
-      }else{
-        
-        this.suc(this.empresa)
-      }    this.will.hide();
+    } else {
+
+      this.suc(this.empresa)
+    } this.will.hide();
   }
 
   abrirgurdar() {
@@ -351,16 +357,16 @@ export class SucursalesComponent {
   }
 
   async actualizar(datos: any) {
- this.info = false;
-    this.sucursalid= datos.sucursalid
-    this.nombre_sucursal=datos.nombre_sucursal
-      this.calle = datos.calle
-      this.numero = datos.numero
-      this.idcp = datos.idcp
-      this.fecharegistro = datos.fecharegistro
-      this.fechacierre = datos.fechacierre
-      this.activa= datos.activa
-      this.empresaid= datos.empresaid
+    this.info = false;
+    this.sucursalid = datos.sucursalid
+    this.nombre_sucursal = datos.nombre_sucursal
+    this.calle = datos.calle
+    this.numero = datos.numero
+    this.idcp = datos.idcp
+    this.fecharegistro = datos.fecharegistro
+    this.fechacierre = datos.fechacierre
+    this.activa = datos.activa
+    this.empresaid = datos.empresaid
 
     const info2 = {
       cp: datos.idcp
@@ -368,10 +374,13 @@ export class SucursalesComponent {
 
     const data2: any = await this.cp.codigopostar(info2).toPromise(); // Convertir el observable a una promesa
 
+
     this.codigopostal = data2.info.data[0].cp;
     this.estado = data2.info.data[0].estado;
     this.municipio = data2.info.data[0].municipio;
+    this.idcp = data2.info.data[0].id;
 
+    this.colonia = this.consultarDespuesDe5Digitos()
 
     this.will.show()
   }
@@ -390,7 +399,7 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-       
+
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -398,22 +407,22 @@ export class SucursalesComponent {
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-      
+
       }
     )
     this.clean();
-    if(this.idrol == 1){
+    if (this.idrol == 1) {
       this.consultar_empresas();
       this.consultar()
-      }else{
-        
-        this.suc(this.empresa)
-      }
+    } else {
+
+      this.suc(this.empresa)
+    }
     this.will.hide()
   }
   getsucursalName(empresaid: number): string {
     console.log(empresaid)
-    const agency = this.empresas.find((a:any) => a.idempresa == empresaid);
+    const agency = this.empresas.find((a: any) => a.idempresa == empresaid);
     return agency ? agency.razonsocial : 'Unknown';
   }
 }

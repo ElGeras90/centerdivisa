@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-compra',
   templateUrl: './compra.component.html',
-  styleUrls: ['./compra.component.css','./compra.component.Scss']
+  styleUrls: ['./compra.component.css', './compra.component.Scss']
 })
 export class CompraComponent {
 
@@ -19,7 +19,7 @@ export class CompraComponent {
   divisas: any;
   compra: any = '{}';
   cambio: number = 0.00;
-  resultado: any= 0.00;
+  resultado: any = 0.00;
   cotizacion: number = 0.00;
   clienteid: number = 1;
   @ViewChild("will", { static: false })
@@ -27,7 +27,7 @@ export class CompraComponent {
   fechaYHoraActual!: Date;
 
   @ViewChild("enviocorrecto", { static: false })
-  enviocorrecto:any;
+  enviocorrecto: any;
 
   async ngOnInit() {
     this.fechaYHoraActual = new Date();
@@ -59,7 +59,7 @@ export class CompraComponent {
   }
 
   constructor(private cp: cpservice,
-   ) {
+  ) {
   }
 
   async consultadivisas() {
@@ -69,6 +69,7 @@ export class CompraComponent {
       sucursal: this.sucursalid
     }
     this.saldomn = await this.cp.saldoactual(s).toPromise(); // Convertir el observable a una promesa
+
     this.saldomn = this.saldomn?.info[0]?.saldosdia?.saldosfinales;
 
     const a = {
@@ -138,7 +139,8 @@ export class CompraComponent {
     }
 
     const data2: any = await this.cp.Formulario(data).toPromise(); // Convertir el observable a una promesa
-    if (data2.info[0].valida_formulario.data.info == 'no') {
+    console.log(data2)
+    if (data2?.info[0]?.valida_formulario?.data?.info == 'no') {
       Swal.fire({
         icon: 'warning',
         title: data2.info[0].valida_formulario.data.messagge,
@@ -156,7 +158,7 @@ export class CompraComponent {
         confirmButtonText: 'Continuar',
         cancelButtonText: 'Registrar',
         showCloseButton: false,
-      }).then((result:any) => {
+      }).then((result: any) => {
         if (result.isConfirmed) {
           this.continuar = true
           this.json = this.crearjson();
@@ -187,7 +189,7 @@ export class CompraComponent {
 
     const data2: any = await this.cp.dll(data).toPromise(); // Convertir el observable a una promesa
 
-    if(data2.resultado.action == false){
+    if (data2.resultado.action == false) {
       Swal.fire({
         icon: 'warning',
         title: data2.resultado.messagge,
@@ -214,14 +216,14 @@ export class CompraComponent {
     let nombres = localStorage.getItem('nombre')
     let z: any = this.i?.rfc;
     let resultado: any;
-    let nombre:any;
+    let nombre: any;
     if (this.continuar == true) {
-      nombre ='PUBLICO EN GENERAL'
+      nombre = 'PUBLICO EN GENERAL'
     } else {
-      nombre = this.i.nombre+' '+ this.i.paterno+' '+this.i.materno
+      nombre = this.i.nombre + ' ' + this.i.paterno + ' ' + this.i.materno
     }
- 
-  
+
+
     // Usar la expresión condicional para asignar un valor predeterminado si x es null o undefined
     resultado = z !== null && z !== undefined ? z : 'xxxx';
 
@@ -310,17 +312,17 @@ export class CompraComponent {
   }
 
   ticket: any;
-  numeroFormateado : any;
+  numeroFormateado: any;
   async guardar(r: any) {
 
-  /**   Swal.fire({
-      // icon: 'warning',
-      imageUrl:'../../../../assets/img/unnamed.png', 
-      title: 'Alerta de Posible Operación Inusual, el comportamiento transaccional del usuario se separa de su perfil transaccional habitual, las operaciones realizadas rebasan en un 200% el perfil habitual del Usuario.',
-       allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
-       allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
-     });
-*/
+    /**   Swal.fire({
+        // icon: 'warning',
+        imageUrl:'../../../../assets/img/unnamed.png', 
+        title: 'Alerta de Posible Operación Inusual, el comportamiento transaccional del usuario se separa de su perfil transaccional habitual, las operaciones realizadas rebasan en un 200% el perfil habitual del Usuario.',
+         allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+         allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+       });
+  */
 
     this.ticket = await this.cp.operaciones(r).toPromise();
 
@@ -331,16 +333,16 @@ export class CompraComponent {
 
     this.enviocorrecto.show();
 
-    
+
   }
 
-  limpiar(){
+  limpiar() {
     this.consultadivisas();
     this.cambio = 0;
     this.resultado = 0;
-    this.i ={};
+    this.i = {};
   }
-  cerrar1(){
+  cerrar1() {
     this.enviocorrecto.hide();
     this.limpiar()
 

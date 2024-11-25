@@ -8,7 +8,7 @@ export class ConfiguracionConstante {
 	//public API_ENDPOINT = "http://binmtec.co:3004/";
 }
 export class pld_data {
-	//public API_ENDPOINT_PLD = "http://localhost:3000/";
+	// public API_ENDPOINT_PLD = "http://localhost:3000/";
 	public API_ENDPOINT_PLD = "http://binmtec.co:3002/";
 }
 export class LoginConstante {
@@ -53,33 +53,33 @@ export class paises {
 
 export class cl {
 	public static URLcliente = "accsosrol/cliente";
-	
+
 }
 export class divisa {
 	public static URLdivisa = "encargado/divisa";
 	public static URLdivisai = "accsosrol/divisa";
 }
-export class Enc{
+export class Enc {
 	public static URLencargado = 'encargado/encargado'
 	public static URLencpermiso = 'encargado/permiso'
 }
-export class Divisasucursal{
+export class Divisasucursal {
 	public static URLdivsuc = 'divisa/sucursal'
 	public static UrlFormulario = 'divisa/formulario'
 	public static URLinfodivisa = 'divisa/infodivisa'
 	public static Urlinfod = 'divisa/infod'
-	public static URLsaldoida= 'divisa/saldoactual'
+	public static URLsaldoida = 'divisa/saldoactual'
 	public static URLOperaciones = 'divisa/operacion'
 	public static URLreporte = 'divisa/moneda'
 }
-export class clienteempresa{
+export class clienteempresa {
 	public static URLcliemp = 'accsosrol/cliemp'
 	public static URLv = 'accsosrol/v'
 }
-export class pld{
+export class pld {
 	public static URLpld = 'api/buscar'
 }
-export class matrizriesgo{
+export class matrizriesgo {
 	public static URLpro = 'matriz/productos'
 	public static URLorigen = 'matriz/paisorigen'
 	public static URLmonto = 'matriz/montomes'
@@ -92,4 +92,13 @@ export class matrizriesgo{
 	public static URLalert = 'matriz/alert'
 	public static URLanonimo = 'matriz/anonimus'
 	public static URLcantidad = 'matriz/contar'
+}
+export class regulatorios {
+	public static URLmontos = 'rg/mt'
+}
+export class conta {
+	public static URLreporte = 'conta/saldos'
+}
+export class Reportediario {
+	public static URLreported = 'conta/cvd'
 }

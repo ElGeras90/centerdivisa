@@ -1,114 +1,149 @@
 <div class="container-fluid cuerpo">
-    <div class="row">
-      <div class="col-12">
-        <div class="blue-line">
-          <div class="moving-text">
-            <ul class="reverse-list">
-              <li class="rli" *ngFor="let a of divisas">Venta {{a.grupo}} : {{ a.venta }} </li>
-            </ul>
-          </div>
-        </div>
+
+  <div class="row">
+    <div class="col">
+      <h1>Usuario: {{nombreusuario}}</h1>
+    </div>
+    <div class="col" style="text-align: right;">
+      <h1>{{(formattedDate)}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-10">
+
+    </div>
+    <div class="col-2">
+      <div>
+        <p>Saldo en Moneda Nacional : {{saldosiniciales}}</p>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <h1>Usuario: {{nombreusuario}}</h1>
-      </div>
-      <div class="col" style="text-align: right;">
-        <h1>{{(formattedDate)}}</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-10">
-  
+  </div>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card p-4">
+          <h4 class="text-center mb-4">Venta</h4>
           <form>
-            <div class="form-group">
+            <!-- Divisa -->
+            <div class="form-group mb-3">
               <label for="divisa">Selecciona la Divisa:</label>
-              <select class="form-control" id="divisa" name="divisa" [(ngModel)]="compra" (change)="captura($event)">
+              <select class="form-control" id="divisa" name="divisa"
+                [(ngModel)]="compra" (change)="captura($event)">
                 <option value="0">Seleccione una opción</option>
-                <option *ngFor="let a of divisas" [value]="a.iddivisa">{{a.grupo}}</option>
-  
+                <option *ngFor="let a of divisas"
+                  [value]="a.iddivisa">{{a.grupo}}</option>
+
               </select>
+
             </div>
-  
-            <div class="form-group">
+
+            <!-- Cantidad -->
+            <div class="form-group mb-3">
               <label for="cantidad">Cantidad:</label>
-              <input type="number" class="form-control" id="cantidad" name="cantidad" step="0.01" [value]="cambio"
+              <input type="number" class="form-control" id="cantidad"
+                name="cantidad" step="0.01" [value]="cambio"
                 (input)="convertir($event)" required>
+
             </div>
-  
-            <div class="form-group">
+
+            <!-- Cotización -->
+            <div class="form-group mb-3">
               <label for="cotizacion">Cotización:</label>
-              <input type="text" class="form-control" id="cotizacion" name="cotizacion" step="0.01" [value]="cotizacion"
+              <input type="text" class="form-control" id="cotizacion"
+                name="cotizacion" step="0.01" [value]="cotizacion"
                 required>
+
             </div>
-  
-            <div class="form-group">
+
+            <!-- Importe -->
+            <div class="form-group mb-3">
               <label for="importe">Importe:</label>
-              <input type="text" class="form-control" id="importe" name="importe" [value]="resultado" readonly>
+              <input type="text" class="form-control" id="importe"
+                name="importe"
+                [value]="resultado" readonly>
+
             </div>
-  
-            <br><br>
-            <button type="submit" class="btn btn-primary" (click)="verificar()">verificar</button>
+
+            <button type="submit" class="btn btn-primary"
+              (click)="verificar()">verificar</button>
           </form>
         </div>
-      <div class="col-2">
-        <div>
-          <p>Saldo en Moneda Nacional : {{saldosiniciales}}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-  
-  
-        </div>
-        <div class="modal-body row">
-          <app-clientes [formulario]="formulario" [status]="true" (respuestaEnviada)="manejarRespuesta($event)"></app-clientes>
-  
-        </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade" bsModal #enviocorrecto="bs-modal" tabindex="-1" role="dialog"
-aria-labelledby="mySmallModalLabel" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
-    <div class="modal-content">
-        <div class="modal-header">
-
-            <h4 class="modal-title">Cobro Realizado imprimir tickets</h4>
-        </div>
-        <div class="modal-body">
-
-            <div class="cardx">
-
-                <div class="titlex">Ticket</div>
-
-                <div class="iconx">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100px" height="100px">
-                        <path d="M32 122h10c1.7 0 3-1.3 3-3s-1.3-3-3-3H32c-3.9 0-7-3.1-7-7V99c0-1.7-1.3-3-3-3s-3 1.3-3 3v10C19 116.2 24.8 122 32 122zM86 122h10c7.2 0 13-5.8 13-13V99c0-1.7-1.3-3-3-3s-3 1.3-3 3v10c0 3.9-3.1 7-7 7H86c-1.7 0-3 1.3-3 3S84.3 122 86 122zM42 6H32c-7.2 0-13 5.8-13 13v10c0 1.7 1.3 3 3 3s3-1.3 3-3V19c0-3.9 3.1-7 7-7h10c1.7 0 3-1.3 3-3S43.7 6 42 6zM86 6c-1.7 0-3 1.3-3 3 0 .2 0 .3.1.5C83 9.7 83 9.8 83 10v9c0 7.2 5.8 13 13 13h9c.2 0 .3 0 .5-.1.2 0 .3 0 .5 0 1.7 0 3-1.3 3-3C109 16.3 98.7 6 86 6zM96 26c-3.9 0-7-3.1-7-7v-6.7c7 1.2 12.5 6.7 13.7 13.7H96zM39 59c0 1.7 1.3 3 3 3h44c1.7 0 3-1.3 3-3s-1.3-3-3-3H42C40.3 56 39 57.3 39 59zM89 74c0-1.7-1.3-3-3-3H42c-1.7 0-3 1.3-3 3s1.3 3 3 3h44C87.7 77 89 75.7 89 74zM69.2 89c0-1.7-1.3-3-3-3h-24c-1.7 0-3 1.3-3 3s1.3 3 3 3h24C67.9 92 69.2 90.7 69.2 89z"/></svg>
-                </div>
-
-                <button class="btnx"  (click)="printTicket(numeroFormateado)">Venta</button>
-
-            </div>
-            <div class="cardx">
-
-                <div class="titlex">Cerrar</div>
-
-                <div class="iconx">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="100px" height="100px">
-                        <linearGradient id="hbE9Evnj3wAjjA2RX0We2a" x1="7.534" x2="27.557" y1="7.534" y2="27.557" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f44f5a"/><stop offset=".443" stop-color="#ee3d4a"/><stop offset="1" stop-color="#e52030"/></linearGradient><path fill="url(#hbE9Evnj3wAjjA2RX0We2a)" d="M42.42,12.401c0.774-0.774,0.774-2.028,0-2.802L38.401,5.58c-0.774-0.774-2.028-0.774-2.802,0 L24,17.179L12.401,5.58c-0.774-0.774-2.028-0.774-2.802,0L5.58,9.599c-0.774,0.774-0.774,2.028,0,2.802L17.179,24L5.58,35.599 c-0.774,0.774-0.774,2.028,0,2.802l4.019,4.019c0.774,0.774,2.028,0.774,2.802,0L42.42,12.401z"/><linearGradient id="hbE9Evnj3wAjjA2RX0We2b" x1="27.373" x2="40.507" y1="27.373" y2="40.507" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#a8142e"/><stop offset=".179" stop-color="#ba1632"/><stop offset=".243" stop-color="#c21734"/></linearGradient><path fill="url(#hbE9Evnj3wAjjA2RX0We2b)" d="M24,30.821L35.599,42.42c0.774,0.774,2.028,0.774,2.802,0l4.019-4.019 c0.774-0.774,0.774-2.028,0-2.802L30.821,24L24,30.821z"/></svg>                    </div>
-
-                <button class="btnx" (click)="cerrar1()">Cerrar</button>
-
-            </div>
-        </div>
-    </div>
 </div>
+
+<div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog"
+  aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+
+      </div>
+      <div class="modal-body row">
+        <app-clientes [formulario]="formulario" [status]="true"
+          (respuestaEnviada)="manejarRespuesta($event)"></app-clientes>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #enviocorrecto="bs-modal" tabindex="-1"
+  role="dialog"
+  aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div
+    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h4 class="modal-title">Cobro Realizado imprimir tickets</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="cardx">
+
+          <div class="titlex">Ticket</div>
+
+          <div class="iconx">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"
+              width="100px" height="100px">
+              <path
+                d="M32 122h10c1.7 0 3-1.3 3-3s-1.3-3-3-3H32c-3.9 0-7-3.1-7-7V99c0-1.7-1.3-3-3-3s-3 1.3-3 3v10C19 116.2 24.8 122 32 122zM86 122h10c7.2 0 13-5.8 13-13V99c0-1.7-1.3-3-3-3s-3 1.3-3 3v10c0 3.9-3.1 7-7 7H86c-1.7 0-3 1.3-3 3S84.3 122 86 122zM42 6H32c-7.2 0-13 5.8-13 13v10c0 1.7 1.3 3 3 3s3-1.3 3-3V19c0-3.9 3.1-7 7-7h10c1.7 0 3-1.3 3-3S43.7 6 42 6zM86 6c-1.7 0-3 1.3-3 3 0 .2 0 .3.1.5C83 9.7 83 9.8 83 10v9c0 7.2 5.8 13 13 13h9c.2 0 .3 0 .5-.1.2 0 .3 0 .5 0 1.7 0 3-1.3 3-3C109 16.3 98.7 6 86 6zM96 26c-3.9 0-7-3.1-7-7v-6.7c7 1.2 12.5 6.7 13.7 13.7H96zM39 59c0 1.7 1.3 3 3 3h44c1.7 0 3-1.3 3-3s-1.3-3-3-3H42C40.3 56 39 57.3 39 59zM89 74c0-1.7-1.3-3-3-3H42c-1.7 0-3 1.3-3 3s1.3 3 3 3h44C87.7 77 89 75.7 89 74zM69.2 89c0-1.7-1.3-3-3-3h-24c-1.7 0-3 1.3-3 3s1.3 3 3 3h24C67.9 92 69.2 90.7 69.2 89z" /></svg>
+          </div>
+
+          <button class="btnx"
+            (click)="printTicket(numeroFormateado)">Venta</button>
+
+        </div>
+        <div class="cardx">
+
+          <div class="titlex">Cerrar</div>
+
+          <div class="iconx">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
+              width="100px" height="100px">
+              <lineargradient id="hbE9Evnj3wAjjA2RX0We2a" x1="7.534" x2="27.557"
+                y1="7.534" y2="27.557" gradientUnits="userSpaceOnUse"><stop
+                  offset="0" stop-color="#f44f5a" /><stop offset=".443"
+                  stop-color="#ee3d4a" /><stop offset="1"
+                  stop-color="#e52030" /></lineargradient><path
+                fill="url(#hbE9Evnj3wAjjA2RX0We2a)"
+                d="M42.42,12.401c0.774-0.774,0.774-2.028,0-2.802L38.401,5.58c-0.774-0.774-2.028-0.774-2.802,0 L24,17.179L12.401,5.58c-0.774-0.774-2.028-0.774-2.802,0L5.58,9.599c-0.774,0.774-0.774,2.028,0,2.802L17.179,24L5.58,35.599 c-0.774,0.774-0.774,2.028,0,2.802l4.019,4.019c0.774,0.774,2.028,0.774,2.802,0L42.42,12.401z" /><lineargradient
+                id="hbE9Evnj3wAjjA2RX0We2b" x1="27.373" x2="40.507" y1="27.373"
+                y2="40.507" gradientUnits="userSpaceOnUse"><stop offset="0"
+                  stop-color="#a8142e" /><stop offset=".179"
+                  stop-color="#ba1632" /><stop offset=".243"
+                  stop-color="#c21734" /></lineargradient><path
+                fill="url(#hbE9Evnj3wAjjA2RX0We2b)"
+                d="M24,30.821L35.599,42.42c0.774,0.774,2.028,0.774,2.802,0l4.019-4.019 c0.774-0.774,0.774-2.028,0-2.802L30.821,24L24,30.821z" /></svg>
+          </div>
+
+          <button class="btnx" (click)="cerrar1()">Cerrar</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

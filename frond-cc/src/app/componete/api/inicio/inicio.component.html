@@ -1,41 +1,57 @@
-<div class="conten">
+<!--
+<div class="container text-center">
 
-
-<div class="container-fluid">
-  <br>
-        <div class="blue-line">
-          <div class="moving-text">
-            <ul class="reverse-list">
-              <li class="rli" *ngFor="let a of divisas">  {{a.grupo}} Compra: {{ a.compra }} , Venta: {{ a.venta }}  </li>
-            </ul>
+  <div class="row align-items-start flex-container">
+    <div class="col-md-6">
+      <div class="row t">
+        <div class="col-md-6 txt bold">
+          Bienvenido
+        </div>
+        <div class="col-md-6 txt2 bold colorred">
+          {{name}}
+        </div>
+      </div>
+      <div class="row an">
+        <div class="col-md-12">
+          <div class="recuadro fondoblue colorgray">
+            <p>{{dmo.razonsocial}}
+              Sucursal: {{dmo.nombresucursal}} <br>
+              Domicilio: {{dmo.domicilio}}
+            </p>
           </div>
         </div>
-  </div>
-  <div class="container d-flex justify-content-center align-items-center">
-  <div class="card">
-    <p class="card-title">Centro Cambiario {{dmo.razonsocial}}</p>
-    <p class="small-desc">
-      Sucursal: {{dmo.nombresucursal}} <br>
-      Domicilio: {{dmo.domicilio}}
-    </p>
-    <div class="go-corner">
-      <div class="go-arrow">→</div>
+      </div>
     </div>
-  </div>
-</div>
-<div class="content container mt-4 ">
-    <div class="content__container">
-      <p class="content__container__text">
-        Hola
-      </p>
-      
-      <ul class="content__container__list">
-        <li class="content__container__list__item">wellcome !</li>
-        <li class="content__container__list__item">{{name}} !</li>
-        <li class="content__container__list__item"><img src="../../../../assets/img/unnamed.png" style="height: 50px; width: auto;" class="txt"></li>
-        <li class="content__container__list__item">Bienvenido !</li>
-      </ul>
+    <div class="col-md-6">
     </div>
-</div>
 
+  </div>
+</div> -->
+
+<div class="container-fluid vh-100 d-flex flex-column">
+
+  <!-- Cuerpo dividido -->
+  <div class="row flex-grow-1">
+    <div
+      class="col-6 d-flex align-items-center justify-content-center  text-center txt bold">
+
+      <p>Bienvenido</p>
+    </div>
+    <div
+      class="col-6 d-flex align-items-center justify-content-center text-center txt2 bold colorred">
+      <p>
+        {{name}}
+      </p>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-md-12">
+      <div class="recuadro fondoblue colorgray">
+        <p>{{dmo.razonsocial}}
+          Sucursal: {{dmo.nombresucursal}} <br>
+          Domicilio: {{dmo.domicilio}}
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

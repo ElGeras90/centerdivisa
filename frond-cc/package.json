@@ -32,7 +32,6 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.31",
     "ngx-bootstrap": "^11.0.2",
-    "ngx-printer": "^1.4.0",
     "pdfmake": "^0.2.9",
     "rxjs": "~7.8.0",
     "socket.io-client": "^4.7.4",

@@ -1,5 +1,108 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: 3vw;}
-/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background-image: url("assets/img/fondoPagina.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    /* Hace que el fondo esté fijo */
+
+    background-size: 100% 100%;
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1rem;
+}
+
+.semibold {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.bold {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.extrabold {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.black {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+}
+
+
+.colorred {
+    color: #DD2726;
+}
+
+.fondorojo {
+    background-color: #DD2726;
+}
+
+.colorgray {
+    color: #D6D7D5;
+}
+
+.fondogray {
+    background-color: #D6D7D5;
+}
+
+.colorblue {
+    color: #0057C2;
+}
+
+.fondoblue {
+    background-color: #0057C2;
+}
+
+.colorblue2 {
+    color: #011C48;
+}
+
+.fondoblue2 {
+    background-color: #011C48;
+}
+
+.encabezado {
+    font-size: 80px;
+}
+
+input {
+    background-color: #D6D7D5;
+    color: #ffffff;
+    border-radius: 24.211px;
+    font-size: 1.5em;
+}
+
+input:placeholder {
+    color: white;
+    background-color: #D6D7D5;
+}
+
+input:focus,
+input:active {
+    background-color: #D6D7D5;
+    color: #ffffff;
+}
