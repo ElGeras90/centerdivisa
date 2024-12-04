@@ -27,6 +27,8 @@ import { AnonimosComponent } from './alertas/anonimos/anonimos.component';
 import { MovComponent } from './alertas/mov/mov.component';
 import { GalertComponent } from './alertas/galert/galert.component';
 import { MovimientosComponent } from './contable/movimientos/movimientos.component';
+import { CortecajaComponent } from './reporte/cortecaja/cortecaja.component';
+import { CortecajamComponent } from './reporte/cortecajam/cortecajam.component';
 
 const routes: Routes = [
     {
@@ -57,6 +59,8 @@ const routes: Routes = [
             { path: 'AlertasGenerales', component: MovComponent },
             { path: 'AlertasRegistros', component: GalertComponent },
             { path: 'Reportediario', component: MovimientosComponent },
+            { path: 'Cortecaja', component: CortecajaComponent },
+            { path: 'Registros', component: CortecajamComponent },
         ]
     },
 ];

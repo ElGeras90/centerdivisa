@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { cp, rol, Sucursal, Empresa, regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo, regulatorios, conta, Reportediario } from "./constantes"; // Importa LoginConstante directamente
+import { cp, rol, Sucursal, Empresa, regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo, regulatorios, conta, Reportediario, Documento } from "./constantes"; // Importa LoginConstante directamente
 
 @Injectable({
   providedIn: 'root'
@@ -141,5 +141,17 @@ export class cpservice {
   saldosdia(data: any) {
     return this._apiServicio.Post(data, Reportediario.URLreported);
 
+  }
+  DocCorteCaja(datos: any) {
+    return this._apiServicio.Download(datos, Documento.Urldoccorte)
+  }
+  Docmovimientos(datos: any) {
+    return this._apiServicio.Download(datos, Documento.Urldoclista)
+  }
+  CorteCaja(datos: any) {
+    return this._apiServicio.Post(datos, Documento.Urlvistacorte)
+  }
+  movimientos(datos: any) {
+    return this._apiServicio.Post(datos, Documento.Urlvistalista)
   }
 }

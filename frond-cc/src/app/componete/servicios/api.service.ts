@@ -37,7 +37,7 @@ export class ApiService {
         const jsonDecifrado = new TextDecoder().decode(bytes);
         let resultado = JSON.parse(jsonDecifrado);
 
-       
+
 
         // Devuelve el resultado con el tipo especificado
         return resultado;
@@ -53,7 +53,7 @@ export class ApiService {
         const jsonDecifrado = new TextDecoder().decode(bytes);
         let resultado = JSON.parse(jsonDecifrado);
 
-       
+
 
         // Devuelve el resultado con el tipo especificado
         return resultado;
@@ -71,17 +71,17 @@ export class ApiService {
   }
 
 
- /**  Download(ruta: string, parametros: HttpParams = new HttpParams()) {
-    return this.http.get(this._constante.API_ENDPOINT + ruta, {
-      headers: this.Cabeceros(),
-      params: parametros,
-      responseType: 'blob'
-    });
-  }*/
+  /**  Download(ruta: string, parametros: HttpParams = new HttpParams()) {
+     return this.http.get(this._constante.API_ENDPOINT + ruta, {
+       headers: this.Cabeceros(),
+       params: parametros,
+       responseType: 'blob'
+     });
+   }*/
 
-  Download(data: any,ruta:String): Observable<Blob> {
-    return this.http.post(this._constante.API_ENDPOINT+ruta, data, 
-      { headers:  this.Cabeceros(), responseType: 'blob' });
+  Download(data: any, ruta: String): Observable<Blob> {
+    return this.http.post(this._constante.API_ENDPOINT + ruta, data,
+      { headers: this.Cabeceros(), responseType: 'blob' });
   }
 
 

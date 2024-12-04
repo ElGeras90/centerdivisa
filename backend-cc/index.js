@@ -1,6 +1,8 @@
 express = require('express');
+require('dotenv').config(); // Cargar variables de entorno desde .env
+
 const app = express();
-const port = 3004;
+const port = process.env.PORT || 3004;
 const cors = require('cors'); // Importa el paquete cors
 const path = require('path'); // Importa el módulo 'path'
 const accesosrol = require('./routes/accesorolRoute');
@@ -18,6 +20,7 @@ const encriptarjsong = require('./util/encriptarjson');
 const { js2xml } = require('xml-js');
 const regulatorios = require('./routes/regulatorioRoute')
 const conta = require('./routes/reportecontables');
+const reporte = require('./routes/documentoRoute')
 // Configurar cabeceras y cors
 app.use(helmet());
 
@@ -79,18 +82,23 @@ app.use('/app', naproxeno);
 app.use('/matriz', diclofenaco)
 app.use('/rg', regulatorios)
 app.use('/conta', conta)
+app.use('/reporte', reporte)
 // para restablecer la contraseña 
 
-// Configurar opciones SSL
-const options = {
-  key: fs.readFileSync('key/localhost-key.pem'),
-  cert: fs.readFileSync('key/localhost.pem'),
-};
 
-// Crear servidor HTTPS
-//const server = https.createServer(options, app);
+if (process.env.NODE_ENV === 'production') {
+  // Configurar opciones SSL
+  const options = {
+    key: fs.readFileSync('/home/remicashbd/ssl/cc/cc.key'),
+    cert: fs.readFileSync('/home/remicashbd/ssl/cc/cc.crt'),
+  };
 
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor HTTPS escuchando en el puerto ${port}`);
-});
+
+  https.createServer(options, app).listen(port, () => {
+    console.log(`Servidor HTTPS corriendo en https://localhost:${port}`);
+  });
+} else {
+  app.listen(port, () => {
+    console.log(`Servidor HTTP corriendo en http://localhost:${port}`);
+  });
+}

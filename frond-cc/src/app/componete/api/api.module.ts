@@ -35,6 +35,8 @@ import { AlertaFlotanteComponent } from '../alerta-flotante/alerta-flotante.comp
 import { GalertComponent } from './alertas/galert/galert.component';
 import { PieComponent } from './pie/pie.component';
 import { MovimientosComponent } from './contable/movimientos/movimientos.component';
+import { CortecajaComponent } from './reporte/cortecaja/cortecaja.component';
+import { CortecajamComponent } from './reporte/cortecajam/cortecajam.component';
 
 
 
@@ -72,7 +74,9 @@ import { MovimientosComponent } from './contable/movimientos/movimientos.compone
         MovComponent,
         AlertaFlotanteComponent,
         GalertComponent,
-        PieComponent
+        PieComponent,
+        CortecajaComponent,
+        CortecajamComponent
     ],
     imports: [
         CommonModule,

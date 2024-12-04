@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,7 @@ import {io} from 'socket.io-client';
 export class SocketService {
   private socket: any;
   //private readonly serverUrl = 'http://localhost:3069'; // URL del servidor Socket.IO
-  private readonly serverUrl  = "http://binmtec.co:3003/";
+  private readonly serverUrl = "https://inmtecdivisas.mx:3003/";
   constructor() { }
 
   // Inicializar la conexión con el servidor
@@ -27,10 +27,10 @@ export class SocketService {
     this.socket.emit('message', message);
   }
 
-    // Enviar un mensaje privado al servidor
-    public sendPrivateMessage(recipient: string, message: string): void {
-      this.socket.emit('privateMessage', { recipient: recipient, message: message });
-    }
+  // Enviar un mensaje privado al servidor
+  public sendPrivateMessage(recipient: string, message: string): void {
+    this.socket.emit('privateMessage', { recipient: recipient, message: message });
+  }
 
   // Escuchar mensajes del servidor
   public onMessageReceived(): any {

@@ -4,12 +4,12 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfiguracionConstante {
-	public API_ENDPOINT = "http://localhost:3004/";
-	//public API_ENDPOINT = "http://binmtec.co:3004/";
+	public API_ENDPOINT = "http://localhost:3000/";
+	//public API_ENDPOINT = "https://inmtecdivisas.mx:3004/";
 }
 export class pld_data {
 	// public API_ENDPOINT_PLD = "http://localhost:3000/";
-	public API_ENDPOINT_PLD = "http://binmtec.co:3002/";
+	public API_ENDPOINT_PLD = "https://inmtecdivisas.mx:3002/";
 }
 export class LoginConstante {
 	public static URLLogin = "auth/login";
@@ -101,4 +101,11 @@ export class conta {
 }
 export class Reportediario {
 	public static URLreported = 'conta/cvd'
+}
+export class Documento {
+	public static Urlvistacorte = 'reporte/cortecaja'
+	public static Urldoccorte = 'reporte/cortecajadoc'
+	public static Urlvistalista = 'reporte/vistalista'
+	public static Urldoclista = 'reporte/vistalistadoc'
+
 }

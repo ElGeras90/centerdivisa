@@ -7,9 +7,12 @@
 
   <div class="row flex-container tm">
     <div class="col-md-6">
-      <img src="../../../../assets/img/Centro cambiario logo-03.png"
-        class="image">
+      <a [routerLink]="['/api']">
+        <img src="../../../../assets/img/Centro cambiario logo-03.png"
+          class="image">
+      </a>
     </div>
+
     <div class="col-md-6 derecha">
       <div class="demo-section img" *ngIf="rol=='PLD'">
         <button class="d-flex btn btn-outline-info" (click)="riesgo.show()">

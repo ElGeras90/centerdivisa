@@ -1,0 +1,72 @@
+<div class="container mt-4">
+    <!-- Campo de fecha y botón Buscar -->
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="fecha" class="form-label">Seleccione una fecha:</label>
+            <input
+                id="fecha"
+                type="date"
+                class="form-control"
+                [(ngModel)]="fechaSeleccionada"
+                placeholder="dd-mm-yyyy" />
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn btn-primary w-100" (click)="buscar()">
+                Buscar
+            </button>
+        </div>
+        <div class="col-md-2 offset-md-4 d-flex align-items-end">
+            <button class="btn btn-success w-100" (click)="descargarExcel()">
+                <i class="bi bi-file-earmark-excel"></i> Descargar
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabla -->
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
+        <!-- Columna Sucursal -->
+        <ng-container matColumnDef="Sucursal">
+            <th mat-header-cell *matHeaderCellDef> DIVISA </th>
+            <td mat-cell *matCellDef="let row"> {{ row.grupo }} </td>
+        </ng-container>
+
+        <!-- Columna Divisa -->
+        <ng-container matColumnDef="Divisa">
+            <th mat-header-cell *matHeaderCellDef> TIPO DIVISA </th>
+            <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <!-- Columna Entrada -->
+        <ng-container matColumnDef="Entrada">
+            <th mat-header-cell *matHeaderCellDef> CANTIDAD EN CAJA </th>
+            <td mat-cell *matCellDef="let row" class="text-right"> {{
+                row.total_monto |
+                currency:'USD':'symbol':'1.2-2' }} </td>
+        </ng-container>
+
+        <!-- Columna Salida -->
+        <ng-container matColumnDef="Salida">
+            <th mat-header-cell *matHeaderCellDef> VALOR UNITARIO </th>
+            <td mat-cell *matCellDef="let row" class="text-right"> {{
+                row.tipocambio |
+                currency:'USD':'symbol':'1.2-2' }} </td>
+        </ng-container>
+
+        <!-- Columna Descripcion -->
+        <ng-container matColumnDef="Descripcion">
+            <th mat-header-cell *matHeaderCellDef> VALOR TOTAL EN MONEDA LOCAL
+            </th>
+            <td mat-cell *matCellDef="let row" class="text-right"> {{
+                row.total_convertido |
+                currency:'USD':'symbol':'1.2-2'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        showFirstLastButtons>
+    </mat-paginator>
+</div>
