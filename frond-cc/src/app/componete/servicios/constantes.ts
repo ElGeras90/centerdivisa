@@ -4,12 +4,12 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfiguracionConstante {
-	public API_ENDPOINT = "http://localhost:3000/";
-	//public API_ENDPOINT = "https://inmtecdivisas.mx:3004/";
+	//public API_ENDPOINT = "http://localhost:3000/";
+	public API_ENDPOINT = "http://187.189.235.152:3004/";
 }
 export class pld_data {
 	// public API_ENDPOINT_PLD = "http://localhost:3000/";
-	public API_ENDPOINT_PLD = "https://inmtecdivisas.mx:3002/";
+	public API_ENDPOINT_PLD = "http://187.189.235.152:3002/";
 }
 export class LoginConstante {
 	public static URLLogin = "auth/login";
@@ -17,7 +17,7 @@ export class LoginConstante {
 
 export class usuarios {
 	public static URLUsuarios = "accsosrol/user";
-}
+} 
 
 export class cp {
 	public static URLcp = "cp/cp";

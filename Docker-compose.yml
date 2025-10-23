@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend-cc
+    container_name: backend_centerdivisa
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frond-cc
+    container_name: frontend_centerdivisa
+    ports:
+      - "80:82"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
