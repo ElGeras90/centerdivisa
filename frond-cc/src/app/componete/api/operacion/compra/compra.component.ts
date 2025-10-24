@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-compra',
   templateUrl: './compra.component.html',
-  styleUrls: ['./compra.component.css', './compra.component.Scss']
+  styleUrls: ['./compra.component.css', './compra.component.scss']
 })
 export class CompraComponent {
 

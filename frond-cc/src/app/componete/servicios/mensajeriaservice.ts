@@ -9,7 +9,7 @@ import { Socket, io } from 'socket.io-client';
 })
 export class SocketService {
 
-    private socket: any= io('http://localhost:3069');
+    private socket: any= io('http://3.149.144.183:3069');
   
   
     ngOnDestroy() {
