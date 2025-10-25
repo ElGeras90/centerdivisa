@@ -55,7 +55,6 @@ jobs:
             docker stop backend || true
             docker rm backend || true
             docker run -d --name backend -p 3004:3004 \
-              --env-file /home/${{ secrets.SERVER_USER }}/backend-cc/.env \
               --restart unless-stopped \
               ${{ secrets.DOCKER_USERNAME }}/backend-cc:latest
 
