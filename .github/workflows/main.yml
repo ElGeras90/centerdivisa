@@ -10,60 +10,69 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Clonar el repositorio
+      # 1️⃣ Clonar el repositorio localmente en Actions
       - name: Checkout code
         uses: actions/checkout@v4
 
       # 2️⃣ Login en Docker Hub
-      - name: Login to DockerHub
+      - name: Login DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 3️⃣ Construir imagen Backend
+      # 3️⃣ Build Backend
       - name: Build Backend image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-cc:latest ./backend-cc
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/backend-cc:latest ./backend-cc
 
-      # 4️⃣ Construir imagen Frontend
+      # 4️⃣ Build Frontend
       - name: Build Frontend image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest ./frond-cc
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest ./frond-cc
 
-      # 5️⃣ Publicar imagen Backend
+      # 5️⃣ Push Backend
       - name: Push Backend image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/backend-cc:latest
 
-      # 6️⃣ Publicar imagen Frontend
-        # (revisa el nombre "frond-cc" si es correcto)
+      # 6️⃣ Push Frontend
       - name: Push Frontend image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
 
-      # 7️⃣ Desplegar en AWS EC2
+      # 7️⃣ Deploy automático en EC2
       - name: Deploy on AWS EC2
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }} # <= debe ser 'ubuntu'
+          username: ${{ secrets.SERVER_USER }} # por ejemplo 'ubuntu'
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            echo "🚀 Desplegando Backend y Frontend en EC2..."
+            echo "🚀 Desplegando aplicación CenterDivisa en EC2..."
 
-            # Navegar al proyecto (ajusta si está en otra ruta)
-            cd /home/${{ secrets.SERVER_USER }}/centerdivisa
+            # Crear carpeta si no existe y clonar repo
+            if [ ! -d "/home/${{ secrets.SERVER_USER }}/centerdivisa" ]; then
+              echo "Repositorio no existe, clonando..."
+              cd /home/${{ secrets.SERVER_USER }}
+              git clone https://github.com/ElGeras90/centerdivisa.git
+            else
+              echo "Repositorio ya existe, actualizando..."
+              cd /home/${{ secrets.SERVER_USER }}/centerdivisa
+              git reset --hard
+              git pull origin main
+            fi
 
-            # Login en Docker Hub
+            # Login a Docker Hub
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
-            # Detener contenedores antiguos
-            docker compose down || true
-
-            # Actualizar imágenes
+            # Bajar las últimas imágenes
             docker pull ${{ secrets.DOCKER_USERNAME }}/backend-cc:latest
             docker pull ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
 
-            # Levantar todo con docker-compose
-            docker compose up -d --build
+            # Asegurarse que docker-compose use las imágenes del Hub
+            sed -i "s|build:.*backend-cc.*|image: ${{ secrets.DOCKER_USERNAME }}/backend-cc:latest|" docker-compose.yml
+            sed -i '/context:/,+1d' docker-compose.yml
+            sed -i "s|build:.*frond-cc.*|image: ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest|" docker-compose.yml
 
-            echo "✅ Despliegue completado con éxito."
+            # Levantar contenedores
+            docker compose down
+            docker compose up -d --force-recreate
+
+            echo "✅ Despliegue completado correctamente"
