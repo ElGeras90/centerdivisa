@@ -3,12 +3,20 @@ FROM node:18-alpine AS build
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
-RUN npm run build 
+RUN npm run build --prod
 
 # Etapa 2: Servir con Nginx
 FROM nginx:alpine
+
+# Copiar archivos de build al servidor de Nginx
 COPY --from=build /app/dist/frond-cc /usr/share/nginx/html
-EXPOSE 82
+
+# Configuración personalizada de Nginx (opcional)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Exponer el puerto interno del contenedor (Nginx usa 80)
+EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]

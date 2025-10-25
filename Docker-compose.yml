@@ -1,21 +1,29 @@
-version: '3.8'
+version: "3.9"
 
 services:
   backend:
-    build: ./backend-cc
-    container_name: backend_centerdivisa
+    build:
+      context: ./backend-cc
+      dockerfile: Dockerfile
+    container_name: backend-cc
     ports:
-      - "3000:3000"
+      - "3004:3004"
+    env_file:
+      - ./backend-cc/.env
+    restart: always
     networks:
       - app-network
 
   frontend:
-    build: ./frond-cc
-    container_name: frontend_centerdivisa
+    build:
+      context: ./frond-cc
+      dockerfile: Dockerfile
+    container_name: frond-cc
     ports:
-      - "80:82"
+      - "82:80"
     depends_on:
       - backend
+    restart: always
     networks:
       - app-network
 
