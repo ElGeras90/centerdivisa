@@ -15,6 +15,7 @@ import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 })
 export class LoginComponent {
   hide = true;
+showPassword: boolean = false;
 
   private motivationalQuotes: string[] = [
       "El éxito no es la clave de la felicidad. La felicidad es la clave del éxito. Si amas lo que haces, serás exitoso.",
