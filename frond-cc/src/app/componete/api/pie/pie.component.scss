@@ -1,0 +1,33 @@
+.footer {
+  background-color: white;
+  color: white;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba(255,255,255,0.2);
+
+  a {
+    color: white;
+    transition: color 0.3s;
+    &:hover {
+      color: blanchedalmond;
+      text-decoration: none;
+    }
+  }
+
+  .footer-logo {
+    width: 150px;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+    }
+  }
+}

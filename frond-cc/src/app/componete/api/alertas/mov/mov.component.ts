@@ -47,12 +47,10 @@ export class MovComponent {
       estado: 'Estado de Prueba'
     };
     this.beni=true;
-    console.log(this.beneficiario)
   }
 
   enviarMonto() {
     // Lógica para enviar el monto (puedes implementarla según tus necesidades)
-    console.log('Monto a enviar:', this.montoEnviar);
   }
   
 }

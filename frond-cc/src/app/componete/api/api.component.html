@@ -1,3 +1,12 @@
-<app-nav></app-nav>
-<router-outlet></router-outlet>
-<app-pie></app-pie>
+<div class="app-container d-flex flex-column min-vh-100">
+  <app-nav></app-nav>
+
+  <!-- Contenido principal (router) -->
+  <main class="flex-grow-1">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer / menú fijo -->
+  <app-pie class="mt-auto"></app-pie>
+  
+</div>

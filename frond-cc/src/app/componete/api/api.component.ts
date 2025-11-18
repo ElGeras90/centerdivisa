@@ -36,7 +36,6 @@ export class ApiComponent implements OnInit {
      const dmo = JSON.parse(dmnues);
 
      this.menus = dmo
-     console.log(this.menus)
       
     } 
     if (localStorage.getItem('ID') == null) {

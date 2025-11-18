@@ -45,7 +45,6 @@ export class AnonimosComponent {
     this.cp.anonimus(a).subscribe(
       (data: any) => {
        this.mensajes=data.info[0].manage_anonimosmsj.data;
-          console.log(data)
           //this.socketService.sendPrivateMessage('cc-'+registro.usuario,'1');
            
       }, (error: any) => {

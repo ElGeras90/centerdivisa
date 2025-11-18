@@ -56,7 +56,7 @@ export class NavComponent implements OnInit {
     const dmnues = localStorage.getItem('menus');
     if (dmnues !== null) {
       const dmo = JSON.parse(dmnues);
-
+      console.log(dmo)
       this.menus = dmo
       this.user = localStorage.getItem('usuario');
       this.rol = localStorage.getItem('rol');
@@ -121,7 +121,6 @@ export class NavComponent implements OnInit {
   xdalert() {
     this.xd.alertar().subscribe({
       next: (data: any) => {
-        console.log("Datos recibidos:", data);
         this.calert = data.info[0].total_alertas;
       },
       error: (error: any) => {
@@ -182,4 +181,15 @@ export class NavComponent implements OnInit {
     )
 
   }
+
+  sidebarOpen = false;
+
+toggleSidebar() {
+  this.sidebarOpen = !this.sidebarOpen;
+}
+
+toggleSubmenu(menu: any) {
+  menu.open = !menu.open;
+}
+
 }

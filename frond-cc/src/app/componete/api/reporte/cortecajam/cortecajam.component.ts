@@ -59,7 +59,6 @@ export class CortecajamComponent {
             });
             return
           }
-          console.log(v)
           const allDetails = v.info.map((item: { detalles: any; }) => item.detalles).flat();
 
           this.dataSource.data = allDetails

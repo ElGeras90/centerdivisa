@@ -1,2 +1,67 @@
-<!-- report.component.html -->
-<button (click)="downloadReport()">Download Report</button>
+<div class="container mt-4">
+  <mat-card>
+    <mat-card-title>Generar Reporte DE1 - Operaciones Relevantes</mat-card-title>
+    <mat-card-content>
+
+      <form [formGroup]="reporteForm" (ngSubmit)="generarReporte()">
+        <div class="row">
+          <!-- Año -->
+          <div class="col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Año</mat-label>
+              <input matInput type="number" formControlName="anio" placeholder="Ej. 2025" />
+            </mat-form-field>
+          </div>
+
+          <!-- Trimestre -->
+          <div class="col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Trimestre</mat-label>
+              <mat-select formControlName="trimestre" (selectionChange)="actualizarFechas()">
+                <mat-option *ngFor="let t of trimestres" [value]="t.id">{{ t.nombre }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- Clave del sujeto -->
+          <div class="col-md-5">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Clave del sujeto obligado</mat-label>
+              <input matInput formControlName="clave_sujeto" placeholder="Ej. CC123456789" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Fechas calculadas automáticamente -->
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha inicio</mat-label>
+              <input matInput [matDatepicker]="inicioPicker" formControlName="fecha_inicio" readonly />
+              <mat-datepicker-toggle matSuffix [for]="inicioPicker"></mat-datepicker-toggle>
+              <mat-datepicker #inicioPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Fecha fin</mat-label>
+              <input matInput [matDatepicker]="finPicker" formControlName="fecha_fin" readonly />
+              <mat-datepicker-toggle matSuffix [for]="finPicker"></mat-datepicker-toggle>
+              <mat-datepicker #finPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Botón -->
+        <div class="text-end mt-4">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!reporteForm.valid">
+            <mat-icon>description</mat-icon>
+            Generar Reporte DE1
+          </button>
+        </div>
+      </form>
+
+    </mat-card-content>
+  </mat-card>
+</div>

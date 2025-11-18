@@ -82,7 +82,6 @@ export class UsuariosComponent {
     this.idrol = localStorage.getItem('idrol')
     this.consultar();
     this.consultarol();
-    console.log(this.empresa +' '+ this.idrol)
     if(this.idrol == 1){
     this.Empresas();
     }else{
@@ -118,6 +117,16 @@ export class UsuariosComponent {
 
     this.user.User(info).subscribe(
       (data: any) => {
+        if(data.resultado[0].manage_user.action == 'error'){
+          Swal.fire({
+            icon: data.resultado[0].manage_user.action, 
+            title: data.resultado[0].manage_user.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+         return;
+        }
+
         Swal.fire({
           icon: data.resultado[0].manage_user.action,
           title: data.resultado[0].manage_user.message,
@@ -312,6 +321,17 @@ export class UsuariosComponent {
     }
     this.user.User(info).subscribe(
       (data: any) => {
+
+         if(data.resultado[0].manage_user.action == 'error'){
+          Swal.fire({
+            icon: data.resultado[0].manage_user.action, 
+            title: data.resultado[0].manage_user.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+         return;
+        }
+        
         Swal.fire({
           icon: data.resultado[0].manage_user.action,
           title: data.resultado[0].manage_user.message,
@@ -395,10 +415,8 @@ export class UsuariosComponent {
   seleccionarSucursal(event: Event) {
     const selectedValue = (event.target as HTMLInputElement).value;
 
-    console.log(selectedValue)
     if (selectedValue !== null) {
       this.llenardatos = this.sucursales.find((item: any) => item.empresaid == selectedValue);
-      console.log(this.llenardatos)
 
     }
   }
@@ -485,7 +503,6 @@ export class UsuariosComponent {
 
         } else {
           this.sucursales = data.resultado[0].manage_sucursal.data;
-          console.log(this.sucursales)
         }
       }, (error: any) => {
         Swal.fire({

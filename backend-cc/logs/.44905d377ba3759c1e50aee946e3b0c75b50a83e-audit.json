@@ -1,0 +1,60 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "logs\\.44905d377ba3759c1e50aee946e3b0c75b50a83e-audit.json",
+    "files": [
+        {
+            "date": 1762536127794,
+            "name": "logs\\2025-11-07-requests.log",
+            "hash": "b70f595be74c2c209f569bc335144deac1ae4db55fc060a756040afca8c00c9c"
+        },
+        {
+            "date": 1762582128532,
+            "name": "logs\\2025-11-08-requests.log",
+            "hash": "4b59655db6ebe92be42e09e06faf67e608d8f5586057dc4c07251bd05cd4b83e"
+        },
+        {
+            "date": 1762704285621,
+            "name": "logs\\2025-11-09-requests.log",
+            "hash": "c58e3bef2db3523343931dc601452e0cb83aa4f00138950e59398a85116d5410"
+        },
+        {
+            "date": 1762755593233,
+            "name": "logs\\2025-11-10-requests.log",
+            "hash": "0ac4e0627354a1e6611a4e7e5292273413b324d4aa6874561305d0d85ea2c0a3"
+        },
+        {
+            "date": 1762873210729,
+            "name": "logs\\2025-11-11-requests.log",
+            "hash": "c22d888ebc09d841854dc9dd0878b861dfaf7bbf11c11140cf86649c3c7c3793"
+        },
+        {
+            "date": 1762929102306,
+            "name": "logs\\2025-11-12-requests.log",
+            "hash": "cf7653759af840771bd51c0d63bfb3afd8a06d3d1426b0397949498e2252d03d"
+        },
+        {
+            "date": 1763014435026,
+            "name": "logs\\2025-11-13-requests.log",
+            "hash": "3aeafb44c6655dc629b48d094401176451748657913b1971775f9b011243a791"
+        },
+        {
+            "date": 1763151784638,
+            "name": "logs\\2025-11-14-requests.log",
+            "hash": "3948c528700c001e4a62743bee9f526fec357c5eb1e8f0f19fe8fd28265a07d8"
+        },
+        {
+            "date": 1763357280541,
+            "name": "logs\\2025-11-16-requests.log",
+            "hash": "43c5aa306fda1f3a5a5b96b2ad30767e295897c2bb5bf12cc932d7406bcbe7e5"
+        },
+        {
+            "date": 1763359596896,
+            "name": "logs\\2025-11-17-requests.log",
+            "hash": "e2c47b95175de8746a09f483ca87dc72ddad402a76d8ed7de23c2b459f5e597d"
+        }
+    ],
+    "hashType": "sha256"
+}

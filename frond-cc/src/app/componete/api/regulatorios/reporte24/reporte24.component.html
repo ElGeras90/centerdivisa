@@ -1,1 +1,67 @@
-<p>reporte24 works!</p>
+<div class="container mt-4">
+  <h3>📊 Reporte de Operaciones 24h</h3>
+
+  <form [formGroup]="formulario" class="row g-3 align-items-end">
+    <div class="form-group col-md-6">
+      <label for="sucursalid">Sucursal:</label>
+      <select class="form-control" id="sucursalid" formControlName="sucursalid">
+        <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">
+          {{ dat.nombre_sucursal }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <button type="button" class="btn btn-primary w-100" (click)="generarReporte()" [disabled]="cargando">
+        {{ cargando ? 'Generando...' : 'Buscar' }}
+      </button>
+    </div>
+
+    <div class="col-md-3">
+      <button type="button" class="btn btn-success w-100" (click)="exportarExcel()" [disabled]="!resultados.length">
+        Exportar XLS
+      </button>
+    </div>
+  </form>
+
+  <hr>
+
+  <div *ngIf="resultados.length > 0">
+    <table class="table table-bordered table-striped mt-3">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Cliente</th>
+          <th>Moneda</th>
+          <th>Monto MN</th>
+          <th>Monto ME</th>
+          <th>Tipo Cambio</th>
+          <th>Tipo Operación</th>
+          <th>Fecha Registro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of resultados; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.cliente }}</td>
+          <td>{{ item.moneda }}</td>
+          <td>{{ item.monto_mn | number:'1.2-2' }}</td>
+          <td>{{ item.monto_me | number:'1.2-2' }}</td>
+          <td>{{ item.tipocambio }}</td>
+          <td>{{ item.tipo_operacion }}</td>
+          <td>{{ item.fecharegistro | date:'short' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-info mt-3">
+      <strong>Total Operaciones:</strong> {{ total_ops }} |
+      <strong>Total MN:</strong> {{ total_mn | number:'1.2-2' }} |
+      <strong>Total ME:</strong> {{ total_me | number:'1.2-2' }}
+    </div>
+  </div>
+
+  <div *ngIf="!resultados.length && !cargando" class="mt-3 text-muted">
+    No hay resultados para mostrar.
+  </div>
+</div>

@@ -7,7 +7,6 @@ const conta = require('./../model/ContaModel')
 
 function saldos(req, res) {
   let resquest = encriptarjsong.decrypt(req.body.resultado)
-  conta.saldos(resquest)
     .then(info => {
       let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows }));
 

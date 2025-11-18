@@ -59,78 +59,130 @@
 </div>
 
 <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h4 class="modal-title" *ngIf="info ==true">AGREGAR MOVIMIENTO</h4>
-                <h4 class="modal-title" *ngIf="info ==false">EDITAR MOVIMIENTO</h4>
-
-            </div>
-
-            <div class="modal-body row">
-
-                <form class="form-responsive">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                           Entradas y Sulidas de sucursal
-                        </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="form-group col" *ngIf="sinsucursal == true">
-                                    <label for="sucursalid">Sucursal:</label>
-                                    <select class="form-control" id="sucursalid"  [(ngModel)]="idsucursalid"  [ngModelOptions]="{standalone: true}">
-                                      <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">{{ dat.nombre_sucursal }}</option>
-                                      <!-- Agrega más opciones según tus necesidades -->
-                                    </select>
-                                </div>
-
-                                <div class="form-group col">
-                                    <label for="grupodivisa">Divisa:</label>
-                                    <select class="form-control" id="grupodivisa"  [(ngModel)]="idgrupodivisa"  [ngModelOptions]="{standalone: true}">
-                                      <option *ngFor="let dat of grupodivisa" [value]="dat.idgrupo">{{ dat.grupo }}</option>
-                                      <!-- Agrega más opciones según tus necesidades -->
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group form-check">
-                                    <label class="form-check-label" for="exampleCheck1">Tipo de movimiento</label>
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" [checked]="isChecked" (change)="isChecked = !isChecked">
-                                    {{ isChecked ? 'Entrada' : 'Salida' }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="numero">Entrada:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="entrada" [ngModelOptions]="{standalone: true}" [disabled]="!isChecked" />
-                                </div>
-                                <div class="form-group col">
-                                    <label for="numero">Salida:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="salida" [ngModelOptions]="{standalone: true}" [disabled]="isChecked" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group ">
-                                    <label class="form-check-label" id = "descripcion">Descripcion</label>
-                                     <input type="text" class="form-control" [(ngModel)]="descripcion" [ngModelOptions]="{standalone: true}" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
-
-                <div class="row">
-                    <div class="col-6 text-left"> <!-- Alinea el primer botón a la izquierda -->
-                        <button class="btn btn-primary mt-4"  *ngIf="info ==true" (click)="guardarmovimiento()">Guardar</button>
-                    </div>
-                    <div class="col-6 text-right"> <!-- Alinea el segundo botón a la derecha -->
-                        <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-content shadow-lg border-0 rounded-3">
+    <div class="modal-header bg-primary text-white">
+      <h4 class="modal-title mb-0">
+        <i class="bi bi-cash-coin me-2"></i>
+        {{ info ? 'Agregar Movimiento' : 'Detalle de Movimiento' }}
+      </h4>
+      <button type="button" class="btn-close btn-close-white" (click)="will.hide()"></button>
     </div>
+
+    <div class="modal-body">
+      <form class="form-responsive needs-validation" novalidate>
+        <div class="card border-0 shadow-sm mb-4">
+          <div class="card-header bg-light fw-semibold">
+            <i class="bi bi-arrow-left-right me-2"></i> Entradas y Salidas de Sucursal
+          </div>
+          <div class="card-body">
+            <!-- Sucursal y Divisa -->
+            <div class="row g-3 align-items-end">
+              <div class="col-md-6" *ngIf="sinsucursal == true">
+                <label for="sucursalid" class="form-label">Sucursal</label>
+                <select
+                  class="form-select"
+                  id="sucursalid"
+                  [(ngModel)]="idsucursalid"
+                  [ngModelOptions]="{ standalone: true }"
+                  required
+                >
+                  <option value="">Seleccione una sucursal</option>
+                  <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">
+                    {{ dat.nombre_sucursal }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="grupodivisa" class="form-label">Divisa</label>
+                <select
+                  class="form-select"
+                  id="grupodivisa"
+                  [(ngModel)]="idgrupodivisa"
+                  [ngModelOptions]="{ standalone: true }"
+                  required
+                >
+                  <option value="">Seleccione una divisa</option>
+                  <option *ngFor="let dat of grupodivisa" [value]="dat.idgrupo">
+                    {{ dat.grupo }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <hr class="my-4" />
+
+            <!-- Tipo de movimiento -->
+            <div class="form-check form-switch mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="tipoMovimiento"
+                [checked]="isChecked"
+                (change)="isChecked = !isChecked"
+              />
+              <label class="form-check-label fw-semibold" for="tipoMovimiento">
+                Tipo de movimiento: {{ isChecked ? 'Entrada' : 'Salida' }}
+              </label>
+            </div>
+
+            <!-- Entrada y salida -->
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Entrada</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="0.00"
+                  [(ngModel)]="entrada"
+                  [ngModelOptions]="{ standalone: true }"
+                  [disabled]="!isChecked"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Salida</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="0.00"
+                  [(ngModel)]="salida"
+                  [ngModelOptions]="{ standalone: true }"
+                  [disabled]="isChecked"
+                />
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="mt-4">
+              <label class="form-label">Descripción</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                placeholder="Motivo o detalle del movimiento"
+                [(ngModel)]="descripcion"
+                [ngModelOptions]="{ standalone: true }"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Botones -->
+      <div class="d-flex justify-content-between mt-3">
+        <button
+          class="btn btn-primary px-4"
+          *ngIf="info == true"
+          (click)="guardarmovimiento()"
+        >
+          <i class="bi bi-save me-1"></i> Guardar
+        </button>
+        <button class="btn btn-outline-secondary px-4" (click)="will.hide()">
+          <i class="bi bi-x-circle me-1"></i> Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>

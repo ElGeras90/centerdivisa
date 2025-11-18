@@ -1,0 +1,11 @@
+[2025-11-14T20:47:42.559Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 393ms body: {"option":1,"tipo_alerta":"Relevante"}
+[2025-11-14T20:47:42.576Z] POST /divisa/sucursal usuario: anonimo ip: ::1 status: 200 duration: 428ms body: {"sucursal":1}
+[2025-11-14T20:47:47.870Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 76ms body: {"option":1,"tipo_alerta":"Relevante"}
+[2025-11-14T20:48:03.238Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 522ms body: {"option":1,"tipo_alerta":"Inusual"}
+[2025-11-14T20:48:13.273Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 129ms body: {"option":3,"tipo_alerta":"Inusual","fecha_inicio":"2025-11-01","fecha_fin":"2025-11-15"}
+[2025-11-14T20:59:27.590Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 434ms body: {"option":1,"tipo_alerta":"Relevante"}
+[2025-11-14T20:59:27.661Z] POST /divisa/sucursal usuario: anonimo ip: ::1 status: 200 duration: 521ms body: {"sucursal":1}
+[2025-11-14T21:02:52.040Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 493ms body: {"option":1,"tipo_alerta":"Relevante"}
+[2025-11-14T21:02:52.055Z] POST /divisa/sucursal usuario: anonimo ip: ::1 status: 200 duration: 519ms body: {"sucursal":1}
+[2025-11-14T21:02:55.205Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 84ms body: {"option":1,"tipo_alerta":"Inusual"}
+[2025-11-14T21:03:07.447Z] POST /alertas-montos/consultar usuario: anonimo ip: ::1 status: 200 duration: 531ms body: {"option":3,"tipo_alerta":"Inusual","fecha_inicio":"2025-11-01","fecha_fin":"2025-11-15"}

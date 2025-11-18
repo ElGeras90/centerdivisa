@@ -62,7 +62,6 @@ export class LoginComponent {
 
   // Función para enviar el formulario
   async onSubmit() {
-    console.log(this.loginForm.value.usuario);
     if (this.loginForm.valid) {
       const usuarioControl = this.loginForm.value.usuario;
       const contraseñaControl = this.loginForm.value.contraseña;

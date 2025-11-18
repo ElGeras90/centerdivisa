@@ -5,7 +5,8 @@ const encriptarjsong = require('./../util/encriptarjson');
 
 function manage_encargados(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
     manage.consultapermisos(resquest.user)
         .then(resultado => {
             let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado: resultado.rows }));
@@ -19,7 +20,8 @@ function manage_encargados(req, res) {
 
 }
 function manage_encargado(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.encargados_sp(resquest)
         .then(resultado => {
@@ -35,7 +37,8 @@ function manage_encargado(req, res) {
 }
 
 function consultadivisa(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.consultadivisa(resquest)
         .then(resultado => {

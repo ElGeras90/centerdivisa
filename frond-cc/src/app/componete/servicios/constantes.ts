@@ -4,12 +4,12 @@ import { Injectable } from "@angular/core";
 })
 
 export class ConfiguracionConstante {
-	//public API_ENDPOINT = "http://localhost:3000/";
-	public API_ENDPOINT = "http://3.149.144.183:3004/";
+	//public API_ENDPOINT = "http://localhost:3004/";
+	public API_ENDPOINT = "https://demo.axen.devgeras.xyz:3004/";
 }
 export class pld_data {
-	// public API_ENDPOINT_PLD = "http://localhost:3000/";
-	public API_ENDPOINT_PLD = "http://3.149.144.183:3002/";
+	 //public API_ENDPOINT_PLD = "http://localhost:3000/";
+	public API_ENDPOINT_PLD = "https://demo.axen.devgeras.xyz:3002/";
 }
 export class LoginConstante {
 	public static URLLogin = "auth/login";
@@ -53,6 +53,7 @@ export class paises {
 
 export class cl {
 	public static URLcliente = "accsosrol/cliente";
+	public static URLobtenerclientes = "accsosrol/obtenerclientes";
 
 }
 export class divisa {
@@ -94,7 +95,11 @@ export class matrizriesgo {
 	public static URLcantidad = 'matriz/contar'
 }
 export class regulatorios {
-	public static URLmontos = 'rg/mt'
+	public static URLmontos = 'rg/montos'
+	public static URLdolares = 'rg/dolares'
+	public static URLreporte24h = 'rg/reporte24h'
+	public static URLinusuales = 'rg/inusuales'
+	public static URLrelevantes = 'rg/relevantes'
 }
 export class conta {
 	public static URLreporte = 'conta/saldos'
@@ -108,4 +113,21 @@ export class Documento {
 	public static Urlvistalista = 'reporte/vistalista'
 	public static Urldoclista = 'reporte/vistalistadoc'
 
+}
+export class PerfilTransaccional {
+  public static URLproposito = 'perfil/proposito';
+  public static URLfrecuencia = 'perfil/frecuencia';
+  public static URLtipoOperaciones = 'perfil/tipooperaciones';
+  public static URLactuaNombre = 'perfil/actuanombre';
+  public static URLmedioPago = 'perfil/mediopago';
+  public static URLorigenRecursos = 'perfil/origenrecursos';
+  public static URLdestinoRecursos = 'perfil/destinorecursos';
+  public static URLrelacionTercero = 'perfil/relaciontercero';
+  public static URLpepTipo = 'perfil/peptipo';
+}
+
+export class AlertasMontos {
+  public static URLconsultar = 'alertas-montos/consultar';
+  public static URLactualizar = 'alertas-montos/actualizar';
+  
 }

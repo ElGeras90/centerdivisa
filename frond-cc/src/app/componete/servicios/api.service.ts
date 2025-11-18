@@ -52,7 +52,7 @@ export class ApiService {
         const bytes = new Uint8Array(atob(response.resultado).split('').map(char => char.charCodeAt(0)));
         const jsonDecifrado = new TextDecoder().decode(bytes);
         let resultado = JSON.parse(jsonDecifrado);
-
+        console.log(resultado);
 
 
         // Devuelve el resultado con el tipo especificado
@@ -80,7 +80,7 @@ export class ApiService {
    }*/
 
   Download(data: any, ruta: String): Observable<Blob> {
-    return this.http.post(this._constante.API_ENDPOINT + ruta, data,
+  return this.http.post(`${this._constante.API_ENDPOINT}${ruta}`, data, 
       { headers: this.Cabeceros(), responseType: 'blob' });
   }
 

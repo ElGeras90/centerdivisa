@@ -6,7 +6,8 @@ const matriz = require('./../model/matrizmodel');
 const encriptarjsong = require('./../util/encriptarjson');
 
 function estados(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.estados(resquest)
         .then(info => {
@@ -22,7 +23,8 @@ function estados(req, res) {
 }
 
 function frecuenciames(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.frecuenciames(resquest)
         .then(info => {
@@ -38,7 +40,8 @@ function frecuenciames(req, res) {
 }
 
 function instrumento(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.instrumento(resquest)
         .then(info => {
@@ -54,7 +57,8 @@ function instrumento(req, res) {
 }
 
 function montomes(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.montomes(resquest)
         .then(info => {
@@ -70,7 +74,8 @@ function montomes(req, res) {
 }
 
 function ocupacion(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.ocupacion(resquest)
         .then(info => {
@@ -86,7 +91,8 @@ function ocupacion(req, res) {
 }
 
 function paises(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.paises(resquest)
         .then(info => {
@@ -102,7 +108,8 @@ function paises(req, res) {
 }
 
 function paisorigen(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.paisorigen(resquest)
         .then(info => {
@@ -118,7 +125,8 @@ function paisorigen(req, res) {
 }
 
 function productos(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.productos(resquest)
         .then(info => {
@@ -133,7 +141,8 @@ function productos(req, res) {
         });
 }
 function tipousuario(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.tipousuario(resquest)
         .then(info => {
@@ -148,7 +157,8 @@ function tipousuario(req, res) {
         });
 }
 function alertas(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.alertas(resquest)
         .then(info => {
@@ -163,7 +173,8 @@ function alertas(req, res) {
         });
 }
 function anonimus(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     matriz.anonimus(resquest)
         .then(info => {
@@ -179,7 +190,8 @@ function anonimus(req, res) {
 }
 
 function cantidad(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
     console.log('entre')
     matriz.cantidad()
         .then(info => {

@@ -67,6 +67,7 @@ async function divisabancomexico() {
   //checa cuanto hay en caja en dolares
   async function saldosdia(monto) {
     const client = await postgresPool.connect();
+    console.log(monto)
     try {
       const result = await client.query('select * from saldosdia($1)',[monto]);
       return result;

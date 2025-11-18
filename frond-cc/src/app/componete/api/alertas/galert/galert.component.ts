@@ -31,7 +31,6 @@ export class GalertComponent {
     this.cp.alertas(a).subscribe(
       (data: any) => {
        
-          console.log(data)
           if(registro.alerta.includes(' pertenece a la lista ')){
             this.socketService.sendPrivateMessage('cc-'+registro.usuario,'3');
            }else{
@@ -78,7 +77,7 @@ export class GalertComponent {
     }
     this.cp.alertas(a).subscribe(
       (data: any) => {
-        console.log(data)
+        
         if (data.info[0].manage_alertasregistros.action == 'error') {
           Swal.fire({
             icon: data.info[0].manage_alertasregistros.action,

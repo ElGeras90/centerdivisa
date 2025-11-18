@@ -1,77 +1,105 @@
-
-<div class="container-fluid cuerpo">
-  <div class="row">
-    <div class="col">
-      <h1>Usuario: {{nombreusuario}}</h1>
+<div class="container-fluid cuerpo bg-light min-vh-100 py-4">
+  <!-- Encabezado -->
+  <div class="row align-items-center mb-4 border-bottom pb-3">
+    <div class="col-md-6">
+      <h3 class="fw-bold text-primary mb-0">
+        <i class="bi bi-person-circle me-2"></i>Usuario: {{ nombreusuario }}
+      </h3>
     </div>
-    <div class="col" style="text-align: right;">
-      <h1>{{(formattedDate)}}</h1>
+    <div class="col-md-6 text-end">
+      <h5 class="text-muted mb-0">
+        <i class="bi bi-calendar3 me-2"></i>{{ formattedDate }}
+      </h5>
     </div>
   </div>
-  <div class="row">
-    <div class="col-10">
 
-    </div>
-    <div class="col-2">
-      <div>
-        <p>Saldo en Moneda Nacional : {{saldomn}}</p>
+  <!-- Saldo -->
+  <div class="row justify-content-end mb-4">
+    <div class="col-auto">
+      <div class="card shadow-sm border-0 bg-white px-4 py-2">
+        <p class="mb-0 fw-semibold text-secondary">
+          Saldo en Moneda Nacional:
+          <span class="text-success fw-bold">{{ saldomn | currency:'MXN' }}</span>
+        </p>
       </div>
     </div>
   </div>
-  <div class="container mt-5">
+
+  <!-- Tarjeta principal -->
+  <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card p-4">
-          <h4 class="text-center mb-4">Compra</h4>
-          <form>
+      <div class="col-12 col-md-7 col-lg-5">
+        <div class="card shadow-lg border-0 rounded-4 p-4 bg-white">
+          <div class="text-center mb-4">
+            <h4 class="fw-bold text-dark mb-1">Operación de Compra</h4>
+            <p class="text-muted small mb-0">Seleccione la divisa y los datos correspondientes</p>
+          </div>
+          <form #f="ngForm">
+
             <!-- Divisa -->
             <div class="form-group mb-3">
-              <label for="divisa">Divisa</label>
-              <select class="form-control" id="divisa" [(ngModel)]="compra"
-                (change)="captura($event)">
+              <label for="divisa" class="fw-semibold">Divisa</label>
+              <select class="form-select" id="divisa" [(ngModel)]="compra" name="compra" (change)="captura($event)" required
+                [ngClass]="{'is-invalid': f.submitted && compra == 0}">
                 <option value="0">Seleccione una opción</option>
-                <option *ngFor="let a of divisas"
-                  [value]="a.iddivisa">{{a.grupo}}</option>
+                <option *ngFor="let a of divisas" [value]="a.iddivisa">{{ a.grupo }}</option>
               </select>
+              <div class="invalid-feedback">Debes seleccionar una divisa válida.</div>
             </div>
 
             <!-- Cantidad -->
             <div class="form-group mb-3">
-              <label for="cantidad">Cantidad</label>
-              <input type="number" class="form-control" id="cantidad"
-                placeholder="Ingresa cantidad" step="0.01" [value]="cambio"
-                (input)="convertir($event)" required>
+              <label for="cantidad" class="fw-semibold">Cantidad</label>
+              <input type="number" class="form-control" id="cantidad" placeholder="Ingresa cantidad" step="0.01"
+                [(ngModel)]="cambio" name="cantidad" required min="0.01" [value]="cambio"
+                [ngClass]="{'is-invalid': f.submitted && ( !cambio || cambio <= 0 )}" (input)="convertir($event)">
+              <div class="invalid-feedback">La cantidad debe ser mayor a 0.</div>
             </div>
 
-            <!-- Cotización -->
+            <!-- Cotización (bloqueado) -->
             <div class="form-group mb-3">
-              <label for="cotizacion">Cotización</label>
-              <input type="number" class="form-control" id="cotizacion"
-                placeholder="Ingresa cotización" step="0.01"
-                [value]="cotizacion"
-                required>
+              <label for="cotizacion" class="fw-semibold">Cotización</label>
+              <input type="number" class="form-control" id="cotizacion" [value]="cotizacion" placeholder="Ingresa cotización" step="0.01"
+                [value]="cotizacion" readonly>
             </div>
 
-            <!-- Importe -->
+            <!-- Importe (bloqueado) -->
             <div class="form-group mb-3">
-              <label for="importe">Importe</label>
-              <input type="number" class="form-control" id="importe"
-                placeholder="Ingresa importe" [value]="resultado" readonly>
+              <label for="importe" class="fw-semibold">Importe</label>
+              <input type="number" class="form-control" id="importe" placeholder="Resultado del cálculo"
+                [value]="resultado" readonly>
             </div>
 
-            <button type="submit"
-              class="btn btn-primary btn-block"
-              (click)="verificar()">Calcular</button>
+            <!-- Instrumento -->
+            <div class="form-group mb-4">
+              <label for="instrumento" class="fw-semibold">Instrumento de Pago</label>
+              <select class="form-select" id="instrumento" [(ngModel)]="instrumento" name="instrumento" required
+                [ngClass]="{'is-invalid': f.submitted && instrumento == 0}">
+                <option value="0" selected>Seleccione una opción</option>
+                <option *ngFor="let a of instrumentos" [value]="a.idtipo">{{ a.descripcion }}</option>
+              </select>
+              <div class="invalid-feedback">Debes seleccionar un instrumento de pago.</div>
+            </div>
+
+            <!-- Botón -->
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary btn-lg rounded-pill shadow-sm" (click)="verificar()"
+                [disabled]="compra == 0 || !cambio || cambio <= 0 || instrumento == 0">
+                <i class="bi bi-calculator me-2"></i>Calcular
+              </button>
+            </div>
+
           </form>
+
+
         </div>
       </div>
     </div>
   </div>
-
 </div>
 
-<div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog"
-  aria-labelledby="mySmallModalLabel">
+
+<div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -85,57 +113,57 @@
   </div>
 </div>
 
-<div class="modal fade" bsModal #enviocorrecto="bs-modal" tabindex="-1"
-  role="dialog"
+<div class="modal fade" bsModal #enviocorrecto="bs-modal" tabindex="-1" role="dialog"
   aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div
-    class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen">
+    <div class="modal-content border-0 rounded-4 shadow-lg bg-gradient-light">
 
-        <h4 class="modal-title">Cobro Realizado imprimir tickets</h4>
+      <!-- Encabezado -->
+      <div class="modal-header bg-primary text-white rounded-top-4 py-3">
+        <h4 class="modal-title fw-bold mb-0">
+          <i class="bi bi-check-circle-fill me-2"></i>
+          Cobro realizado con éxito
+        </h4>
       </div>
-      <div class="modal-body">
 
-        <div class="cardx">
-
-          <div class="titlex">Ticket Agente</div>
-
-          <div class="iconx">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128"
-              width="100px" height="100px">
-              <path
-                d="M32 122h10c1.7 0 3-1.3 3-3s-1.3-3-3-3H32c-3.9 0-7-3.1-7-7V99c0-1.7-1.3-3-3-3s-3 1.3-3 3v10C19 116.2 24.8 122 32 122zM86 122h10c7.2 0 13-5.8 13-13V99c0-1.7-1.3-3-3-3s-3 1.3-3 3v10c0 3.9-3.1 7-7 7H86c-1.7 0-3 1.3-3 3S84.3 122 86 122zM42 6H32c-7.2 0-13 5.8-13 13v10c0 1.7 1.3 3 3 3s3-1.3 3-3V19c0-3.9 3.1-7 7-7h10c1.7 0 3-1.3 3-3S43.7 6 42 6zM86 6c-1.7 0-3 1.3-3 3 0 .2 0 .3.1.5C83 9.7 83 9.8 83 10v9c0 7.2 5.8 13 13 13h9c.2 0 .3 0 .5-.1.2 0 .3 0 .5 0 1.7 0 3-1.3 3-3C109 16.3 98.7 6 86 6zM96 26c-3.9 0-7-3.1-7-7v-6.7c7 1.2 12.5 6.7 13.7 13.7H96zM39 59c0 1.7 1.3 3 3 3h44c1.7 0 3-1.3 3-3s-1.3-3-3-3H42C40.3 56 39 57.3 39 59zM89 74c0-1.7-1.3-3-3-3H42c-1.7 0-3 1.3-3 3s1.3 3 3 3h44C87.7 77 89 75.7 89 74zM69.2 89c0-1.7-1.3-3-3-3h-24c-1.7 0-3 1.3-3 3s1.3 3 3 3h24C67.9 92 69.2 90.7 69.2 89z" /></svg>
-          </div>
-
-          <button class="btnx"
-            (click)="printTicket(numeroFormateado)">Agente</button>
-
+      <!-- Cuerpo -->
+      <div class="modal-body d-flex flex-column align-items-center justify-content-center p-5 bg-light-subtle">
+        <div class="text-center mb-5">
+          <p class="fs-5 text-muted mb-0">
+            Selecciona una opción para continuar
+          </p>
         </div>
-        <div class="cardx">
 
-          <div class="titlex">Cerrar</div>
+        <div class="d-flex flex-wrap justify-content-center gap-5">
 
-          <div class="iconx">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-              width="100px" height="100px">
-              <lineargradient id="hbE9Evnj3wAjjA2RX0We2a" x1="7.534" x2="27.557"
-                y1="7.534" y2="27.557" gradientUnits="userSpaceOnUse"><stop
-                  offset="0" stop-color="#f44f5a" /><stop offset=".443"
-                  stop-color="#ee3d4a" /><stop offset="1"
-                  stop-color="#e52030" /></lineargradient><path
-                fill="url(#hbE9Evnj3wAjjA2RX0We2a)"
-                d="M42.42,12.401c0.774-0.774,0.774-2.028,0-2.802L38.401,5.58c-0.774-0.774-2.028-0.774-2.802,0 L24,17.179L12.401,5.58c-0.774-0.774-2.028-0.774-2.802,0L5.58,9.599c-0.774,0.774-0.774,2.028,0,2.802L17.179,24L5.58,35.599 c-0.774,0.774-0.774,2.028,0,2.802l4.019,4.019c0.774,0.774,2.028,0.774,2.802,0L42.42,12.401z" /><lineargradient
-                id="hbE9Evnj3wAjjA2RX0We2b" x1="27.373" x2="40.507" y1="27.373"
-                y2="40.507" gradientUnits="userSpaceOnUse"><stop offset="0"
-                  stop-color="#a8142e" /><stop offset=".179"
-                  stop-color="#ba1632" /><stop offset=".243"
-                  stop-color="#c21734" /></lineargradient><path
-                fill="url(#hbE9Evnj3wAjjA2RX0We2b)"
-                d="M24,30.821L35.599,42.42c0.774,0.774,2.028,0.774,2.802,0l4.019-4.019 c0.774-0.774,0.774-2.028,0-2.802L30.821,24L24,30.821z" /></svg>
+          <!-- Opción: Ticket Agente -->
+          <div class="op-card text-center p-4 rounded-4 shadow-sm bg-white">
+            <div class="icon-wrapper mb-3 bg-primary bg-opacity-10 rounded-circle d-inline-flex p-4">
+              <i class="bi bi-printer-fill text-primary fs-1"></i>
+            </div>
+            <h5 class="fw-semibold text-dark mb-3">Ticket Agente</h5>
+            <p class="text-secondary small mb-4">
+              Genera e imprime el ticket correspondiente al agente
+            </p>
+            <button class="btn btn-primary px-4 py-2 rounded-pill shadow-sm fw-semibold"
+              (click)="printTicket(numeroFormateado)">
+              <i class="bi bi-receipt me-2"></i> Imprimir Ticket
+            </button>
           </div>
 
-          <button class="btnx" (click)="cerrar1()">Cerrar</button>
+          <!-- Opción: Cerrar -->
+          <div class="op-card text-center p-4 rounded-4 shadow-sm bg-white">
+            <div class="icon-wrapper mb-3 bg-danger bg-opacity-10 rounded-circle d-inline-flex p-4">
+              <i class="bi bi-x-circle-fill text-danger fs-1"></i>
+            </div>
+            <h5 class="fw-semibold text-dark mb-3">Cerrar</h5>
+            <p class="text-secondary small mb-4">
+              Finaliza la operación y regresa al panel principal
+            </p>
+            <button class="btn btn-outline-danger px-4 py-2 rounded-pill fw-semibold shadow-sm" (click)="cerrar1()">
+              <i class="bi bi-door-closed-fill me-2"></i> Cerrar
+            </button>
+          </div>
 
         </div>
       </div>

@@ -1,400 +1,916 @@
 <mat-tab-group animationDuration="1200ms">
-    <mat-tab label="PRODUCTOS">
-      <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtroproducto($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
+  <mat-tab label="Producto">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtroproducto($event)" placeholder="Buscar">
+          </mat-form-field>
         </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourceproducto" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
-                <ng-container matColumnDef="descripcion">
-                    <th mat-header-cell *matHeaderCellDef> Rol </th>
-                    <td mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
-                </ng-container>
-                <ng-container matColumnDef="puntos">
-                    <th mat-header-cell *matHeaderCellDef> Menu </th>
-                    <td mat-cell *matCellDef="let row"> {{row.puntos}}</td>
-                </ng-container>
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-    
-            <mat-paginator #paginator1 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Pais origen">
-      <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtropaisorigen($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourcepaisorigen" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
-    
-            <ng-container matColumnDef="descripcion">
-              <th mat-header-cell *matHeaderCellDef> descripcion </th>
-              <td mat-cell *matCellDef="let row"> {{row.desc}} </td>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourceproducto" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Rol </th>
+            <td mat-cell *matCellDef="let row"> {{row.descripcion}} </td>
           </ng-container>
           <ng-container matColumnDef="puntos">
-              <th mat-header-cell *matHeaderCellDef> puntos </th>
-              <td mat-cell *matCellDef="let row"> {{row.puntos}}</td>
+            <th mat-header-cell *matHeaderCellDef> Menu </th>
+            <td mat-cell *matCellDef="let row"> {{row.puntos}}</td>
           </ng-container>
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumnspaisorigen"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnspaisorigen;"></tr>
-            </table>
-    
-            <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Montos por mes">
-      <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtromontomes($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourcemontomes" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
-                <ng-container matColumnDef="nivel">
-                  <th mat-header-cell *matHeaderCellDef> nivel </th>
-                  <td mat-cell *matCellDef="let row"> {{row.nivel}} </td>
-              </ng-container>
-              <ng-container matColumnDef="montominimo">
-                  <th mat-header-cell *matHeaderCellDef> monto minimo </th>
-                  <td mat-cell *matCellDef="let row"> {{row.minmonto}}</td>
-              </ng-container>
-              <ng-container matColumnDef="montomaximo">
-                <th mat-header-cell *matHeaderCellDef> monto maximo </th>
-                <td mat-cell *matCellDef="let row"> {{row.maxmonto}}</td>
-            </ng-container>
-            <ng-container matColumnDef="puntuacion">
-              <th mat-header-cell *matHeaderCellDef> puntos </th>
-              <td mat-cell *matCellDef="let row"> {{row.puntuacion}}</td>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
           </ng-container>
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumnsmontomes"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnsmontomes;"></tr>
-            </table>
-    
-            <mat-paginator #paginator3 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Instrumentos">
-      <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtroinstrumento($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourceinstrumento" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
 
-            <ng-container matColumnDef="descripcion">
-              <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-              <td mat-cell *matCellDef="let row"> {{row.descripcion}}</td>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator #paginator1 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Pais origen">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtropaisorigen($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourcepaisorigen" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> descripcion </th>
+            <td mat-cell *matCellDef="let row"> {{row.desc}} </td>
+          </ng-container>
+          <ng-container matColumnDef="puntos">
+            <th mat-header-cell *matHeaderCellDef> puntos </th>
+            <td mat-cell *matCellDef="let row"> {{row.puntos}}</td>
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnspaisorigen"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnspaisorigen;"></tr>
+        </table>
+
+        <mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Montos por mes">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtromontomes($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourcemontomes" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+          <ng-container matColumnDef="nivel">
+            <th mat-header-cell *matHeaderCellDef> nivel </th>
+            <td mat-cell *matCellDef="let row"> {{row.nivel}} </td>
+          </ng-container>
+          <ng-container matColumnDef="montominimo">
+            <th mat-header-cell *matHeaderCellDef> monto minimo </th>
+            <td mat-cell *matCellDef="let row"> {{row.minmonto}}</td>
+          </ng-container>
+          <ng-container matColumnDef="montomaximo">
+            <th mat-header-cell *matHeaderCellDef> monto maximo </th>
+            <td mat-cell *matCellDef="let row"> {{row.maxmonto}}</td>
+          </ng-container>
+          <ng-container matColumnDef="puntuacion">
+            <th mat-header-cell *matHeaderCellDef> puntos </th>
+            <td mat-cell *matCellDef="let row"> {{row.puntuacion}}</td>
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsmontomes"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsmontomes;"></tr>
+        </table>
+
+        <mat-paginator #paginator3 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Instrumentos">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtroinstrumento($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourceinstrumento" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+            <td mat-cell *matCellDef="let row"> {{row.descripcion}}</td>
           </ng-container>
           <ng-container matColumnDef="puntos">
             <th mat-header-cell *matHeaderCellDef> Descripcion </th>
             <td mat-cell *matCellDef="let row"> {{row.puntos}}</td>
-        </ng-container>
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumnsinstrumento"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnsinstrumento;"></tr>
-            </table>
-    
-            <mat-paginator #paginator4 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Frecuencia Mes">
-      <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtrofrecuencia($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourcefrecuencia" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-            <ng-container matColumnDef="frecuencia">
-              <th mat-header-cell *matHeaderCellDef> Frecuencia </th>
-              <td mat-cell *matCellDef="let row"> {{row.frecuencia}}</td>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsinstrumento"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsinstrumento;"></tr>
+        </table>
+
+        <mat-paginator #paginator4 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Frecuencia Mes">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtrofrecuencia($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourcefrecuencia" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="frecuencia">
+            <th mat-header-cell *matHeaderCellDef> Frecuencia </th>
+            <td mat-cell *matCellDef="let row"> {{row.frecuencia}}</td>
           </ng-container>
           <ng-container matColumnDef="puntos">
             <th mat-header-cell *matHeaderCellDef> puntos </th>
             <td mat-cell *matCellDef="let row"> {{row.puntuacion}}</td>
-        </ng-container>
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                       
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumnsfrecuencia"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnsfrecuencia;"></tr>
-            </table>
-    
-            <mat-paginator #paginator5 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Tipo Usuario">
-      <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtrotuser($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourcetuser" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
 
-            <ng-container matColumnDef="descripcion">
-              <th mat-header-cell *matHeaderCellDef> Descripcion </th>
-              <td mat-cell *matCellDef="let row"> {{row.descripcion}}</td>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsfrecuencia"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsfrecuencia;"></tr>
+        </table>
+
+        <mat-paginator #paginator5 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Tipo Usuario">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtrotuser($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourcetuser" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef> Descripcion </th>
+            <td mat-cell *matCellDef="let row"> {{row.descripcion}}</td>
           </ng-container>
           <ng-container matColumnDef="puntos">
             <th mat-header-cell *matHeaderCellDef> puntos </th>
             <td mat-cell *matCellDef="let row"> {{row.puntos}}</td>
-        </ng-container>
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumnstuser"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnstuser;"></tr>
-            </table>
-    
-            <mat-paginator #paginator6 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Paises">
-        <div class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col">
-                <mat-form-field>
-                    <input matInput (keyup)="filtropais($event)" placeholder="Buscar">
-                </mat-form-field>
-            </div>
-        </div>
-        <div class="table-responsive">
-           
-            <table mat-table [dataSource]="dataSourcepaises" class="mat-elevation-z8">
-                <!-- Columna Usuario -->
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
 
-            <ng-container matColumnDef="Pais">
-              <th mat-header-cell *matHeaderCellDef> Pais </th>
-              <td mat-cell *matCellDef="let row"> {{row.nombre}}</td>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnstuser"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnstuser;"></tr>
+        </table>
+
+        <mat-paginator #paginator6 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Paises">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtropais($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourcepaises" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="Pais">
+            <th mat-header-cell *matHeaderCellDef> Pais </th>
+            <td mat-cell *matCellDef="let row"> {{row.nombre}}</td>
           </ng-container>
           <ng-container matColumnDef="Codigo">
             <th mat-header-cell *matHeaderCellDef> Codigo </th>
             <td mat-cell *matCellDef="let row"> {{row.codigo}}</td>
-        </ng-container>
-        <ng-container matColumnDef="nivel">
+          </ng-container>
+          <ng-container matColumnDef="nivel">
             <th mat-header-cell *matHeaderCellDef> puntos </th>
             <td mat-cell *matCellDef="let row"> {{row.nivel}}</td>
-        </ng-container>
-        <ng-container matColumnDef="Paraiso">
+          </ng-container>
+          <ng-container matColumnDef="Paraiso">
             <th mat-header-cell *matHeaderCellDef> Paraiso Fiscal </th>
             <td mat-cell *matCellDef="let row"><input type="checkbox" [ngModel]="row.paraisofiscal" [disabled]="true">
             </td>
-        </ng-container>
-        <ng-container matColumnDef="Bloqueados">
+          </ng-container>
+          <ng-container matColumnDef="Bloqueados">
             <th mat-header-cell *matHeaderCellDef> Bloqueado </th>
             <td mat-cell *matCellDef="let row"><input type="checkbox" [ngModel]="row.bloqueado" [disabled]="true"></td>
-        </ng-container>
- 
-                <!-- Columna Acciones -->
-                <ng-container matColumnDef="acciones">
-                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                    <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumnspaises"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumnspaises;"></tr>
-            </table>
-    
-            <mat-paginator #paginator7 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-        </div>
-    
-    </div>
-    </mat-tab>
-    <mat-tab label="Estados">
-        <div class="container mt-4">
-            <div class="row align-items-center">
-                <div class="col">
-                    <mat-form-field>
-                        <input matInput (keyup)="filtroestado($event)" placeholder="Buscar">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="table-responsive">
-               
-                <table mat-table [dataSource]="dataSourceestados" class="mat-elevation-z8">
-                    <!-- Columna Usuario -->
-    
-                <ng-container matColumnDef="Estado">
-                  <th mat-header-cell *matHeaderCellDef> Estado</th>
-                  <td mat-cell *matCellDef="let row"> {{row.estado}}</td>
-              </ng-container>
-              <ng-container matColumnDef="puntuacion">
-                <th mat-header-cell *matHeaderCellDef> puntos </th>
-                <td mat-cell *matCellDef="let row"> {{row.puntuacion}}</td>
-            </ng-container>
-                    <!-- Columna Acciones -->
-                    <ng-container matColumnDef="acciones">
-                        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                        <td mat-cell *matCellDef="let row">
-                            <button mat-icon-button color="primary">
-                                <mat-icon>edit</mat-icon>
-                            </button>
-                         
-                        </td>
-                    </ng-container>
-        
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsestados"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsestados;"></tr>
-                </table>
-        
-                <mat-paginator #paginator8 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-            </div>
-        
-        </div>
-    </mat-tab>
-    <mat-tab label="Ocupaciones">
-            <div class="container mt-4">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <mat-form-field>
-                            <input matInput (keyup)="filtroocupacion($event)" placeholder="Buscar">
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                   
-                    <table mat-table [dataSource]="dataSourcesocupacion" class="mat-elevation-z8">
-                        <!-- Columna Usuario -->
-        
-                    <ng-container matColumnDef="Ocupacion">
-                      <th mat-header-cell *matHeaderCellDef> Ocupacion</th>
-                      <td mat-cell *matCellDef="let row"> {{row.descripcion}}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="Clave">
-                    <th mat-header-cell *matHeaderCellDef> Clave</th>
-                    <td mat-cell *matCellDef="let row"> {{row.claveof}}</td>
-                </ng-container>
-                  <ng-container matColumnDef="puntuacion">
-                    <th mat-header-cell *matHeaderCellDef> puntos </th>
-                    <td mat-cell *matCellDef="let row"> {{row.nivel}}</td>
-                </ng-container>
-                        <!-- Columna Acciones -->
-                        <ng-container matColumnDef="acciones">
-                            <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                            <td mat-cell *matCellDef="let row">
-                                <button mat-icon-button color="primary">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
+          </ng-container>
 
-                            </td>
-                        </ng-container>
-            
-                        <tr mat-header-row *matHeaderRowDef="displayedColumnsocupacion"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumnsocupacion;"></tr>
-                    </table>
-            
-                    <mat-paginator #paginator9 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-                </div>
-            
-            </div>
-    </mat-tab>
-  </mat-tab-group>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnspaises"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnspaises;"></tr>
+        </table>
+
+        <mat-paginator #paginator7 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Estados">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtroestado($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourceestados" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="Estado">
+            <th mat-header-cell *matHeaderCellDef> Estado</th>
+            <td mat-cell *matCellDef="let row"> {{row.estado}}</td>
+          </ng-container>
+          <ng-container matColumnDef="puntuacion">
+            <th mat-header-cell *matHeaderCellDef> puntos </th>
+            <td mat-cell *matCellDef="let row"> {{row.puntuacion}}</td>
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsestados"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsestados;"></tr>
+        </table>
+
+        <mat-paginator #paginator8 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+  <mat-tab label="Ocupaciones">
+    <div class="container mt-4">
+      <div class="row align-items-center">
+        <div class="col">
+          <mat-form-field>
+            <input matInput (keyup)="filtroocupacion($event)" placeholder="Buscar">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="table-responsive">
+
+        <table mat-table [dataSource]="dataSourcesocupacion" class="mat-elevation-z8">
+          <!-- Columna Usuario -->
+
+          <ng-container matColumnDef="Ocupacion">
+            <th mat-header-cell *matHeaderCellDef> Ocupacion</th>
+            <td mat-cell *matCellDef="let row"> {{row.descripcion}}</td>
+          </ng-container>
+          <ng-container matColumnDef="Clave">
+            <th mat-header-cell *matHeaderCellDef> Clave</th>
+            <td mat-cell *matCellDef="let row"> {{row.claveof}}</td>
+          </ng-container>
+          <ng-container matColumnDef="puntuacion">
+            <th mat-header-cell *matHeaderCellDef> puntos </th>
+            <td mat-cell *matCellDef="let row"> {{row.nivel}}</td>
+          </ng-container>
+          <!-- Columna Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsocupacion"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsocupacion;"></tr>
+        </table>
+
+        <mat-paginator #paginator9 [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>
+  </mat-tab>
+ 
+
+
+<!-- =======================
+     Propósito de Relación
+======================= -->
+<mat-tab label="Propósito de Relación">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroProposito($event)" placeholder="Buscar propósito">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarProposito()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceProposito" class="mat-elevation-z8">
+        <ng-container matColumnDef="idproposito">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idproposito }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="proposito(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsProposito"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsProposito;"></tr>
+      </table>
+      <mat-paginator #paginator10 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Frecuencia de Operaciones
+======================= -->
+<mat-tab label="Frecuencia de Operaciones">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroFrecuencia($event)" placeholder="Buscar frecuencia">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarFrecuencia()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceFrecuencia" class="mat-elevation-z8">
+        <ng-container matColumnDef="idfrecuencia">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idfrecuencia }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="frecuenciasa(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsFrecuencia"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsFrecuencia;"></tr>
+      </table>
+      <mat-paginator #paginator11 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Tipo de Operaciones
+======================= -->
+<mat-tab label="Tipo de Operaciones">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroTipoOperaciones($event)" placeholder="Buscar tipo de operación">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarTipoOperaciones()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceTipoOperaciones" class="mat-elevation-z8">
+        <ng-container matColumnDef="idtipo">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idtipo }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="tipoOperaciones(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsTipoOperaciones"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTipoOperaciones;"></tr>
+      </table>
+      <mat-paginator #paginator12 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Actúa en Nombre
+======================= -->
+<mat-tab label="Actúa en Nombre">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroActuaNombre($event)" placeholder="Buscar actúa en nombre">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarActuaNombre()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceActuaNombre" class="mat-elevation-z8">
+        <ng-container matColumnDef="idactua">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idactua }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="actuaNombre(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsActuaNombre"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsActuaNombre;"></tr>
+      </table>
+      <mat-paginator #paginator13 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Medio de Pago
+======================= -->
+<mat-tab label="Medio de Pago">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroMedioPago($event)" placeholder="Buscar medio de pago">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarMedioPago()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceMedioPago" class="mat-elevation-z8">
+        <ng-container matColumnDef="idmedio">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idmedio }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="medioPago(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsMedioPago"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsMedioPago;"></tr>
+      </table>
+      <mat-paginator #paginator14 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Origen de Recursos
+======================= -->
+<mat-tab label="Origen de Recursos">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroOrigenRecursos($event)" placeholder="Buscar origen de recursos">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarOrigenRecursos()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceOrigenRecursos" class="mat-elevation-z8">
+        <ng-container matColumnDef="idorigen">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idorigen }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="origenRecursos(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsOrigenRecursos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsOrigenRecursos;"></tr>
+      </table>
+      <mat-paginator #paginator15 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Destino de Recursos
+======================= -->
+<mat-tab label="Destino de Recursos">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroDestinoRecursos($event)" placeholder="Buscar destino de recursos">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarDestinoRecursos()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceDestinoRecursos" class="mat-elevation-z8">
+        <ng-container matColumnDef="iddestino">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.iddestino }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="destinoRecursos(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsDestinoRecursos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsDestinoRecursos;"></tr>
+      </table>
+      <mat-paginator #paginator16 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+<!-- =======================
+     Relación con Tercero
+======================= -->
+<mat-tab label="Relación con Tercero">
+  <div class="container mt-4">
+    <div class="row align-items-center mb-3">
+      <div class="col">
+        <mat-form-field>
+          <input matInput (keyup)="filtroRelacionTercero($event)" placeholder="Buscar relación con tercero">
+        </mat-form-field>
+      </div>
+      <div class="col text-end">
+        <button mat-raised-button color="primary" (click)="mostrarRelacionTercero()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSourceRelacionTercero" class="mat-elevation-z8">
+        <ng-container matColumnDef="idrelacion">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.idrelacion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripción </th>
+          <td mat-cell *matCellDef="let row"> {{ row.descripcion }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" (click)="relacionTercero(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsRelacionTercero"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsRelacionTercero;"></tr>
+      </table>
+      <mat-paginator #paginator17 [pageSizeOptions]="[5,10,25,50]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</mat-tab>
+
+</mat-tab-group>
+
+<div class="modal fade" bsModal #propositom="bs-modal" tabindex="-1" role="dialog" aria-labelledby="propositoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="propositoLabel">{{ idproposito ? 'Editar Propósito' : 'Agregar Propósito' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionProposito" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarProposito()">Guardar</button>
+        <button class="btn btn-danger" (click)="propositom.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #frecuenciam="bs-modal" tabindex="-1" role="dialog" aria-labelledby="frecuenciaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="frecuenciaLabel">{{ idfrecuencia ? 'Editar Frecuencia' : 'Agregar Frecuencia' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionFrecuencia" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarFrecuencia()">Guardar</button>
+        <button class="btn btn-danger" (click)="frecuenciam.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #tipooperacionesm="bs-modal" tabindex="-1" role="dialog" aria-labelledby="tipooperacionesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="tipooperacionesLabel">{{ idtipo ? 'Editar Tipo' : 'Agregar Tipo' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionTipoOperaciones" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarTipoOperaciones()">Guardar</button>
+        <button class="btn btn-danger" (click)="tipooperacionesm.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #actuanombrem="bs-modal" tabindex="-1" role="dialog" aria-labelledby="actuanombreLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="actuanombreLabel">{{ idactua ? 'Editar Registro' : 'Agregar Registro' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionActuaNombre" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarActuaNombre()">Guardar</button>
+        <button class="btn btn-danger" (click)="actuanombrem.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #mediopagom="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mediopagoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="mediopagoLabel">{{ idmedio ? 'Editar Medio de Pago' : 'Agregar Medio de Pago' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionMedioPago" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarMedioPago()">Guardar</button>
+        <button class="btn btn-danger" (click)="mediopagom.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #origenrecursosm="bs-modal" tabindex="-1" role="dialog" aria-labelledby="origenrecursosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="origenrecursosLabel">{{ idorigen ? 'Editar Origen' : 'Agregar Origen' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionOrigenRecursos" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarOrigenRecursos()">Guardar</button>
+        <button class="btn btn-danger" (click)="origenrecursosm.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #destinorecursosm="bs-modal" tabindex="-1" role="dialog" aria-labelledby="destinorecursosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="destinorecursosLabel">{{ iddestino ? 'Editar Destino' : 'Agregar Destino' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionDestinoRecursos" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarDestinoRecursos()">Guardar</button>
+        <button class="btn btn-danger" (click)="destinorecursosm.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #relaciontercerom="bs-modal" tabindex="-1" role="dialog" aria-labelledby="relacionterceroLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary text-white">
+        <h5 class="modal-title" id="relacionterceroLabel">{{ idrelacion ? 'Editar Relación' : 'Agregar Relación' }}</h5>
+      </div>
+      <div class="modal-body">
+        <label>Descripción</label>
+        <input type="text" class="form-control" [(ngModel)]="descripcionRelacionTercero" placeholder="Ingrese descripción" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="guardarRelacionTercero()">Guardar</button>
+        <button class="btn btn-danger" (click)="relaciontercerom.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

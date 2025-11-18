@@ -69,7 +69,6 @@ export class EncargadoComponent {
 
   activar(info: any) {
     let a = {};
-    console.log(info)
     if (info.datos == false) {
       a = {
         option: 1,
@@ -82,7 +81,6 @@ export class EncargadoComponent {
         idencargado: info.idencargado
       }
     }
-    console.log(a)
 
     this.cp.Encargados_permiso(a).subscribe(
       (data: any) => {

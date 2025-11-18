@@ -72,7 +72,6 @@ export class AltoriesgoComponent {
     const dd = d.target.value;
     if (dd < this.mesSeleccionado) {
       // Realiza alguna acción si el mes seleccionado es menor al actual
-      console.log('El mes seleccionado no puede ser menor al mes actual.');
     }
   }
 
