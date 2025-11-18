@@ -58,165 +58,250 @@
 
 </div>
 <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h4 class="modal-title" *ngIf="info ==true">Agregar Empresa</h4>
-                <h4 class="modal-title" *ngIf="info ==false">Editar Empresa</h4>
-
-            </div>
-            <div class="modal-body row">
-
-                <form class="form-responsive">
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            Datos Empresa
-                        </div>
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="form-group col">
-                                    <label for="razonsocial">razonsocial:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="razonsocial"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-
-                                <div class="form-group col">
-                                    <label for="rfc">RFC:</label>
-                                    <input type="text" class="form-control" id="rfc" [(ngModel)]="rfc"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-                                <div class="form-group form-check col">
-                                    <label for="activo">Estatus:</label>
-                                    <label class="container">
-                                        <input checked="checked" type="checkbox" id="activo" [(ngModel)]="activo" [ngModelOptions]="{standalone: true}">
-                                        <div class="checkmark"></div>
-                                      </label>
-
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="fechainicioop">Fecha de Registro:</label>
-                                    <input type="date" class="form-control" [(ngModel)]="fechainicioop"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-
-                                <div class="form-group col">
-                                    <label for="emailoc">Correo de Oficial de Cumplimiento</label>
-                                    <input type="text" class="form-control" [(ngModel)]="emailoc"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="perfilid">Perfil:</label>
-                                    <select class="form-control" [(ngModel)]="idregimenfiscal"
-                                        [ngModelOptions]="{standalone: true}">
-                                        <option *ngFor="let item of regfis" [value]="item.id">{{ item.idreg }} - {{
-                                            item.descripcion }}</option>
-                                    </select>
-                                </div>
-                                <div class="col">
-                                    <label for="idpais">País:</label>
-                                    <select class="form-control" [(ngModel)]="idpais"
-                                        [ngModelOptions]="{standalone: true}">
-                                        <option selected [value]=""> </option>
-                                        <option *ngFor="let item of paises" [value]="item.idpais">{{ item.nombre }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            Direccion Empresa
-                        </div>
-                        <div class="card-body">
-
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="codigopostal">Código Postal:</label>
-                                    <input type="text" class="form-control" (input)="consultarDespuesDe5Digitos()"
-                                        maxlength="5" [(ngModel)]="codigopostal"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-
-                                <div class="form-group col">
-                                    <label for="calle">Calle:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="calle"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-
-                                <div class="form-group col">
-                                    <label for="numero">Número:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="numero"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="form-group col">
-                                    <label for="idcp">Seleccionar Colonia:</label>
-                                    <select class="form-control" (change)="seleccionarColonia($event)"
-                                        [(ngModel)]="idcp" [ngModelOptions]="{standalone: true}">
-                                        <option value="" selected>Seleccione una colonia</option>
-                                        <option *ngFor="let item of colonia" [value]="item.id">{{ item.colonia }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="form-group col">
-                                    <label for="municipio">Municipio:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="municipio"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-
-                                <div class="form-group col">
-                                    <label for="estado">Estado:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="estado"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-                            </div>
-
-                            <div class="row">
-
-                                <div class="form-group col">
-                                    <label for="telefono">Teléfono:</label>
-                                    <input type="tel" class="form-control" [(ngModel)]="telefono"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <label for="avisoprivasidad">Aviso de privasidad:</label>
-                                    <input type="text" class="form-control" [(ngModel)]="avisoprivasidad"
-                                        [ngModelOptions]="{standalone: true}" />
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </form>
-
-                <div class="row">
-                    <div class="col"> <button class="btn btn-primary mt-4" *ngIf="info ==true"
-                            (click)="guardarempresa()">Guardar</button>
-                        <button class="btn btn-primary mt-4" *ngIf="info ==false"
-                            (click)="actualizarempresa()">Actualizar</button>
-                    </div>
-
-                    <div class="col">
-
-                    </div>
-                    <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide()">Cerrar</button>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
+   <div class="modal-dialog modal-xl modal-dialog-centered">
+  <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
+    <!-- Encabezado -->
+    <div class="modal-header bg-primary text-white py-3">
+      <h4 class="modal-title d-flex align-items-center mb-0">
+        <i class="bi bi-building me-2"></i>
+        {{ info ? 'Agregar Empresa' : 'Editar Empresa' }}
+      </h4>
+      <button type="button" class="btn-close btn-close-white" (click)="will.hide()"></button>
     </div>
+
+    <div class="modal-body bg-light">
+      <form class="form-responsive">
+        <!-- Datos Empresa -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+          <div class="card-header bg-primary text-white fw-semibold">
+            <i class="bi bi-briefcase-fill me-2"></i> Datos de la Empresa
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-5">
+                <label for="razonsocial" class="form-label">Razón Social</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="razonsocial"
+                  [(ngModel)]="razonsocial"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Nombre completo de la empresa"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label for="rfc" class="form-label">RFC</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="rfc"
+                  [(ngModel)]="rfc"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ej. ABC1234567A1"
+                />
+              </div>
+
+              <div class="col-md-3 d-flex align-items-center">
+                <div class="form-check form-switch mt-4">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="activo"
+                    [(ngModel)]="activo"
+                    [ngModelOptions]="{ standalone: true }"
+                  />
+                  <label class="form-check-label fw-semibold" for="activo">
+                    Activa
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-3" />
+
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Fecha de Registro</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="fechainicioop"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Correo de Oficial de Cumplimiento</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="emailoc"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="correo@empresa.com"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Régimen Fiscal</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="idregimenfiscal"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option *ngFor="let item of regfis" [value]="item.id">
+                    {{ item.idreg }} - {{ item.descripcion }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+              <div class="col-md-4">
+                <label class="form-label">País</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="idpais"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option value="">Seleccione país</option>
+                  <option *ngFor="let item of paises" [value]="item.idpais">
+                    {{ item.nombre }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dirección Empresa -->
+        <div class="card border-0 shadow-sm rounded-3 mb-4">
+          <div class="card-header bg-success text-white fw-semibold">
+            <i class="bi bi-geo-alt-fill me-2"></i> Dirección de la Empresa
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label">Código Postal</label>
+                <input
+                  type="text"
+                  maxlength="5"
+                  class="form-control"
+                  [(ngModel)]="codigopostal"
+                  (input)="consultarDespuesDe5Digitos()"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Ej. 97000"
+                />
+              </div>
+
+              <div class="col-md-5">
+                <label class="form-label">Calle</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="calle"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+
+              <div class="col-md-2">
+                <label class="form-label">Número</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="numero"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+
+              <div class="col-md-2">
+                <label class="form-label">Teléfono</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  [(ngModel)]="telefono"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+              <div class="col-md-4">
+                <label class="form-label">Colonia</label>
+                <select
+                  class="form-select"
+                  [(ngModel)]="idcp"
+                  (change)="seleccionarColonia($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option value="">Seleccione una colonia</option>
+                  <option *ngFor="let item of colonia" [value]="item.id">
+                    {{ item.colonia }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Municipio</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="municipio"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Estado</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="estado"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+              <div class="col-md-12">
+                <label class="form-label">Aviso de Privacidad</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="avisoprivasidad"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="URL o descripción del aviso"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Botones -->
+      <div class="d-flex justify-content-between mt-4">
+        <button
+          class="btn btn-primary px-4"
+          *ngIf="info == true"
+          (click)="guardarempresa()"
+        >
+          <i class="bi bi-save me-2"></i> Guardar
+        </button>
+
+        <button
+          class="btn btn-warning text-white px-4"
+          *ngIf="info == false"
+          (click)="actualizarempresa()"
+        >
+          <i class="bi bi-pencil-square me-2"></i> Actualizar
+        </button>
+
+        <button class="btn btn-danger px-4" (click)="will.hide()">
+          <i class="bi bi-x-circle me-2"></i> Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>

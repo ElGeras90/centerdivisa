@@ -37,6 +37,7 @@ import { PieComponent } from './pie/pie.component';
 import { MovimientosComponent } from './contable/movimientos/movimientos.component';
 import { CortecajaComponent } from './reporte/cortecaja/cortecaja.component';
 import { CortecajamComponent } from './reporte/cortecajam/cortecajam.component';
+import { OperacionesComponent } from './operaciones/operaciones.component';
 
 
 
@@ -76,7 +77,8 @@ import { CortecajamComponent } from './reporte/cortecajam/cortecajam.component';
         GalertComponent,
         PieComponent,
         CortecajaComponent,
-        CortecajamComponent
+        CortecajamComponent,
+        OperacionesComponent
     ],
     imports: [
         CommonModule,

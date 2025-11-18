@@ -7,8 +7,9 @@ import { io } from 'socket.io-client';
 })
 export class SocketService {
   private socket: any;
-  //private readonly serverUrl = 'http://localhost:3069'; // URL del servidor Socket.IO
-  private readonly serverUrl = "https://inmtecdivisas.mx:3003/";
+  //private readonly serverUrl = 'http://localhost:3003'; 
+  private readonly serverUrl = 'https://demo.axen.devgeras.xyz:3003'; // URL del servidor Socket.IO
+  //private readonly serverUrl = "https://inmtecdivisas.mx:3003/";
   constructor() { }
 
   // Inicializar la conexión con el servidor
@@ -18,7 +19,6 @@ export class SocketService {
 
   // Autenticar al usuario en el servidor
   public authenticate(username: string): void {
-    console.log(username)
     this.socket.emit('authenticate', username);
   }
 

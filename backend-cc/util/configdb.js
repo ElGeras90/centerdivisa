@@ -9,11 +9,11 @@ module.exports = {
         database: 'binmtec01'
       },*/
   postgres: {
-    host: 'localhost',
+    host: '3.149.144.183',
     port: 5432,
     user: 'sistemas',
     password: 'Juange90',
-    database: 'cc'
+    database: 'axen_cc'
   },
   sqlServer: {
     server: 'localhost',

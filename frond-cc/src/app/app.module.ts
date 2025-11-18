@@ -25,8 +25,7 @@ import { AlertaFlotanteComponent } from './componete/alerta-flotante/alerta-flot
     HttpClientModule,
     NoopAnimationsModule
   ],
-  providers: [EncryptDataService, pld_data
-  ],
+  providers: [EncryptDataService, pld_data],
 
   bootstrap: [AppComponent]
 })

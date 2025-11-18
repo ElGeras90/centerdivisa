@@ -246,12 +246,23 @@ export class SucursalesComponent {
   }
   guardarsucursal() {
     if (this.idrol == 1) {
-      console.log(this.empresaid)
     }
     else {
       this.empresaid = this.empresa;
     }
+ // 🔹 Validar campos
+  if (!this.validarFormulario()) return;
 
+  // 🔹 Verificar duplicado
+  if (this.esDuplicado(this.nombre_sucursal)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'El nombre de la sucursal ya existe',
+      text: 'Ingrese un nombre diferente',
+      allowOutsideClick: false,
+    });
+    return;
+  }
     const a = {
 
       //sucursalid: sucursalid
@@ -267,10 +278,18 @@ export class SucursalesComponent {
 
     }
 
-    console.log(a)
 
     this.cp.sucursal(a).subscribe(
       (data: any) => {
+            if(data.resultado[0].manage_sucursal.action == 'error'){
+          Swal.fire({
+            icon: data.resultado[0].manage_sucursal.action,
+            title: data.resultado[0].manage_sucursal.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+          return
+        }
         Swal.fire({
           icon: data.resultado[0].manage_sucursal.action,
           title: data.resultado[0].manage_sucursal.message,
@@ -306,7 +325,19 @@ export class SucursalesComponent {
       this.empresaid = this.empresa
 
     }
+     // 🔹 Validar campos
+  if (!this.validarFormulario()) return;
 
+  // 🔹 Verificar duplicado
+  if (this.esDuplicado(this.nombre_sucursal)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'El nombre de la sucursal ya existe',
+      text: 'Ingrese un nombre diferente',
+      allowOutsideClick: false,
+    });
+    return;
+  }
     const a = {
       sucursalid: this.sucursalid,
       nombre_sucursal: this.nombre_sucursal,
@@ -320,9 +351,17 @@ export class SucursalesComponent {
       option: 2
     }
 
-    console.log(a)
     this.cp.sucursal(a).subscribe(
       (data: any) => {
+        if(data.resultado[0].manage_sucursal.action == 'error'){
+          Swal.fire({
+            icon: data.resultado[0].manage_sucursal.action,
+            title: data.resultado[0].manage_sucursal.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+          return
+        }
         Swal.fire({
           icon: data.resultado[0].manage_sucursal.action,
           title: data.resultado[0].manage_sucursal.message,
@@ -393,13 +432,22 @@ export class SucursalesComponent {
 
     this.cp.sucursal(a).subscribe(
       (data: any) => {
+        if (data.resultado[0].manage_sucursal.action == 'error') {
+          Swal.fire({
+            icon: data.resultado[0].manage_sucursal.action,
+            title: data.resultado[0].manage_sucursal.message,
+            allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
+            allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
+          });
+          return
+        } else {  
         Swal.fire({
           icon: data.resultado[0].manage_sucursal.action,
           title: data.resultado[0].manage_sucursal.message,
           allowOutsideClick: false, // Evitar que se cierre al hacer clic fuera de la alerta
           allowEscapeKey: false, // Evitar que se cierre al presionar la tecla "Esc"
         });
-
+      }
       }, (error: any) => {
         Swal.fire({
           icon: 'error',
@@ -421,8 +469,62 @@ export class SucursalesComponent {
     this.will.hide()
   }
   getsucursalName(empresaid: number): string {
-    console.log(empresaid)
     const agency = this.empresas.find((a: any) => a.idempresa == empresaid);
     return agency ? agency.razonsocial : 'Unknown';
   }
+  // 🔹 Validar formulario antes de guardar o actualizar
+validarFormulario(): boolean {
+  if (!this.nombre_sucursal || this.nombre_sucursal.trim() === '') {
+    Swal.fire({ icon: 'warning', title: 'Debe ingresar el nombre de la sucursal' });
+    return false;
+  }
+
+  if (this.idrol == 1 && (!this.empresaid || this.empresaid === '')) {
+    Swal.fire({ icon: 'warning', title: 'Debe seleccionar una empresa' });
+    return false;
+  }
+
+  if (!this.codigopostal || this.codigopostal.length !== 5) {
+    Swal.fire({ icon: 'warning', title: 'Ingrese un código postal válido (5 dígitos)' });
+    return false;
+  }
+
+  if (!this.idcp || this.idcp === '') {
+    Swal.fire({ icon: 'warning', title: 'Seleccione una colonia' });
+    return false;
+  }
+
+  if (!this.calle || this.calle.trim() === '') {
+    Swal.fire({ icon: 'warning', title: 'Debe ingresar una calle' });
+    return false;
+  }
+
+  if (!this.numero || this.numero.trim() === '') {
+    Swal.fire({ icon: 'warning', title: 'Debe ingresar el número' });
+    return false;
+  }
+
+  if (!this.municipio || this.municipio.trim() === '') {
+    Swal.fire({ icon: 'warning', title: 'Debe ingresar el municipio' });
+    return false;
+  }
+
+  if (!this.estado || this.estado.trim() === '') {
+    Swal.fire({ icon: 'warning', title: 'Debe ingresar el estado' });
+    return false;
+  }
+
+  return true;
+}
+
+esDuplicado(nombre: string): boolean {
+  if (!this.dataSource || !this.dataSource.data) return false;
+
+  const nombreNormalizado = nombre.trim().toLowerCase();
+  return this.dataSource.data.some((s: any) =>
+    s.nombre_sucursal.trim().toLowerCase() === nombreNormalizado &&
+    s.sucursalid !== this.sucursalid // si está editando, que no cuente la misma
+  );
+}
+
 }

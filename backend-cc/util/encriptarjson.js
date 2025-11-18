@@ -10,7 +10,7 @@ function encrypt(text) {
     return encrypted;
 }
 
-function decrypt(text) {
+function decrypt(text,res) {
     const bufferCifrado = Buffer.from(text, 'base64');
     let decrypt = JSON.parse(bufferCifrado.toString('latin1'))
     return decrypt;

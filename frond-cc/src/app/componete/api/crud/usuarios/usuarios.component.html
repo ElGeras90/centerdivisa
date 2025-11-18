@@ -49,187 +49,197 @@
 
 </div>
 <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
+<div class="modal-dialog modal-xl modal-dialog-centered">
+  <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
+    <!-- Encabezado -->
+    <div class="modal-header bg-primary text-white py-3">
+      <h4 class="modal-title d-flex align-items-center mb-0">
+        <i class="bi bi-person-fill-add me-2"></i>
+        {{ info ? 'Ingresar Usuario' : 'Editar Usuario' }}
+      </h4>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        (click)="will.hide();limpiar()"
+      ></button>
+    </div>
 
-        <h4 class="modal-title" *ngIf="info ==true">Ingresar Usuario</h4>
-        <h4 class="modal-title" *ngIf="info ==false">Editar Usuario</h4>
+    <div class="modal-body bg-light">
+      <form [formGroup]="usuarioForm" class="form-responsive">
+        <!-- Sección: Datos de Usuario -->
+        <div class="card mb-4 border-0 shadow-sm rounded-3">
+          <div class="card-header bg-gradient text-white bg-primary">
+            <i class="bi bi-person-lines-fill me-2"></i> Datos del Usuario
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="text" class="form-control" id="usuario" formControlName="usuario" />
+              </div>
 
-      </div>
-      <div class="modal-body row">
+              <div class="col-md-4">
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="contrasena" formControlName="contrasena" />
+              </div>
 
-        <form [formGroup]="usuarioForm" class="form-responsive">
-
-          <div class="card mb-4">
-            <div class="card-header">
-              Datos Usuarios
-            </div>
-            <div class="card-body">
-              <div class="row align-items-center">
-                <div class="form-group col">
-                  <label for="usuario">Usuario:</label>
-                  <input type="text" class="form-control" id="usuario" formControlName="usuario" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="contrasena">Contraseña:</label>
-                  <input type="password" class="form-control" id="contrasena" formControlName="contrasena" />
-                </div>
-                <div class="form-group form-check col ">
-                 <!-- <input type="checkbox"  id="activo" formControlName="activo" />-->
+              <div class="col-md-4 d-flex align-items-center">
+                <div class="form-check form-switch mt-4">
+                  <input class="form-check-input" type="checkbox" id="activo" formControlName="activo" />
                   <label class="form-check-label" for="activo">Activo</label>
-                  <div class="checkbox-wrapper">
-                    <label>
-                      <input type="checkbox"  id="activo" formControlName="activo" >
-                      <span class="checkbox"></span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="fecharegistro">Fecha de Registro:</label>
-                  <input type="date" class="form-control" id="fecharegistro" formControlName="fecharegistro" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="fechamodificacion">Fecha de Modificación:</label>
-                  <input type="date" class="form-control" id="fechamodificacion" formControlName="fechamodificacion" />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="form-group col">
-                    <label for="perfilid">Perfil:</label>
-                    <select class="form-control" id="perfilid" formControlName="perfilid">
-                      <option *ngFor="let item of rol" [value]="item.idrol">{{ item.descripcion }}</option>
-                      <!-- Agrega más opciones según tus necesidades -->
-                    </select>
-                </div>
-
-                <div class="form-group col" *ngIf="idrol==1">
-                    <label for="empresa">Empresa:</label>
-                    <select class="form-control" id="empresa" formControlName="empresa" (change)="suc($event)">
-                      <option *ngFor="let item of empre" [value]="item.idempresa">{{ item.razonsocial }}</option>
-                      <!-- Agrega más opciones según tus necesidades -->
-                    </select>
-                </div>
-                <div class="form-group col">
-                    <label for="sucursalid">Sucursal:</label>
-                    <select class="form-control" id="sucursalid" formControlName="sucursalid">
-                      <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">{{ dat.nombre_sucursal }}</option>
-                      <!-- Agrega más opciones según tus necesidades -->
-                    </select>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="card mb-4">
-            <div class="card-header">
-              Datos Personales
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="form-group col">
-                  <label for="nombre">Nombre:</label>
-                  <input type="text" class="form-control" id="nombre" formControlName="nombre" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="paterno">Apellido Paterno:</label>
-                  <input type="text" class="form-control" id="paterno" formControlName="paterno" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="materno">Apellido Materno:</label>
-                  <input type="text" class="form-control" id="materno" formControlName="materno" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="codigopostal">Código Postal:</label>
-                  <input type="text" class="form-control" formControlName="codigopostal"
-                    (input)="consultarDespuesDe5Digitos()"maxlength="5" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="calle">Calle:</label>
-                  <input type="text" class="form-control" id="calle" formControlName="calle" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="numero">Número:</label>
-                  <input type="text" class="form-control" id="numero" formControlName="numero" />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="form-group col">
-                  <label for="idcp">Seleccionar Colonia:</label>
-                  <select class="form-control" id="idcp" formControlName="idcp"  (change)="seleccionarColonia($event)">
-                    <option *ngFor="let item of colonia" [value]="item.id">{{ item.colonia }}</option>
-                  </select>
-                </div>
-                <div class="form-group col">
-                  <label for="municipio">Municipio:</label>
-                  <input type="text" class="form-control" formControlName="municipio" id="municipio" />
-                </div>
-                
-                <div class="form-group col">
-                  <label for="estado">Estado:</label>
-                  <input type="text" class="form-control" formControlName="estado" id="estado"/>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="form-group col">
-                  <label for="correo">Correo:</label>
-                  <input type="email" class="form-control" id="correo" formControlName="correo" />
-                </div>
-
-                <div class="form-group col">
-                  <label for="telefono">Teléfono:</label>
-                  <input type="tel" class="form-control" id="telefono" formControlName="telefono" />
-                </div>
-              </div>
-
-              
-            </div>
-          </div>
-         
-          <div class="card mb-4">
-            <div class="card-header">
-             Encargado
-            </div>
-            <div class="card-body">
-              <div class="row">
-          
-
-                <div class="form-group form-check col">
-                  <input type="checkbox" class="form-check-input" id="encargado" formControlName="encargado" />
-                  <label class="form-check-label" for="activo">Encargado de sucursal</label>
                 </div>
               </div>
             </div>
-          </div>
-        </form>
 
-        <div class="row">
-          <div class="col" > <button  class="btn btn-primary mt-4" *ngIf="info ==true" (click)="onSubmit()">Guardar</button>
-            <button  class="btn btn-primary mt-4" *ngIf="info ==false" (click)="onSubmit()">Actualizar</button>
-          </div>
-         
-          <div class="col">
+            <hr />
 
-          </div>
-          <div class="col"> <button class="btn btn-danger mt-4" (click)="will.hide();limpiar()">Cerrar</button>
-          </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="fecharegistro" class="form-label">Fecha de Registro</label>
+                <input type="date" class="form-control" id="fecharegistro" formControlName="fecharegistro" />
+              </div>
 
+              <div class="col-md-6">
+                <label for="fechamodificacion" class="form-label">Fecha de Modificación</label>
+                <input type="date" class="form-control" id="fechamodificacion" formControlName="fechamodificacion" />
+              </div>
+            </div>
+
+            <div class="row g-3 mt-3">
+              <div class="col-md-4">
+                <label for="perfilid" class="form-label">Perfil</label>
+                <select class="form-select" id="perfilid" formControlName="perfilid">
+                  <option *ngFor="let item of rol" [value]="item.idrol">{{ item.descripcion }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4" *ngIf="idrol == 1">
+                <label for="empresa" class="form-label">Empresa</label>
+                <select class="form-select" id="empresa" formControlName="empresa" (change)="suc($event)">
+                  <option *ngFor="let item of empre" [value]="item.idempresa">{{ item.razonsocial }}</option>
+                </select>
+              </div>
+
+              <div class="col-md-4">
+                <label for="sucursalid" class="form-label">Sucursal</label>
+                <select class="form-select" id="sucursalid" formControlName="sucursalid">
+                  <option *ngFor="let dat of sucursales" [value]="dat.sucursalid">{{ dat.nombre_sucursal }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
 
+        <!-- Sección: Datos Personales -->
+        <div class="card mb-4 border-0 shadow-sm rounded-3">
+          <div class="card-header bg-success text-white">
+            <i class="bi bi-person-vcard-fill me-2"></i> Datos Personales
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-control" formControlName="nombre" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Apellido Paterno</label>
+                <input type="text" class="form-control" formControlName="paterno" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Apellido Materno</label>
+                <input type="text" class="form-control" formControlName="materno" />
+              </div>
+            </div>
+
+            <div class="row g-3 mt-2">
+              <div class="col-md-2">
+                <label class="form-label">C.P.</label>
+                <input
+                  type="text"
+                  maxlength="5"
+                  class="form-control"
+                  formControlName="codigopostal"
+                  (input)="consultarDespuesDe5Digitos()"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Calle</label>
+                <input type="text" class="form-control" formControlName="calle" />
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Número</label>
+                <input type="text" class="form-control" formControlName="numero" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Colonia</label>
+                <select class="form-select" formControlName="idcp" (change)="seleccionarColonia($event)">
+                  <option *ngFor="let item of colonia" [value]="item.id">{{ item.colonia }}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row g-3 mt-2">
+              <div class="col-md-4">
+                <label class="form-label">Municipio</label>
+                <input type="text" class="form-control" formControlName="municipio" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado</label>
+                <input type="text" class="form-control" formControlName="estado" />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Correo</label>
+                <input type="email" class="form-control" formControlName="correo" />
+              </div>
+            </div>
+
+            <div class="row g-3 mt-2">
+              <div class="col-md-4">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" formControlName="telefono" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección: Encargado -->
+        <div class="card border-0 shadow-sm rounded-3">
+          <div class="card-header bg-info text-white">
+            <i class="bi bi-person-workspace me-2"></i> Encargado
+          </div>
+          <div class="card-body">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="encargado" formControlName="encargado" />
+              <label class="form-check-label fw-semibold" for="encargado">Encargado de sucursal</label>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Botones -->
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <button
+          class="btn btn-primary px-4"
+          *ngIf="info == true"
+          (click)="onSubmit()"
+        >
+          <i class="bi bi-save me-2"></i> Guardar
+        </button>
+
+        <button
+          class="btn btn-warning text-white px-4"
+          *ngIf="info == false"
+          (click)="onSubmit()"
+        >
+          <i class="bi bi-pencil-square me-2"></i> Actualizar
+        </button>
+
+        <button class="btn btn-danger px-4" (click)="will.hide();limpiar()">
+          <i class="bi bi-x-circle me-2"></i> Cerrar
+        </button>
       </div>
     </div>
   </div>
+</div>
+
 </div>

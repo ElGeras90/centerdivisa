@@ -206,6 +206,18 @@ const {postgresPool} = require('./../util/condb');
       client.release();
     }
   }
+  async function obtenerClientes(empresa) {
+    const client = await postgresPool.connect();
+    try {
+      const query = 'SELECT * FROM "public"."obtenerdatosclientes"($1)';
+      const result = await client.query(query, [empresa]);
+      return result;
+    } catch (error) {
+      throw error;
+    } finally {
+      client.release();
+    }
+  }
 
   module.exports = {
     manage_acceso_rol,
@@ -222,7 +234,8 @@ const {postgresPool} = require('./../util/condb');
     manage_user,
     manage_cat_reg,
     manage_cliente_empresa,
-    dll
+    dll,
+    obtenerClientes
 
   };
   

@@ -1,0 +1,130 @@
+<div class="container mt-3">
+  <h2 class="mb-3">Gestión de Alertas de Montos</h2>
+
+  <!-- 🔘 Botones de tipo de alerta -->
+  <div class="mb-3 d-flex flex-wrap align-items-center">
+    <button class="btn btn-primary me-2 mb-2" (click)="cambiarTipo('Relevante')">
+      Relevantes / Fraccionadas
+    </button>
+    <button class="btn btn-warning me-2 mb-2" (click)="cambiarTipo('Inusual')">
+      Inusuales
+    </button>
+    <!-- <button class="btn btn-info me-3 mb-2" (click)="cambiarTipo('Interna')">
+      Internas
+    </button> -->
+
+    <!-- 🔍 Búsqueda por rango de fechas -->
+    <div class="d-flex align-items-center flex-wrap">
+      <label class="me-2 fw-semibold mb-2">Desde:</label>
+      <input type="date" class="form-control me-2 mb-2" [(ngModel)]="fechaInicio" style="width: 180px;">
+
+      <label class="me-2 fw-semibold mb-2">Hasta:</label>
+      <input type="date" class="form-control me-2 mb-2" [(ngModel)]="fechaFin" style="width: 180px;">
+
+      <button class="btn btn-outline-success mb-2" (click)="buscarPorFechas()">
+        Buscar
+      </button>
+      <button class="btn btn-outline-secondary ms-2 mb-2" (click)="limpiarFechas()">
+        Limpiar
+      </button>
+    </div>
+  </div>
+
+  <!-- ⏳ Cargando -->
+  <div *ngIf="cargando" class="text-center mt-4">
+    <div class="spinner-border text-primary"></div>
+    <p>Cargando alertas...</p>
+  </div>
+
+  <!-- 🧾 Tabla de resultados -->
+  <table *ngIf="!cargando && alertas.length" class="table table-striped table-hover mt-3">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Fecha</th>
+        <th>Tipo</th>
+        <th>Monto</th>
+        <th>Moneda</th>
+        <th>Riesgo</th>
+        <th>Estatus</th>
+        <th>Tipo Relación</th>
+        <th>Nombre / Razón Social</th>
+        <th>RFC</th>
+        <th *ngIf="tipoSeleccionado === 'Inusual'">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of alertas">
+        <td>{{ a.id_alerta }}</td>
+        <td>{{ a.fecha_operacion | date:'short' }}</td>
+        <td>{{ a.tipo_alerta }}</td>
+        <td>{{ a.monto | number:'1.2-2' }}</td>
+        <td>{{ a.moneda }}</td>
+        <td>{{ a.riesgo_asociado }}</td>
+        <td>{{ a.estatus }}</td>
+        <td>{{ a.tipo_relacion }}</td>
+        <td>{{ a.nombre_relacion }}</td>
+        <td>{{ a.rfc_relacion }}</td>
+        <td *ngIf="tipoSeleccionado === 'Inusual'">
+          <button class="btn btn-sm btn-success" (click)="editarAlerta(a)">
+            Editar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!cargando && !alertas.length" class="text-center text-muted">
+    No se encontraron alertas para el tipo o rango seleccionado.
+  </p>
+</div>
+
+<!-- 🟡 Modal de edición -->
+ 
+<div class="modal fade" bsModal #modalEditar="bs-modal" tabindex="-1" role="dialog" aria-labelledby="modalEditarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+
+      <!-- Encabezado -->
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="modalEditarLabel">Editar Alerta Inusual</h5>
+      </div>
+
+      <!-- Cuerpo -->
+      <div class="modal-body">
+
+        <p><strong>Tipo relación:</strong> {{ alertaSeleccionada.tipo_relacion }}</p>
+        <p><strong>Nombre / Razón Social:</strong> {{ alertaSeleccionada.nombre_relacion }}</p>
+        <p><strong>RFC:</strong> {{ alertaSeleccionada.rfc_relacion }}</p>
+
+        <div class="mb-3">
+          <label>Descripción</label>
+          <textarea [(ngModel)]="alertaSeleccionada.descripcion" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Observaciones</label>
+          <textarea [(ngModel)]="alertaSeleccionada.observaciones" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label>Estatus</label>
+          <select [(ngModel)]="alertaSeleccionada.estatus" class="form-select">
+            <option>Pendiente</option>
+            <option>Analizada</option>
+            <option>Reportada</option>
+            <option>Descartada</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="modalEditar.hide()">Cerrar</button>
+        <button class="btn btn-warning text-dark" (click)="guardarCambios()">Guardar cambios</button>
+      </div>
+
+    </div>
+  </div>
+</div>

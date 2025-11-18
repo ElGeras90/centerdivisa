@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<reporte xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.uif.shcp.gob.mx/recepcion/de1 de1.xsd" xmlns="http://www.uif.shcp.gob.mx/recepcion/de1">
+  <trimestre_reportado>4</trimestre_reportado>
+  <clave_organo_supervisor>CNBV</clave_organo_supervisor>
+  <clave_sujeto>123456</clave_sujeto>
+  <codigo_postal>20000</codigo_postal>
+  <operacion>
+    <moneda>USD</moneda>
+    <numero_operaciones_compra>5</numero_operaciones_compra>
+    <monto_compra>368499.00</monto_compra>
+    <numero_operaciones_venta>0</numero_operaciones_venta>
+    <monto_venta>0.00</monto_venta>
+  </operacion>
+</reporte>

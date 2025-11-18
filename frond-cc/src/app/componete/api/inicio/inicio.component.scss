@@ -1,47 +1,77 @@
-.t {
-  height: 60vh;
-
+/* Variables CSS globales */
+:root {
+  --primary-dark: #1F2124;
+  --primary-gray: #383A3F;
+  --accent-orange: #F68657;
+  --accent-yellow: #F6B352;
 }
 
-.txt {
-
-  text-align: right;
-  font-size: 30px;
-  height: 80vh;
+.dashboard-container {
+  background-color: var(--primary-gray);
+  color: var(--accent-yellow);
+  font-family: "Varela Round", sans-serif;
+  min-height: 100vh;
   display: flex;
-  justify-content: right;
-  /* Centra horizontalmente */
-  align-items: center;
-  /* Centra verticalmente */
-}
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
 
-.txt2 {
+  .dashboard-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 
-  text-align: left;
-  font-size: 30px;
-  height: 80vh;
-  display: flex;
-  justify-content: left;
-  /* Centra horizontalmente */
-  align-items: center;
-  /* Centra verticalmente */
-}
+    @media (min-width: 768px) {
+      flex-direction: row;
+      gap: 1rem;
+    }
 
-.an {
-  height: 35%;
-}
+    .welcome-title { font-size: 2.5rem; font-weight: 700; }
+    .welcome-subtitle { font-size: 1.2rem; color: var(--accent-yellow); }
+    .user-name { font-size: 2rem; font-weight: 800; }
+    .user-role { font-size: 1rem; color: var(--primary-dark); font-weight: 600; }
+  }
 
-.recuadro {
-  width: 100%;
-  /* Ajusta el ancho según sea necesario */
-  height: 100%;
-  /* Ajusta la altura según sea necesario */
-  border-radius: 20px;
-  /* Ajusta el radio de redondeo según sea necesario */
-  display: flex;
-  /* Usado para centrar el texto */
-  align-items: center;
-  /* Centra verticalmente */
-  justify-content: center;
-  /* Centra horizontalmente */
+  .info-card {
+    background-color: var(--primary-dark);
+    color: var(--accent-yellow);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.6);
+    }
+
+    .card-value { color: var(--accent-orange); }
+    .btn-card {
+      background-color: var(--accent-yellow);
+      color: var(--primary-dark);
+      font-weight: bold;
+
+      &:hover {
+        background-color: var(--accent-orange);
+        color: var(--primary-dark);
+      }
+    }
+
+    .icon img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+
+  .branch-card {
+    background-color: var(--primary-dark);
+    color: var(--accent-yellow);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+
+    .branch-name { font-weight: 700; font-size: 1.5rem; }
+    .branch-info { font-size: 1.1rem; margin: 0.2rem 0; }
+  }
 }

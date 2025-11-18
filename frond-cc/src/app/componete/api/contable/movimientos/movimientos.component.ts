@@ -34,9 +34,7 @@ export class MovimientosComponent implements OnInit {
 
     this.cp.saldosdia(a).subscribe(
       (data: any) => {
-        console.log('Error entre')
         this.dataSource.data = data.info.valores;
-        console.log(this.dataSource.data)
 
       }, (error: any) => {
         Swal.fire({

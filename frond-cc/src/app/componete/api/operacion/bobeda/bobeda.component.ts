@@ -115,7 +115,6 @@ export class BobedaComponent {
 
   crearjson(){
     this.descripcion=this.descripcion;
-    console.log(this.descripcion)
     const a = {
       idsucursalid:this.idsucursalid,
       idgrupodivisa:this.idgrupodivisa,
@@ -201,7 +200,53 @@ export class BobedaComponent {
 
   async guardarmovimiento() {
 
-  
+      // --- VALIDACIONES PREVIAS ---
+  if (this.sinsucursal && (!this.idsucursalid || this.idsucursalid === 0)) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Sucursal requerida',
+      text: 'Debe seleccionar una sucursal antes de continuar.',
+    });
+    return;
+  }
+
+  if (!this.idgrupodivisa || this.idgrupodivisa === 0) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Divisa requerida',
+      text: 'Debe seleccionar una divisa antes de continuar.',
+    });
+    return;
+  }
+
+  if (this.isChecked) {
+    if (!this.entrada || isNaN(this.entrada) || Number(this.entrada) <= 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Entrada inválida',
+        text: 'Debe ingresar un valor numérico mayor a 0 en el campo Entrada.',
+      });
+      return;
+    }
+  } else {
+    if (!this.salida || isNaN(this.salida) || Number(this.salida) <= 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Salida inválida',
+        text: 'Debe ingresar un valor numérico mayor a 0 en el campo Salida.',
+      });
+      return;
+    }
+  }
+
+  if (!this.descripcion || this.descripcion.trim() === '') {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Descripción requerida',
+      text: 'Debe agregar una descripción del movimiento.',
+    });
+    return;
+  }
       Swal.fire({
         imageUrl: '../../../../assets/img/unnamed.png',
         title: '¿Desea Realizar el registro?',

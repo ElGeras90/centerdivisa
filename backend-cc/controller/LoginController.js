@@ -8,7 +8,7 @@ const encriptarjsong = require('./../util/encriptarjson');
 
 function login(req, res) {
   let resquest = encriptarjsong.decrypt(req.body.resultado)
-
+  console.log(resquest)
   const { usuario, password } = resquest;
 
   if (!usuario || !password) {
@@ -27,6 +27,7 @@ function login(req, res) {
 
     })
     .catch(error => {
+      console.log(error)
       res.status(501).send({ success: false, message: error });
 
     });

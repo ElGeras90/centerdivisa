@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { cp, rol, Sucursal, Empresa, regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo, regulatorios, conta, Reportediario, Documento } from "./constantes"; // Importa LoginConstante directamente
+import { cp, rol, Sucursal, Empresa, regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo, regulatorios, conta, Reportediario, Documento, PerfilTransaccional, AlertasMontos } from "./constantes"; // Importa LoginConstante directamente
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,9 @@ export class cpservice {
   }
   clientes(data: any) {
     return this._apiServicio.Post(data, cl.URLcliente);
+  }
+  obtenerclientes(data?: any) {
+    return this._apiServicio.Post(data, cl.URLobtenerclientes);
   }
   divisas(data: any) {
     return this._apiServicio.Post(data, divisa.URLdivisa);
@@ -154,4 +157,64 @@ export class cpservice {
   movimientos(datos: any) {
     return this._apiServicio.Post(datos, Documento.Urlvistalista)
   }
+
+  reportedolares(data: any) {
+    return this._apiServicio.Download(data, regulatorios.URLdolares);
+  }
+  reporte24h(data: any) {
+    return this._apiServicio.Post(data, regulatorios.URLreporte24h);
+  }
+  reporteinusuales(data: any) {
+    return this._apiServicio.Post(data, regulatorios.URLinusuales);
+  }
+  reporterelevantes(data: any) {
+    return this._apiServicio.Post(data, regulatorios.URLrelevantes);
+  }
+  reportemontosvista(data: any) {
+    return this._apiServicio.Download(data, regulatorios.URLmontos);
+  }
+
+  propositoVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLproposito);
+  }
+
+  frecuenciaVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLfrecuencia);
+  }
+
+  tipoOperacionesVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLtipoOperaciones);
+  }
+
+  actuaNombreVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLactuaNombre);
+  }
+
+  medioPagoVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLmedioPago);
+  }
+
+  origenRecursosVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLorigenRecursos);
+  }
+
+  destinoRecursosVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLdestinoRecursos);
+  }
+
+  relacionTerceroVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLrelacionTercero);
+  }
+
+  pepTipoVista(data: any) {
+    return this._apiServicio.Post(data, PerfilTransaccional.URLpepTipo);
+  }
+  alertasMontosConsultar(data: any) {
+  return this._apiServicio.Post(data, AlertasMontos.URLconsultar);
+}
+
+alertasMontosActualizar(data: any) {
+  return this._apiServicio.Post(data, AlertasMontos.URLactualizar);
+}
+
 }

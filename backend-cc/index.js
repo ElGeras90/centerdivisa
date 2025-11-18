@@ -14,13 +14,15 @@ const env = require('./routes/cambioroute')
 const naproxeno = require('./routes/resetpass')
 const diclofenaco = require('./routes/matrizroute')
 var helmet = require('helmet');
-//const https = require('https');
+const https = require('https');
 const fs = require('fs');
 const encriptarjsong = require('./util/encriptarjson');
 const { js2xml } = require('xml-js');
 const regulatorios = require('./routes/regulatorioRoute')
 const conta = require('./routes/reportecontables');
 const reporte = require('./routes/documentoRoute')
+const loggerMiddleware = require('./middlewares/log.middleware');
+const perfil = require('./routes/PerfilTransaccionalRoutes');
 // Configurar cabeceras y cors
 app.use(helmet());
 
@@ -34,6 +36,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
 app.set('view engine', 'ejs');
+app.use(loggerMiddleware);
 
 // Configuración adicional de helmet
 app.use(
@@ -83,14 +86,18 @@ app.use('/matriz', diclofenaco)
 app.use('/rg', regulatorios)
 app.use('/conta', conta)
 app.use('/reporte', reporte)
+app.use('/perfil', perfil);
+const alertasMontosRoutes = require('./routes/alertasMontos');
+app.use('/alertas-montos', alertasMontosRoutes);
+
 // para restablecer la contraseña 
 
 
 if (process.env.NODE_ENV === 'production') {
   // Configurar opciones SSL
   const options = {
-    key: fs.readFileSync('/home/remicashbd/ssl/cc/cc.key'),
-    cert: fs.readFileSync('/home/remicashbd/ssl/cc/cc.crt'),
+    key: fs.readFileSync('/etc/letsencrypt/live/demo.axen.devgeras.xyz/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/demo.axen.devgeras.xyz/fullchain.pem'),
   };
 
 

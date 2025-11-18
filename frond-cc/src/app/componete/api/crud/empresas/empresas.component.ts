@@ -94,7 +94,6 @@ export class EmpresasComponent {
     }
     this.cp.regimen(info).subscribe(
       (data: any) => {
-        console.log(data)
         if (data.resultado[0].manage_cat_reg.action == 'error') {
           Swal.fire({
             icon: data.info.action,
@@ -235,6 +234,89 @@ export class EmpresasComponent {
       option: 1
 
     }
+     // --- VALIDACIONES ---
+  if (!this.razonsocial || this.razonsocial.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar la razón social.', 'warning');
+    return;
+  }
+
+  if (!this.rfc || this.rfc.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el RFC de la empresa.', 'warning');
+    return;
+  }
+
+  // RFC: formato general de 12 o 13 caracteres (personas morales/físicas)
+  const rfcRegex = /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/i;
+  if (!rfcRegex.test(this.rfc)) {
+    Swal.fire('RFC inválido', 'El RFC ingresado no tiene un formato válido.', 'warning');
+    return;
+  }
+
+  if (!this.idregimenfiscal) {
+    Swal.fire('Campo requerido', 'Debe seleccionar un régimen fiscal.', 'warning');
+    return;
+  }
+
+  if (!this.idpais) {
+    Swal.fire('Campo requerido', 'Debe seleccionar un país.', 'warning');
+    return;
+  }
+
+  if (!this.calle || this.calle.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar la calle.', 'warning');
+    return;
+  }
+
+  if (!this.numero || this.numero.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el número.', 'warning');
+    return;
+  }
+
+  if (!this.idcp) {
+    Swal.fire('Campo requerido', 'Debe seleccionar una colonia.', 'warning');
+    return;
+  }
+
+  if (!this.codigopostal || this.codigopostal.toString().length !== 5) {
+    Swal.fire('Código postal inválido', 'Debe ingresar un código postal de 5 dígitos.', 'warning');
+    return;
+  }
+
+  if (!this.municipio || this.municipio.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el municipio.', 'warning');
+    return;
+  }
+
+  if (!this.estado || this.estado.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el estado.', 'warning');
+    return;
+  }
+
+  if (!this.telefono || this.telefono.toString().length < 10) {
+    Swal.fire('Teléfono inválido', 'Debe ingresar un teléfono válido de al menos 10 dígitos.', 'warning');
+    return;
+  }
+
+  if (!this.emailoc || this.emailoc.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el correo del oficial de cumplimiento.', 'warning');
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(this.emailoc)) {
+    Swal.fire('Correo inválido', 'Debe ingresar un correo electrónico válido.', 'warning');
+    return;
+  }
+
+  if (!this.fechainicioop) {
+    Swal.fire('Campo requerido', 'Debe ingresar la fecha de registro.', 'warning');
+    return;
+  }
+
+  if (!this.avisoprivasidad || this.avisoprivasidad.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar o adjuntar el aviso de privacidad.', 'warning');
+    return;
+  }
 
     this.cp.Empresax(a).subscribe(
       (data: any) => {
@@ -280,7 +362,89 @@ export class EmpresasComponent {
       idempresa: this.idempresa,
       option:2
     }
+     // --- VALIDACIONES ---
+  if (!this.razonsocial || this.razonsocial.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar la razón social.', 'warning');
+    return;
+  }
 
+  if (!this.rfc || this.rfc.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el RFC de la empresa.', 'warning');
+    return;
+  }
+
+  // RFC: formato general de 12 o 13 caracteres (personas morales/físicas)
+  const rfcRegex = /^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$/i;
+  if (!rfcRegex.test(this.rfc)) {
+    Swal.fire('RFC inválido', 'El RFC ingresado no tiene un formato válido.', 'warning');
+    return;
+  }
+
+  if (!this.idregimenfiscal) {
+    Swal.fire('Campo requerido', 'Debe seleccionar un régimen fiscal.', 'warning');
+    return;
+  }
+
+  if (!this.idpais) {
+    Swal.fire('Campo requerido', 'Debe seleccionar un país.', 'warning');
+    return;
+  }
+
+  if (!this.calle || this.calle.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar la calle.', 'warning');
+    return;
+  }
+
+  if (!this.numero || this.numero.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el número.', 'warning');
+    return;
+  }
+
+  if (!this.idcp) {
+    Swal.fire('Campo requerido', 'Debe seleccionar una colonia.', 'warning');
+    return;
+  }
+
+  if (!this.codigopostal || this.codigopostal.toString().length !== 5) {
+    Swal.fire('Código postal inválido', 'Debe ingresar un código postal de 5 dígitos.', 'warning');
+    return;
+  }
+
+  if (!this.municipio || this.municipio.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el municipio.', 'warning');
+    return;
+  }
+
+  if (!this.estado || this.estado.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el estado.', 'warning');
+    return;
+  }
+
+  if (!this.telefono || this.telefono.toString().length < 10) {
+    Swal.fire('Teléfono inválido', 'Debe ingresar un teléfono válido de al menos 10 dígitos.', 'warning');
+    return;
+  }
+
+  if (!this.emailoc || this.emailoc.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar el correo del oficial de cumplimiento.', 'warning');
+    return;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(this.emailoc)) {
+    Swal.fire('Correo inválido', 'Debe ingresar un correo electrónico válido.', 'warning');
+    return;
+  }
+
+  if (!this.fechainicioop) {
+    Swal.fire('Campo requerido', 'Debe ingresar la fecha de registro.', 'warning');
+    return;
+  }
+
+  if (!this.avisoprivasidad || this.avisoprivasidad.trim() === '') {
+    Swal.fire('Campo requerido', 'Debe ingresar o adjuntar el aviso de privacidad.', 'warning');
+    return;
+  }
     this.cp.Empresax(a).subscribe(
       (data: any) => {
         Swal.fire({
@@ -336,11 +500,15 @@ export class EmpresasComponent {
     };
 
     const data2: any = await this.cp.codigopostar(info2).toPromise(); // Convertir el observable a una promesa
-
+    console.log(data2);
     this.codigopostal = data2.info.data[0].cp;
     this.estado = data2.info.data[0].estado;
     this.municipio = data2.info.data[0].municipio;
 
+    this.consultarCodigosPostales(this.codigopostal);
+
+
+    this.colonia = data2.info.data[0].id;
  
     this.will.show()
   }

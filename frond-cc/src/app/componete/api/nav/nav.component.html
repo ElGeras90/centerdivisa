@@ -1,92 +1,98 @@
+<!-- Alertas flotantes -->
 <div>
   <app-alerta-flotante class="alserts" *ngFor="let a of messages; let i = index"
     [message]="a" (closed)="closeAlert(i)"></app-alerta-flotante>
 </div>
 
-<div class="container-fluid fondoblue2 ">
+<!-- Header con logo y notificaciones -->
+<header class="header-container d-flex justify-content-between align-items-center p-3 bg-primary text-white">
+  <a [routerLink]="['/api']" class="d-flex align-items-center">
+    <img src="../../../../assets/img/Centro cambiario logo-03.png" alt="Logo" class="logo">
+  </a>
 
-  <div class="row flex-container tm">
-    <div class="col-md-6">
-      <a [routerLink]="['/api']">
-        <img src="../../../../assets/img/Centro cambiario logo-03.png"
-          class="image">
-      </a>
-    </div>
+  <div class="d-flex align-items-center gap-3">
+    <button *ngIf="rol=='PLD'" class="btn btn-outline-light position-relative" (click)="riesgo.show()">
+      <mat-icon [matBadge]="calert" matBadgeColor="warn">notifications</mat-icon>
+    </button>
 
-    <div class="col-md-6 derecha">
-      <div class="demo-section img" *ngIf="rol=='PLD'">
-        <button class="d-flex btn btn-outline-info" (click)="riesgo.show()">
-          <mat-icon [matBadge]="calert"
-            matBadgeColor="warn">notifications</mat-icon>
-        </button>
+    <button class="btn btn-outline-light" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</header>
 
-      </div>
-
-      <button class="d-flex btn btn-outline-light derecha img"
-        (click)="logout()">
-        <mat-icon>logout</mat-icon>
-      </button>
-    </div>
-
+<!-- Ticker de divisas -->
+<div class="ticker-container bg-dark text-white py-1">
+  <div class="marquee">
+    <ul class="list-inline mb-0">
+      <li class="list-inline-item" *ngFor="let a of divisas">
+        <span class="fw-bold">{{a.grupo}}</span> Compra: {{a.compra}} | Venta: {{ a.venta }}
+      </li>
+    </ul>
   </div>
 </div>
 
-<div class="container-fluid">
-  <br>
-  <div class="blue-line">
-    <div class="moving-text">
-      <ul class="reverse-list">
-        <li class="rli colorblue2" *ngFor="let a of divisas"> <span
-            class="bold">{{a.grupo}}</span> Compra : {{
-          a.compra }} Venta : {{ a.venta }} </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<nav class="navbar navbar-expand-lg navbar-gray fondogray semibold ">
+<!-- Menú de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm py-2">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-      data-bs-target="#navbarsExample08"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <!-- 🔹 Botón para pantallas pequeñas -->
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarMenu"
+      aria-controls="navbarMenu"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-md-center"
-      id="navbarsExample08">
-      <ul class="navbar-nav colorblue2 bold">
+    <!-- 🔹 Contenido del menú -->
+    <div class="collapse navbar-collapse justify-content-center" id="navbarMenu">
+      <ul class="navbar-nav gap-lg-4 gap-2 text-center">
+        <li
+          class="nav-item dropdown"
+          *ngFor="let a of menus"
+          [class.dropdown-center]="true">
 
-        <li class="nav-item dropdown" *ngFor="let a of menus">
-          <a class="nav-link dropdown-toggle" href="#"
-            data-bs-toggle="dropdown" aria-expanded="false">{{a.menu}}</a>
-          <ul class="dropdown-menu">
-            <li *ngFor="let b of a.submenus"><a class="dropdown-item"
-                [routerLink]="b.componente">{{b.nombre}}</a></li>
+          <!-- 🔸 Menú principal -->
+          <a
+            class="nav-link dropdown-toggle fw-semibold text-white px-3"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false">
+            {{ a.menu }}
+          </a>
 
+          <!-- 🔸 Submenú -->
+          <ul class="dropdown-menu dropdown-menu-dark shadow rounded-3 animate__animated animate__fadeIn">
+            <li *ngFor="let b of a.submenus">
+              <a
+                class="dropdown-item py-2 px-3"
+                [routerLink]="b.componente"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <i class="bi bi-caret-right-fill me-2 text-primary"></i>{{ b.nombre }}
+              </a>
+            </li>
           </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" role="dialog"
-  aria-labelledby="mySmallModalLabel">
+
+<!-- Modal de alertas -->
+<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" aria-labelledby="alertasModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+    <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-
-        <h4 class="modal-title">Alertas</h4>
-
+        <h5 class="modal-title">Alertas</h5>
+        <button type="button" class="btn-close btn-close-white" (click)="riesgo.hide()"></button>
       </div>
-      <div class="modal-body row">
-
-        <div class="row">
-          <div class="col-md-1 col-12 mt-2">
-            <button class="btn btn-danger"
-              (click)="riesgo.hide()">Cerrar</button>
-          </div>
-        </div>
-
+      <div class="modal-body">
+        <!-- contenido dinámico -->
       </div>
     </div>
   </div>

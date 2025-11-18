@@ -17,7 +17,7 @@ export class AccesosComponent {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['rol','menu','estatus', 'acciones'];
+  displayedColumns: string[] = ['rol', 'menu', 'estatus', 'acciones'];
 
   dataSource = new MatTableDataSource<any>([]);
   info: boolean = false;
@@ -27,7 +27,7 @@ export class AccesosComponent {
   idrol: any;
   roles: any;
   menus: any;
-  idr:any;
+  idr: any;
   constructor(
     private cp: cpservice) { }
   /**fin del paginador y modal */
@@ -54,7 +54,7 @@ export class AccesosComponent {
   consultar() {
     const a = {
       option: 5,
-      rol:this.idr
+      rol: this.idr
     }
     this.cp.accesos(a).subscribe(
       (data: any) => {
@@ -67,7 +67,6 @@ export class AccesosComponent {
           });
 
         } else {
-          console.log(data.resultado[0].manage_acceso_rol.data)
           this.dataSource.data = data.resultado[0].manage_acceso_rol.data;
         }
       }, (error: any) => {
@@ -160,7 +159,7 @@ export class AccesosComponent {
       idrol: this.idrol,
       idcomponete: this.rol,
       status: this.estatus,
-      idacceso:this.id,
+      idacceso: this.id,
       option: 2
     }
     this.cp.accesos(a).subscribe(
@@ -187,10 +186,10 @@ export class AccesosComponent {
     )
   }
 
-  consulstarrolesmenus(){
+  consulstarrolesmenus() {
     const a = {
-      option:5,
-      rol:this.idr
+      option: 5,
+      rol: this.idr
     }
     this.cp.roles(a).subscribe(
       (data: any) => {
@@ -238,9 +237,9 @@ export class AccesosComponent {
       }
     )
   }
-limpiar(){
-  this.idrol= 0
-  this.rol=''
-  this.estatus =false
-}
+  limpiar() {
+    this.idrol = 0
+    this.rol = ''
+    this.estatus = false
+  }
 }

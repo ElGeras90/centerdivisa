@@ -29,6 +29,7 @@ import { GalertComponent } from './alertas/galert/galert.component';
 import { MovimientosComponent } from './contable/movimientos/movimientos.component';
 import { CortecajaComponent } from './reporte/cortecaja/cortecaja.component';
 import { CortecajamComponent } from './reporte/cortecajam/cortecajam.component';
+import { OperacionesComponent } from './operaciones/operaciones.component';
 
 const routes: Routes = [
     {
@@ -61,6 +62,7 @@ const routes: Routes = [
             { path: 'Reportediario', component: MovimientosComponent },
             { path: 'Cortecaja', component: CortecajaComponent },
             { path: 'Registros', component: CortecajamComponent },
+            {path: 'Operaciones', component: OperacionesComponent}
         ]
     },
 ];

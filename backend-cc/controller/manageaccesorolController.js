@@ -6,7 +6,8 @@ const encriptarjsong = require('./../util/encriptarjson');
 
 function manage_acceso_rol(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
     manage.manage_acceso_rol(resquest)
         .then(resultado => {
             let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado: resultado.rows }));
@@ -22,7 +23,8 @@ function manage_acceso_rol(req, res) {
 }
 
 function manage_cliente(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_cliente(resquest)
         .then(resultado => {
@@ -40,7 +42,8 @@ function manage_cliente(req, res) {
 
 function manage_divisa(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_divisa(resquest)
         .then(resultado => {
@@ -58,7 +61,8 @@ function manage_divisa(req, res) {
 
 function manage_empresa(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_empresa(resquest)
         .then(resultado => {
@@ -76,7 +80,8 @@ function manage_empresa(req, res) {
 
 function manage_grupo_divisa(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_grupo_divisa(resquest)
         .then(resultado => {
@@ -94,7 +99,8 @@ function manage_grupo_divisa(req, res) {
 
 function manage_identificacion(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_identificacion(resquest)
         .then(resultado => {
@@ -112,7 +118,8 @@ function manage_identificacion(req, res) {
 
 function manage_menu(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_menu(resquest)
         .then(resultado => {
@@ -129,7 +136,8 @@ function manage_menu(req, res) {
 }
 function manage_nacionalidad(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
 
     manage.manage_nacionalidad(resquest)
@@ -147,7 +155,8 @@ function manage_nacionalidad(req, res) {
 }
 function manage_ocupacion(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
 
     manage.manage_ocupacion(resquest)
@@ -166,7 +175,8 @@ function manage_ocupacion(req, res) {
 
 function manage_rol(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
 
     manage.manage_rol(resquest)
@@ -185,7 +195,8 @@ function manage_rol(req, res) {
 
 function manage_sucursal(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
 
     manage.manage_sucursal(resquest)
@@ -203,7 +214,8 @@ function manage_sucursal(req, res) {
 }
 function manage_user(req, res) {
 
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_user(resquest)
         .then(resultado => {
@@ -219,7 +231,8 @@ function manage_user(req, res) {
 
 }
 function manage_cat_reg(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_cat_reg(resquest)
         .then(resultado => {
@@ -233,7 +246,8 @@ function manage_cat_reg(req, res) {
 }
 
 function manage_cliente_empresa(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.manage_cliente_empresa(resquest)
         .then(resultado => {
@@ -248,7 +262,8 @@ function manage_cliente_empresa(req, res) {
 }
 
 function dll(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
     manage.dll(resquest)
         .then(resultado => {
@@ -259,6 +274,22 @@ function dll(req, res) {
             let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
             res.status(501).send(data);
         })
+}
+
+function obtenerClientes(req, res) {
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)   
+    const { empresa } = resquest;
+    manage.obtenerClientes(empresa)
+        .then(resultado => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: true, resultado: resultado.rows }));
+
+            res.status(200).send({resultado:data});
+        }
+        )
+        .catch(error => {
+            let data = encriptarjsong.encrypt(JSON.stringify({ success: false, message: error }));
+            res.status(501).send(data);;
+        });
 }
 
 module.exports = {
@@ -276,6 +307,7 @@ module.exports = {
     manage_user,
     manage_cat_reg,
     manage_cliente_empresa,
-    dll
+    dll,
+    obtenerClientes
 
 };

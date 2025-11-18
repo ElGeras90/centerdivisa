@@ -21,7 +21,8 @@ function codigopostal(req, res) {
       });
   }
   function codigopostalid(req, res) {
-    let resquest = encriptarjsong.decrypt(req.body.resultado)
+    let resquest = encriptarjsong.decrypt(req.body.resultado,res)
+
 
         cp.consultacpid(resquest.cp)
           .then(info => {
