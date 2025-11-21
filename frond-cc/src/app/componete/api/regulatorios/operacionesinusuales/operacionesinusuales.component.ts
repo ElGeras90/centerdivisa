@@ -93,6 +93,6 @@ export class OperacionesinusualesComponent  implements OnInit {
 
     const csv = [cabeceras.join(','), ...filas].join('\n');
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, 'reporte_relevantes.csv');
+    saveAs(blob, 'inusuales.csv');
   }
 }

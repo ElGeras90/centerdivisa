@@ -25,7 +25,7 @@ export class VentaComponent {
   @ViewChild("enviocorrecto", { static: false })
   enviocorrecto: any;
   tipopersona: string | undefined;
-  instrumento: any =0;
+  instrumento: any = 0;
   instrumentos: any;
   nombre: any;
   rfc: any;
@@ -177,17 +177,20 @@ export class VentaComponent {
       if (nivel === 'menuda') {
         Swal.fire({
           title: 'Operación Menuda',
-          text: 'No es necesario registrar cliente. ¿Desea continuar con la operación?',
+          text: 'Puede continuar utilizando el cliente "Público en General". ¿Desea continuar?',
           icon: 'info',
           showCancelButton: true,
-          confirmButtonText: 'Continuar',
-          cancelButtonText: 'Cancelar',
-        }).then((resultSwal) => {
-          if (resultSwal.isConfirmed) {
+          confirmButtonText: 'Sí, continuar (Público en General)',
+          cancelButtonText: 'No, seleccionar o registrar cliente',
+        }).then((res) => {
+          if (res.isConfirmed) {
             this.continuar = true;
             this.json = this.crearjson();
-            this.json.clienteid = 1; // cliente genérico
+            this.json.clienteid = 1; // Público en General
             this.guardar(this.json);
+          } else {
+            this.continuar = false;
+            this.will.show();
           }
         });
         return;
@@ -195,24 +198,7 @@ export class VentaComponent {
 
       // 🧾 Caso de operación básica o completa
       if (nivel === 'básica' || nivel === 'completa') {
-        Swal.fire({
-          title: 'Formulario requerido',
-          text: mensaje + ' ¿Desea registrar o continuar con cliente existente?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Continuar',
-          cancelButtonText: 'Registrar',
-        }).then((resultSwal) => {
-          if (resultSwal.isConfirmed) {
-            this.continuar = true;
-            this.json = this.crearjson();
-            this.json.clienteid = 1;
-            this.guardar(this.json);
-          } else if (resultSwal.dismiss === Swal.DismissReason.cancel) {
-            this.continuar = false;
-            this.will.show(); // abre el modal de registro de cliente
-          }
-        });
+       this.will.show()
         return;
       }
 

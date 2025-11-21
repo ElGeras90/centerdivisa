@@ -161,13 +161,7 @@ export class CompraComponent {
 
       // Caso de operación relevante o fuera de rango
       if (nivel === 'relevante') {
-        // Swal.fire({
-        //   icon: 'warning',
-        //   title: 'Operación relevante',
-        //   text: mensaje,
-        //   allowOutsideClick: false,
-        //   allowEscapeKey: false,
-        // });
+      
         this.continuar = false;
         this.will.show(); // abre el modal de registro de cliente
         return;
@@ -176,43 +170,29 @@ export class CompraComponent {
       // ✅ Caso de operación menuda (no requiere registro)
       if (nivel === 'menuda') {
         Swal.fire({
-          title: 'Operación Menuda',
-          text: 'No es necesario registrar cliente. ¿Desea continuar con la operación?',
-          icon: 'info',
-          showCancelButton: true,
-          confirmButtonText: 'Continuar',
-          cancelButtonText: 'Cancelar',
-        }).then((resultSwal) => {
-          if (resultSwal.isConfirmed) {
-            this.continuar = true;
-            this.json = this.crearjson();
-            this.json.clienteid = 1; // cliente genérico
-            this.guardar(this.json);
-          }
-        });
-        return;
+      title: 'Operación Menuda',
+      text: 'Puede continuar utilizando el cliente "Público en General". ¿Desea continuar?',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, continuar (Público en General)',
+      cancelButtonText: 'No, seleccionar o registrar cliente',
+    }).then((res) => {
+      if (res.isConfirmed) {
+        this.continuar = true;
+        this.json = this.crearjson();
+        this.json.clienteid = 1; // Público en General
+        this.guardar(this.json);
+      } else {
+        this.continuar = false;
+        this.will.show();
+      }
+    });
+    return;
       }
 
       // 🧾 Caso de operación básica o completa
       if (nivel === 'básica' || nivel === 'completa') {
-        Swal.fire({
-          title: 'Formulario requerido',
-          text: mensaje + ' ¿Desea registrar o continuar con cliente existente?',
-          icon: 'question',
-          showCancelButton: true,
-          confirmButtonText: 'Continuar',
-          cancelButtonText: 'Registrar',
-        }).then((resultSwal) => {
-          if (resultSwal.isConfirmed) {
-            this.continuar = true;
-            this.json = this.crearjson();
-            this.json.clienteid = 1;
-            this.guardar(this.json);
-          } else if (resultSwal.dismiss === Swal.DismissReason.cancel) {
-            this.continuar = false;
-            this.will.show(); // abre el modal de registro de cliente
-          }
-        });
+       this.will.show()
         return;
       }
 
