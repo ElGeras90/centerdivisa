@@ -56,8 +56,14 @@ async function generarReporteDE1(params, formato = 'descargar') {
 
 
     // Guardar archivo
-    const outPath = path.join(__dirname, `../exports/reporte_de1_${pid_empresa}.xml`);
-    fs.writeFileSync(outPath, xml, 'utf8');
+   const fechaActual = new Date();
+       const anio = fechaActual.getFullYear();
+       const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+       const dia = String(fechaActual.getDate()).padStart(2, '0');
+       const consecutivo = "01";
+       const nombreArchivo = `DE1_${p_clave_sujeto}_${anio}${mes}${dia}_${consecutivo}.DE1`;
+   
+       const outPath = path.join(__dirname, `../exports/${nombreArchivo}`);
 
     // Retorno según formato
     if (formato === 'base64') {

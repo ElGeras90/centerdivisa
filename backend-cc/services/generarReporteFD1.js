@@ -81,8 +81,8 @@ async function generarReporteFD1(params, formato = 'descargar') {
       })
       .ele('trimestre_reportado').txt(p_trimestre).up()
       .ele('sujeto_obligado')
-        .ele('clave_organo_regulador').txt(p_clave_organo).up()
-        .ele('clave_sujeto_obligado').txt(p_clave_sujeto).up()
+      .ele('clave_organo_regulador').txt(p_clave_organo).up()
+      .ele('clave_sujeto_obligado').txt(p_clave_sujeto).up()
       .up()
       .ele('operaciones');
 
@@ -149,14 +149,18 @@ async function generarReporteFD1(params, formato = 'descargar') {
 
       dom.up().up().up();
     }
-
+    const fechaActual = new Date();
+    const anio = fechaActual.getFullYear();
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0');
+    const dia = String(fechaActual.getDate()).padStart(2, '0');
+    const consecutivo = "01";
     const xml = root.end({ prettyPrint: true });
-    const outPath = path.join(__dirname, `../exports/reporte_fd1_${pid_empresa}.xml`);
+    const nombreArchivo = `FD1_${p_clave_sujeto}_${anio}${mes}${dia}_${consecutivo}.FD1`;
 
+    const outPath = path.join(__dirname, `../exports/${nombreArchivo}`);
     fs.writeFileSync(outPath, xml, 'utf8');
-    console.log(`✅ XML FD1 generado correctamente: ${outPath}`);
 
-if (formato === 'base64') {
+    if (formato === 'base64') {
       return Buffer.from(xml).toString('base64');
     } else if (formato === 'texto') {
       return xml;

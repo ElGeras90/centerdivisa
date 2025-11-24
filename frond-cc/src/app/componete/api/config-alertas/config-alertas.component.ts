@@ -20,7 +20,7 @@ export class ConfigAlertasComponent implements OnInit {
     const data = { option: 3 };
     this.configSrv.consultar().subscribe((resp: any) => {
       console.log(resp);
-      this.lista = resp;
+      this.lista = resp.info;
     });
   }
 

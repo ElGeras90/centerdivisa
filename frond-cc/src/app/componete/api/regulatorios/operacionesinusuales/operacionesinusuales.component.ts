@@ -37,7 +37,7 @@ export class OperacionesinusualesComponent  implements OnInit {
       anio: [new Date().getFullYear(), Validators.required],
       mes: [null, Validators.required],
       clave_sujeto: ['', Validators.required],
-      clave_organo: ['CNBV', Validators.required],
+      clave_organo: ['01-002', Validators.required],
       fecha_inicio: [{ value: '', disabled: true }],
       fecha_fin: [{ value: '', disabled: true }],
     });
