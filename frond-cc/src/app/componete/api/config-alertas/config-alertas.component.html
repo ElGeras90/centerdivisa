@@ -1,0 +1,71 @@
+<div class="container mt-4">
+
+  <h3>Configuración de Alertas PLD</h3>
+  <p class="text-muted">Actualiza solo los parámetros permitidos por tipo de alerta.</p>
+
+  <table class="table table-bordered table-striped mt-4">
+    <thead class="table-dark">
+      <tr>
+        <th>Tipo</th>
+        <th>Descripción</th>
+        <th>Valores</th>
+        <th>Riesgo</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let cfg of lista">
+
+        <td>{{ cfg.tipo_alerta }}</td>
+        <td>{{ cfg.descripcion }}</td>
+
+        <td>
+
+          <!-- 🟦 relevante -->
+          <div *ngIf="cfg.tipo_alerta === 'relevante'">
+            <label>Monto Umbral (USD):</label>
+            <input class="form-control" type="number" [(ngModel)]="cfg.umbral_monto">
+          </div>
+
+          <!-- 🟠 inusual -->
+          <div *ngIf="cfg.tipo_alerta === 'inusual'">
+            <label>Porcentaje (%):</label>
+            <input class="form-control" type="number" [(ngModel)]="cfg.umbral_porcentaje">
+          </div>
+
+          <!-- 🔴 preocupante -->
+          <div *ngIf="cfg.tipo_alerta === 'preocupante'">
+            <i>No requiere configuración adicional.</i>
+          </div>
+
+          <!-- 🟣 fraccionada -->
+          <div *ngIf="cfg.tipo_alerta === 'fraccionada'">
+            <label>Umbral acumulado (USD):</label>
+            <input class="form-control" type="number" [(ngModel)]="cfg.umbral_fraccionamiento">
+
+            <label class="mt-2">Periodo (días):</label>
+            <input class="form-control" type="number" [(ngModel)]="cfg.periodo_fraccionamiento">
+          </div>
+
+          <!-- 🟢 cambio_datos -->
+          <div *ngIf="cfg.tipo_alerta === 'cambio_datos'">
+            <label>Porcentaje requerido:</label>
+            <input class="form-control" type="number" [(ngModel)]="cfg.umbral_porcentaje">
+          </div>
+
+        </td>
+
+        <td>{{ cfg.nivel_riesgo }}</td>
+
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="guardar(cfg)">
+            Guardar
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>

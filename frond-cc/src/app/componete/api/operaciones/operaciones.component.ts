@@ -15,6 +15,7 @@ export class OperacionesComponent implements OnInit {
   nombreusuario: any;
   idusuario: any;
   sucursalid: any;
+esAdmin: boolean = false; // true si el usuario es administrador
 
   fechaInicio: string = '';
   fechaFin: string = '';
@@ -132,4 +133,13 @@ export class OperacionesComponent implements OnInit {
       Swal.fire('Error', 'Error al actualizar la alerta', 'error');
     }
   }
+
+  puedeEditar(): boolean {
+  // Si no es admin y la alerta está reportada → NO puede modificar
+  if (this.alertaSeleccionada.estatus === 'Reportada' && !this.esAdmin) {
+    return false;
+  }
+  return true;
+}
+
 }

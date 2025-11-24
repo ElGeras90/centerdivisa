@@ -23,6 +23,7 @@ const conta = require('./routes/reportecontables');
 const reporte = require('./routes/documentoRoute')
 const loggerMiddleware = require('./middlewares/log.middleware');
 const perfil = require('./routes/PerfilTransaccionalRoutes');
+const configuracionAlertaRoutes = require('./routes/configAlertaRoutes');
 // Configurar cabeceras y cors
 app.use(helmet());
 
@@ -89,6 +90,7 @@ app.use('/reporte', reporte)
 app.use('/perfil', perfil);
 const alertasMontosRoutes = require('./routes/alertasMontos');
 app.use('/alertas-montos', alertasMontosRoutes);
+app.use('/configalerta', configuracionAlertaRoutes);
 
 // para restablecer la contraseña 
 

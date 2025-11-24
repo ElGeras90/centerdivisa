@@ -131,3 +131,6 @@ export class AlertasMontos {
   public static URLactualizar = 'alertas-montos/actualizar';
   
 }
+export class ConfigAlertasPLD {
+  public static URLconfigAlertas = 'pld/config-alertas'; 
+}

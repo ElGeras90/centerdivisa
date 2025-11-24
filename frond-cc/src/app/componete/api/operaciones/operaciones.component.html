@@ -93,23 +93,39 @@
       <!-- Cuerpo -->
       <div class="modal-body">
 
+        <!-- Mensaje si no puede editar -->
+        <div *ngIf="!puedeEditar()" class="alert alert-danger py-2">
+          <strong>La alerta está reportada.</strong><br>
+          Solo un administrador puede modificar esta información.
+        </div>
+
         <p><strong>Tipo relación:</strong> {{ alertaSeleccionada.tipo_relacion }}</p>
         <p><strong>Nombre / Razón Social:</strong> {{ alertaSeleccionada.nombre_relacion }}</p>
         <p><strong>RFC:</strong> {{ alertaSeleccionada.rfc_relacion }}</p>
 
         <div class="mb-3">
           <label>Descripción</label>
-          <textarea [(ngModel)]="alertaSeleccionada.descripcion" class="form-control"></textarea>
+          <textarea 
+            [(ngModel)]="alertaSeleccionada.descripcion"
+            class="form-control"
+            [readonly]="!puedeEditar()">
+          </textarea>
         </div>
 
         <div class="mb-3">
           <label>Observaciones</label>
-          <textarea [(ngModel)]="alertaSeleccionada.observaciones" class="form-control"></textarea>
+          <textarea 
+            [(ngModel)]="alertaSeleccionada.observaciones" 
+            class="form-control"
+            [readonly]="!puedeEditar()">
+          </textarea>
         </div>
 
         <div class="mb-3">
           <label>Estatus</label>
-          <select [(ngModel)]="alertaSeleccionada.estatus" class="form-select">
+          <select class="form-select" 
+            [(ngModel)]="alertaSeleccionada.estatus"
+            [disabled]="!puedeEditar()">
             <option>Pendiente</option>
             <option>Analizada</option>
             <option>Reportada</option>
@@ -122,7 +138,11 @@
       <!-- Footer -->
       <div class="modal-footer">
         <button class="btn btn-danger" (click)="modalEditar.hide()">Cerrar</button>
-        <button class="btn btn-warning text-dark" (click)="guardarCambios()">Guardar cambios</button>
+        <button class="btn btn-warning text-dark" 
+          (click)="guardarCambios()"
+          [disabled]="!puedeEditar()">
+          Guardar cambios
+        </button>
       </div>
 
     </div>

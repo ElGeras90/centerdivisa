@@ -38,6 +38,7 @@ import { MovimientosComponent } from './contable/movimientos/movimientos.compone
 import { CortecajaComponent } from './reporte/cortecaja/cortecaja.component';
 import { CortecajamComponent } from './reporte/cortecajam/cortecajam.component';
 import { OperacionesComponent } from './operaciones/operaciones.component';
+import { ConfigAlertasComponent } from './config-alertas/config-alertas.component';
 
 
 
@@ -78,7 +79,8 @@ import { OperacionesComponent } from './operaciones/operaciones.component';
         PieComponent,
         CortecajaComponent,
         CortecajamComponent,
-        OperacionesComponent
+        OperacionesComponent,
+        ConfigAlertasComponent
     ],
     imports: [
         CommonModule,

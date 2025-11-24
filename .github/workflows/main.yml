@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Clonar el repositorio
+      # 1️⃣ Clonar repositorio
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -21,32 +21,81 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-  
-      # 4️⃣ Build Frontend
+      # 3️⃣ Build Frontend
       - name: Build Frontend image
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest ./frond-cc
 
-      # 6️⃣ Push Frontend
+      # 4️⃣ Push Frontend
       - name: Push Frontend image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
 
-      # 7️⃣ Deploy en AWS EC2
-      - name: Deploy on AWS EC2
+      # 5️⃣ Deploy en AWS EC2
+      - name: Deploy on AWS EC2 (Frontend + Backend PM2)
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            echo "🚀 Desplegando Backend y Frontend en EC2..."
-            # Login a Docker Hub en la EC2
+            echo "🚀 Iniciando despliegue en EC2..."
+
+            # ===============================
+            #      FRONTEND DOCKER
+            # ===============================
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          
-            # --- Frontend ---
+
             docker pull ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
             docker stop frontend || true
             docker rm frontend || true
+
             docker run -d --name frontend -p 82:80 \
               --restart unless-stopped \
               ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
-            echo "✅ Despliegue completado correctamente"
+
+            echo "✔️ Frontend desplegado con Docker"
+
+            # ===============================
+            #           BACKEND
+            #   (SIN DOCKER - CON PM2)
+            # ===============================
+
+            echo "📁 Actualizando backend en /home/ubuntu/backend-cc"
+
+            # Crear carpeta si no existe
+            mkdir -p /home/ubuntu/backend-cc
+
+            # Limpiar el backend anterior
+            rm -rf /home/ubuntu/backend-cc/*
+
+            # Subir nuevos archivos del backend desde el repositorio actual
+            # GitHub Actions los copia con SCP
+      - name: Upload backend to EC2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          source: "backend-cc/*"
+          target: "/home/ubuntu/backend-cc"
+
+      # 6️⃣ Instalar dependencias y reiniciar PM2
+      - name: Restart backend with PM2
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/backend-cc
+
+            echo "📦 Instalando dependencias del backend..."
+            npm install --production
+
+            echo "🔄 Reiniciando proceso PM2 cc..."
+            pm2 delete cc || true
+            pm2 start index.js --name cc
+
+            pm2 save
+
+            echo "✔️ Backend actualizado y ejecutándose con PM2"
+            echo "🚀 Despliegue completo correctamente"

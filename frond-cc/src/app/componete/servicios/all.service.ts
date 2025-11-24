@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { cp, rol, Sucursal, Empresa, regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo, regulatorios, conta, Reportediario, Documento, PerfilTransaccional, AlertasMontos } from "./constantes"; // Importa LoginConstante directamente
+import { cp, rol, Sucursal, Empresa, regimenfiscal, paises, cl, divisa, Enc, Divisasucursal, clienteempresa, pld, matrizriesgo, regulatorios, conta, Reportediario, Documento, PerfilTransaccional, AlertasMontos, ConfigAlertasPLD } from "./constantes"; // Importa LoginConstante directamente
 
 @Injectable({
   providedIn: 'root'
@@ -216,5 +216,13 @@ export class cpservice {
 alertasMontosActualizar(data: any) {
   return this._apiServicio.Post(data, AlertasMontos.URLactualizar);
 }
+  consultar() {
+    const data = { option: 3 };
+    return this._apiServicio.Post(data, ConfigAlertasPLD.URLconfigAlertas);
+  }
+
+  actualizar(data: any) {
+    return this._apiServicio.Post(data, ConfigAlertasPLD.URLconfigAlertas);
+  }
 
 }
