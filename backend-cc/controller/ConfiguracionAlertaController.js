@@ -9,7 +9,7 @@ function confi(req, res) {
   //let resquest = req.body;
   configuracion.configalertas(resquest)
     .then(info => {
-      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows[0].reporte_cpd }));
+      let data = encriptarjsong.encrypt(JSON.stringify({ success: true, info: info.rows[0].manage_config_alertas_pld }));
       //let data = { success: true, info: info.rows }
       //console.log(info)
       res.status(200).send({ resultado: data });
