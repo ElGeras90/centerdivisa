@@ -6,7 +6,7 @@ async function configalertas(data) {
     console.log("Datos recibidos en el modelo:", data);
     const query = 'SELECT * FROM "public"."manage_config_alertas_pld"($1)';
     const result = await client.query(query, [data]);
-    console.log("Resultado de la consulta:", result);
+    console.log("Resultado de la consulta:", result.rows[0].manage_config_alertas_pld);
     return result;
   } catch (error) {
     throw error;
