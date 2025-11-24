@@ -11,3 +11,89 @@
     flex-direction: column;
     min-height: 80vh;
 }
+
+/* ------------------------
+   Estilo AXEN Cash - Clientes
+   ------------------------ */
+:root {
+  --axen-blue: #0072FF;
+  --axen-green: #1FA774;
+  --axen-dark: #0B0C0E;
+  --muted: #6c757d;
+}
+
+.cuerpo {
+  min-height: 60vh;
+  font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+  color: #111;
+}
+
+/* Toolbar */
+.search-field { width: 100%; max-width: 420px; }
+@media(min-width: 768px){ .search-field { width: 420px; } }
+
+/* Card & table */
+.card { border-radius: 12px; overflow: hidden; }
+.table-header {
+  background: linear-gradient(90deg, rgba(0,114,255,0.08), rgba(31,167,116,0.03));
+  border-bottom: none;
+  padding: 16px;
+  font-weight: 700;
+  color: var(--axen-dark);
+}
+.table-row { transition: background .12s ease; }
+.table-row:nth-child(even) { background: rgba(11,12,14,0.02); }
+.table-row:hover { background: rgba(0,114,255,0.04); }
+
+.table td, .table th {
+  vertical-align: middle;
+  padding: 14px 18px;
+}
+
+/* Avatar small */
+.avatar {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* Action buttons */
+.btn-action {
+  border-radius: 8px;
+  background: transparent;
+  height: 38px;
+  width: 38px;
+}
+.btn-action mat-icon { font-size: 18px; }
+
+/* Paginator / footer */
+.card .bg-light { background: #f8f9fa !important; }
+.card .small { font-size: 0.9rem; color: var(--muted); }
+
+/* Modal header gradiente */
+.modal-header.bg-gradient {
+  background: linear-gradient(90deg, var(--axen-blue), var(--axen-green));
+  color: #fff;
+}
+
+/* Form highlights */
+.campo-rojo { border: 1px solid #dc3545 !important; box-shadow: 0 0 0 0.06rem rgba(220,53,69,0.12); }
+
+/* Responsive tweaks */
+@media(max-width: 767.98px) {
+  .table td, .table th { padding: 10px; font-size: 0.95rem; }
+  .avatar { width: 36px; height: 36px; }
+  .search-field { max-width: 100%; }
+}
+
+/* Accessibility: focus visible */
+button:focus, input:focus, select:focus, textarea:focus {
+  outline: 3px solid rgba(0,114,255,0.14);
+  outline-offset: 2px;
+}
+
+/* Small utility */
+.text-truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -1,157 +1,104 @@
-<div class="container mt-4 cuerpo">
-  <div class="row align-items-center">
-    <div class="col">
-      <mat-form-field>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar">
+<div class="container-fluid mt-4 cuerpo px-3 px-md-4">
+  <!-- Toolbar -->
+  <div
+    class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-3">
+    <div class="d-flex gap-2 w-100 w-md-auto align-items-center">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre, correo o teléfono">
+        <button mat-icon-button matSuffix *ngIf="false"><mat-icon>search</mat-icon></button>
       </mat-form-field>
     </div>
-    <div class="col" style="text-align: right;">
-      <button class="btn btn-primary mt-3" (click)="abrirwill()">Agregar Cliente</button>
+
+    <div class="d-flex gap-2 justify-content-end w-100 w-md-auto">
+
+
+      <button class="btn btn-primary d-flex align-items-center" (click)="abrirwill()">
+        <i class="bi bi-person-plus-fill me-2"></i> Agregar Cliente
+      </button>
     </div>
   </div>
-  <div class="table-responsive">
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <!-- Columna Usuario -->
-      <ng-container matColumnDef="Nombre">
-        <th mat-header-cell *matHeaderCellDef> Nombre </th>
-        <td mat-cell *matCellDef="let row"> {{row.nombre}}</td>
-      </ng-container>
-      <ng-container matColumnDef="Telefono">
-        <th mat-header-cell *matHeaderCellDef> Telefono </th>
-        <td mat-cell *matCellDef="let row"> {{row.telefono}} </td>
-      </ng-container>
-      <!-- <ng-container matColumnDef="Fecha">
-        <th mat-header-cell *matHeaderCellDef>Email </th>
-        <td mat-cell *matCellDef="let row"> {{row.correo}} </td>
-      </ng-container> -->
-      <ng-container matColumnDef="correo">
-        <th mat-header-cell *matHeaderCellDef> correo </th>
-        <td mat-cell *matCellDef="let row"> {{row.correo}} </td>
-      </ng-container>
-      <ng-container matColumnDef="calle">
-        <th mat-header-cell *matHeaderCellDef> calle </th>
-        <td mat-cell *matCellDef="let row"> {{row.direccion}} </td>
-      </ng-container>
+  <!-- Tabla dentro de card -->
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 table table-borderless align-middle mb-0">
+          <!-- Nombre -->
+          <ng-container matColumnDef="Nombre">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Nombre</th>
+            <td mat-cell *matCellDef="let row">
+              <div class="d-flex align-items-center gap-3">
+                <div class="avatar bg-light rounded-circle text-center">
+                  <i class="bi bi-person-fill fs-5 text-primary"></i>
+                </div>
+                <div>
+                  <div class="fw-semibold">{{ row.nombre }}</div>
+                  <div class="small text-muted">{{ row.paterno }} {{ row.materno }}</div>
+                </div>
+              </div>
+            </td>
+          </ng-container>
 
+          <!-- Telefono -->
+          <ng-container matColumnDef="Telefono">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Teléfono</th>
+            <td mat-cell *matCellDef="let row"> {{ row.telefono || '-' }} </td>
+          </ng-container>
 
-      <!-- Columna Acciones -->
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary" (click)="abrirupdate(row)">
-            <mat-icon>edit</mat-icon>
-          </button>
+          <!-- Correo -->
+          <ng-container matColumnDef="correo">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Correo</th>
+            <td mat-cell *matCellDef="let row"> {{ row.correo || '-' }} </td>
+          </ng-container>
 
-          <button mat-icon-button color="secundary" *ngIf="status==true" (click)="cargardatos(row)">
-            <mat-icon>person_check</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+          <!-- Calle / Dirección -->
+          <ng-container matColumnDef="calle">
+            <th mat-header-cell *matHeaderCellDef class="table-header">Dirección</th>
+            <td mat-cell *matCellDef="let row">
+              <div class="small text-truncate" style="max-width:360px;">{{ row.direccion || '-' }}</div>
+            </td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+          <!-- Acciones -->
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="table-header text-end">Acciones</th>
+            <td mat-cell *matCellDef="let row" class="text-end">
+              <button mat-icon-button color="primary" class="btn-action me-1" (click)="abrirupdate(row)" title="Editar">
+                <mat-icon>edit</mat-icon>
+              </button>
 
-    <mat-paginator *ngIf="!activar" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
-  </div>
+              <button mat-icon-button color="accent" class="btn-action me-1" *ngIf="status==true"
+                (click)="cargardatos(row)" title="Seleccionar">
+                <mat-icon>person_check</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-</div>
-
-<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-
-        <h4 class="modal-title" *ngIf="info ==true">{{riesgos}}</h4>
-
+          <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-row-header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"></tr>
+        </table>
       </div>
-      <div class="modal-body row">
 
-        <form class="form-responsive">
+      <div class="d-flex justify-content-between align-items-center p-3 border-top small bg-light">
 
-
-          <div class="card mb-4">
-            <div class="card-header">
-              Datos Personales
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Montos habitualmente operados por operación:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="500.00" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Montos habitualmente acumulados por mes:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="1000.00" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Numero de operaciones por mes:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="2" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Tipo de operación: Compra/Venta:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="Compra" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Naturaleza:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="Efectivo" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Frecuencia de las operaciones:</label>
-                  <ul>
-                    <li>Diaria:<b>0.6</b></li>
-                    <li>Semanal:0.5</li>
-                    <li>Quincenal:1</li>
-                    <li>Mensual:2</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Actividad Economica:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="Agricultor" />
-                </div>
-              </div>
-              <div class="row">
-                <div class="form-group col">
-                  <label for="identificacion">Destino de los recursos:</label>
-                  <input type="text" class="form-control" name="numerodeidentificacion" value="Prestamos" />
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </form>
-
-        <div class="row">
-          <div class="col-md-1 col-12 mt-2">
-            <button class="btn btn-danger" (click)="riesgo.hide()">Cerrar</button>
-          </div>
+        <div>
+          <mat-paginator *ngIf="!activar" [pageSizeOptions]="[5, 10, 25, 50]" showFirstLastButtons></mat-paginator>
         </div>
-
       </div>
     </div>
   </div>
 </div>
+
+
 <!-- Clientes Fisicos Extranjeros -->
 <div class="modal fade" bsModal #will="bs-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
-        <h4 class="modal-title" *ngIf="info">Agregar CLIENTE</h4>
-        <h4 class="modal-title" *ngIf="!info">Editar CLIENTE</h4>
-        <button class="btn btn-warning ms-auto" (click)="riesgo.show()">Riesgo: {{riesgos}}</button>
+        <h4 class="modal-title" *ngIf="info">Agregar USUARIO</h4>
+        <h4 class="modal-title" *ngIf="!info">EDITAR USUARIO</h4>
+        <button class="btn btn-warning ms-auto">Riesgo: {{riesgos}}</button>
       </div>
 
       <div class="modal-body">
@@ -342,11 +289,11 @@
           <div class="card mb-4 shadow-sm">
             <div class="card-header bg-light fw-bold">Perfil Transaccional</div>
             <div class="card-body">
+
               <div class="row g-3">
                 <div class="form-group col-md-4">
                   <label>Propósito de la relación:</label>
-                  <select class="form-control" name="proposito_relacion" [(ngModel)]="proposito_relacion"
-                    [ngClass]="{'campo-rojo': formulario && formulario.proposito_relacion}">
+                  <select class="form-control" name="proposito_relacion" [(ngModel)]="proposito_relacion">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let p of proposito" [value]="p.descripcion">{{ p.descripcion }}</option>
                   </select>
@@ -354,8 +301,7 @@
 
                 <div class="form-group col-md-4">
                   <label>Frecuencia de operaciones:</label>
-                  <select class="form-control" name="frecuencia_operaciones" [(ngModel)]="frecuencia_operaciones"
-                    [ngClass]="{'campo-rojo': formulario && formulario.frecuencia_operaciones}">
+                  <select class="form-control" name="frecuencia_operaciones" [(ngModel)]="frecuencia_operaciones">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let f of frecuencias" [value]="f.descripcion || f.frecuencia">
                       {{ f.descripcion || f.frecuencia }}
@@ -365,16 +311,14 @@
 
                 <div class="form-group col-md-4">
                   <label>Monto Promedio (MXN):</label>
-                  <input type="number" class="form-control" name="monto_promedio" [(ngModel)]="monto_promedio"
-                    [ngClass]="{'campo-rojo': formulario && formulario.monto_promedio}" />
+                  <input type="number" class="form-control" name="monto_promedio" [(ngModel)]="monto_promedio" />
                 </div>
               </div>
 
               <div class="row g-3 mt-2">
                 <div class="form-group col-md-4">
                   <label>Tipo de Operaciones:</label>
-                  <select class="form-control" name="tipo_operaciones" [(ngModel)]="tipo_operaciones"
-                    [ngClass]="{'campo-rojo': formulario && formulario.tipo_operaciones}">
+                  <select class="form-control" name="tipo_operaciones" [(ngModel)]="tipo_operaciones">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let t of tiposOperaciones" [value]="t.descripcion">{{ t.descripcion }}</option>
                   </select>
@@ -382,8 +326,7 @@
 
                 <div class="form-group col-md-4">
                   <label>Medio de Pago:</label>
-                  <select class="form-control" name="medio_pago" [(ngModel)]="medio_pago"
-                    [ngClass]="{'campo-rojo': formulario && formulario.medio_pago}">
+                  <select class="form-control" name="medio_pago" [(ngModel)]="medio_pago">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let m of mediosPago" [value]="m.descripcion">{{ m.descripcion }}</option>
                   </select>
@@ -391,9 +334,8 @@
 
                 <div class="form-group col-md-4">
                   <label>Países de Operación:</label>
-                     <select class="form-control" name="paisnaci" [(ngModel)]="paises_operaciones"
-                    [ngClass]="{'campo-rojo': formulario && formulario.paisnaci}">
-                    <option *ngFor="let item of paises" [value]="item.iso">{{ item.nombre }}</option>
+                  <select class="form-control" name="paises_operaciones" [(ngModel)]="paises_operaciones">
+                    <option *ngFor="let item of paises" [value]="item.codigo">{{ item.nombre }}</option>
                   </select>
                 </div>
               </div>
@@ -401,8 +343,7 @@
               <div class="row g-3 mt-2">
                 <div class="form-group col-md-4">
                   <label>¿Actúa en nombre de alguien?:</label>
-                  <select class="form-control" name="actua_en_nombre" [(ngModel)]="actua_en_nombre"
-                    [ngClass]="{'campo-rojo': formulario && formulario.actua_en_nombre}">
+                  <select class="form-control" name="actua_en_nombre" [(ngModel)]="actua_en_nombre">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let a of actuaNombres" [value]="a.descripcion">{{ a.descripcion }}</option>
                   </select>
@@ -410,14 +351,12 @@
 
                 <div class="form-group col-md-4" *ngIf="actua_en_nombre === 'Tercero'">
                   <label>Nombre del Tercero:</label>
-                  <input type="text" class="form-control" name="tercero_nombre" [(ngModel)]="tercero_nombre"
-                    [ngClass]="{'campo-rojo': formulario && formulario.tercero_nombre}" />
+                  <input type="text" class="form-control" name="tercero_nombre" [(ngModel)]="tercero_nombre" />
                 </div>
 
                 <div class="form-group col-md-4">
                   <label>¿Es PEP?:</label>
-                  <select class="form-control" name="es_pep" [(ngModel)]="es_pep"
-                    [ngClass]="{'campo-rojo': formulario && formulario.es_pep}">
+                  <select class="form-control" name="es_pep" [(ngModel)]="es_pep">
                     <option [ngValue]="false">No</option>
                     <option [ngValue]="true">Sí</option>
                   </select>
@@ -428,8 +367,7 @@
               <div class="row g-3 mt-2">
                 <div class="form-group col-md-4">
                   <label>Origen de Recursos:</label>
-                  <select class="form-control" name="origen_recursos" [(ngModel)]="origen_recursos"
-                    [ngClass]="{'campo-rojo': formulario && formulario.origen_recursos}">
+                  <select class="form-control" name="origen_recursos" [(ngModel)]="origen_recursos">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let o of origenesRecursos" [value]="o.descripcion">{{ o.descripcion }}</option>
                   </select>
@@ -437,8 +375,7 @@
 
                 <div class="form-group col-md-4">
                   <label>Destino de Recursos:</label>
-                  <select class="form-control" name="destino_recursos" [(ngModel)]="destino_recursos"
-                    [ngClass]="{'campo-rojo': formulario && formulario.destino_recursos}">
+                  <select class="form-control" name="destino_recursos" [(ngModel)]="destino_recursos">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let d of destinosRecursos" [value]="d.descripcion">{{ d.descripcion }}</option>
                   </select>
@@ -447,8 +384,7 @@
                 <div class="form-group col-md-4">
                   <label>Monto mensual estimado:</label>
                   <input type="number" class="form-control" name="monto_mensual_estimado"
-                    [(ngModel)]="monto_mensual_estimado"
-                    [ngClass]="{'campo-rojo': formulario && formulario.monto_mensual_estimado}" />
+                    [(ngModel)]="monto_mensual_estimado" />
                 </div>
               </div>
 
@@ -464,14 +400,12 @@
                 <div class="form-group col-md-4" *ngIf="maneja_fondos_terceros">
                   <label>Nombre del tercero:</label>
                   <input type="text" class="form-control" name="nombre_tercero_fondos"
-                    [(ngModel)]="nombre_tercero_fondos"
-                    [ngClass]="{'campo-rojo': formulario && formulario.nombre_tercero_fondos}" />
+                    [(ngModel)]="nombre_tercero_fondos" />
                 </div>
 
                 <div class="form-group col-md-4" *ngIf="maneja_fondos_terceros">
                   <label>Relación con el tercero:</label>
-                  <select class="form-control" name="relacion_tercero_fondos" [(ngModel)]="relacion_tercero_fondos"
-                    [ngClass]="{'campo-rojo': formulario && formulario.relacion_tercero_fondos}">
+                  <select class="form-control" name="relacion_tercero_fondos" [(ngModel)]="relacion_tercero_fondos">
                     <option value="">Seleccione...</option>
                     <option *ngFor="let r of relacionesTercero" [value]="r.descripcion">{{ r.descripcion }}</option>
                   </select>
@@ -481,16 +415,18 @@
               <div class="row g-3 mt-2">
                 <div class="form-group col-md-6">
                   <label>País de procedencia de fondos:</label>
-                    <select class="form-control" name="paisnaci" [(ngModel)]="pais_procedencia_fondos"
-                    [ngClass]="{'campo-rojo': formulario && formulario.pais_procedencia_fondos}">
-                    <option *ngFor="let item of paises" [value]="item.iso">{{ item.nombre }}</option>
+                  <select class="form-control" name="pais_procedencia_fondos" [(ngModel)]="pais_procedencia_fondos"
+                    (change)="verificarCambio(pais_procedencia_fondos)">
+                    <option *ngFor="let item of paises" [value]="item.codigo">{{ item.nombre }}</option>
                   </select>
+
                 </div>
+
                 <div class="form-group col-md-6">
                   <label>País destino de fondos:</label>
-                         <select class="form-control" name="paisnaci" [(ngModel)]="pais_destino_fondos"
-                    [ngClass]="{'campo-rojo': formulario && formulario.pais_destino_fondos}">
-                    <option *ngFor="let item of paises" [value]="item.iso">{{ item.nombre }}</option>
+                  <select class="form-control" name="pais_destino_fondos" [(ngModel)]="pais_destino_fondos"
+                    (change)="verificarCambio(pais_destino_fondos)">
+                    <option *ngFor="let item of paises" [value]="item.codigo">{{ item.nombre }}</option>
                   </select>
                 </div>
               </div>
@@ -499,18 +435,18 @@
                 <div class="form-group col-md-6">
                   <label>Cantidad de operaciones por mes:</label>
                   <input type="number" class="form-control" name="cantidad_operaciones_mes"
-                    [(ngModel)]="cantidad_operaciones_mes"
-                    [ngClass]="{'campo-rojo': formulario && formulario.cantidad_operaciones_mes}" />
+                    [(ngModel)]="cantidad_operaciones_mes" />
                 </div>
               </div>
 
               <div class="form-group mt-3">
                 <label>Comentarios:</label>
-                <textarea class="form-control" rows="2" name="comentarios" [(ngModel)]="comentarios"
-                  [ngClass]="{'campo-rojo': formulario && formulario.comentarios}"></textarea>
+                <textarea class="form-control" rows="2" name="comentarios" [(ngModel)]="comentarios"></textarea>
               </div>
+
             </div>
           </div>
+
 
 
         </form>
@@ -532,8 +468,8 @@
     <div class="modal-content">
 
       <div class="modal-header">
-        <h4 class="modal-title" *ngIf="info == true">Agregar Empresa</h4>
-        <h4 class="modal-title" *ngIf="info == false">Editar Empresa</h4>
+        <h4 class="modal-title" *ngIf="info == true">Agregar Usuario Empresa</h4>
+        <h4 class="modal-title" *ngIf="info == false">Editar Usuario Empresa</h4>
       </div>
 
       <!-- ================= EMPRESA ================= -->
@@ -661,7 +597,7 @@
           </div>
           <!-- ============ PERFIL TRANSACCIONAL ============ -->
 
-                    <div class="card mb-4 shadow-sm">
+          <div class="card mb-4 shadow-sm">
             <div class="card-header bg-light fw-bold">Perfil Transaccional</div>
             <div class="card-body">
               <div class="row g-3">
@@ -800,16 +736,16 @@
               <div class="row g-3 mt-2">
                 <div class="form-group col-md-6">
                   <label>País de procedencia de fondos:</label>
-                    <select class="form-control" name="paisnaci" [(ngModel)]="pais_procedencia_fondos"
+                  <select class="form-control" name="paisnaci" [(ngModel)]="pais_procedencia_fondos"
                     [ngClass]="{'campo-rojo': formulario && formulario.pais_procedencia_fondos}">
-                    <option *ngFor="let item of paises" [value]="item.iso">{{ item.nombre }}</option>
+                    <option *ngFor="let item of paises" [value]="item.codigo">{{ item.nombre }}</option>
                   </select>
                 </div>
                 <div class="form-group col-md-6">
                   <label>País destino de fondos:</label>
-                         <select class="form-control" name="paisnaci" [(ngModel)]="pais_destino_fondos"
+                  <select class="form-control" name="paisnaci" [(ngModel)]="pais_destino_fondos"
                     [ngClass]="{'campo-rojo': formulario && formulario.pais_destino_fondos}">
-                    <option *ngFor="let item of paises" [value]="item.iso">{{ item.nombre }}</option>
+                    <option *ngFor="let item of paises" [value]="item.codigo">{{ item.nombre }}</option>
                   </select>
                 </div>
               </div>

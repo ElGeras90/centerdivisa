@@ -92,8 +92,8 @@ jobs:
             npm install --production
 
             echo "🔄 Reiniciando proceso PM2 cc..."
-            sudo pm2 delete cc || true
-            sudo pm2 start index.js --name cc
+            sudo pm2 stop cc
+            sudo pm2 start cc
 
             sudo pm2 save
 

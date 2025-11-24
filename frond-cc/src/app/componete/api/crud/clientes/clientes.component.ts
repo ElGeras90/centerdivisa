@@ -168,7 +168,7 @@ export class ClientesComponent {
   user: any;
   ngOnInit(): void {
     this.empresa = localStorage.getItem('emp')
-
+    console.log('empresa de sesion', this.empresa)
     this.activar = this.shared.getActivo();
     this.catalogos();
     this.consultar();
@@ -267,7 +267,7 @@ export class ClientesComponent {
     )
     this.datos.pais(info).subscribe(
       (data: any) => {
-
+        console.log('paises', data.info)
         this.paises = data.info;
 
       }, (error: any) => {
@@ -361,9 +361,9 @@ export class ClientesComponent {
   consultacp(d: any) {
 
     const codigoValue = d.target.value;
-      if (codigoValue && codigoValue.length === 5) {
-        this.consultarCodigosPostales(codigoValue);
-      }
+    if (codigoValue && codigoValue.length === 5) {
+      this.consultarCodigosPostales(codigoValue);
+    }
   }
 
   consultarCodigosPostales(dato: any) {
@@ -618,6 +618,7 @@ export class ClientesComponent {
       this.clienteupdate(cliente);
     } else {
       const cliente = this.empresas.find((c: any) => c.idempresa === data.id);
+      console.log(cliente);
       this.cargarDatosEmpresa(cliente)
     }
 
@@ -653,7 +654,6 @@ export class ClientesComponent {
     this.pais_ = data.pais;
     this.codigopostal = data.cp;
     this.idcp = data.idcp;
-    this.empresa = data.empresa;
     this.info = false;
 
     // 🧾 Perfil transaccional
@@ -1221,7 +1221,7 @@ export class ClientesComponent {
       pais_procedencia_fondos: this.pais_procedencia_fondos,
       pais_destino_fondos: this.pais_destino_fondos,
       cantidad_operaciones_mes: this.cantidad_operaciones_mes,
-      
+
       // 🟢 ESTRUCTURA DE LA EMPRESA
       accionistas: this.accionistas
     };
@@ -1245,16 +1245,16 @@ export class ClientesComponent {
     this.actividad = empresa.actividad;
     this.numeroescritura = empresa.numeroescritura;
     this.foliomercantil = empresa.foliomercantil;
-      const info2 = { cp: empresa.idcp };
-      const data2: any = await this.datos.codigopostar(info2).toPromise();
-      console.log(data2)
-      this.codigopostal = data2.info.data[0].cp;
-      this.estado = data2.info.data[0].estado;
-      this.municipio = data2.info.data[0].municipio;
-      this.consultarCodigosPostales(this.codigopostal);
-      this.calle = empresa.calle,
-      this.numeroexterior=empresa.n_ext,
-      this.numerointerior=empresa.n_int
+    const info2 = { cp: empresa.idcp };
+    const data2: any = await this.datos.codigopostar(info2).toPromise();
+    console.log(data2)
+    this.codigopostal = data2.info.data[0].cp;
+    this.estado = data2.info.data[0].estado;
+    this.municipio = data2.info.data[0].municipio;
+    this.consultarCodigosPostales(this.codigopostal);
+    this.calle = empresa.calle,
+      this.numeroexterior = empresa.n_ext,
+      this.numerointerior = empresa.n_int
     // 🟩 PERFIL TRANSACCIONAL
     if (empresa.perfil_transaccional) {
       const perfil = empresa.perfil_transaccional;
@@ -1486,75 +1486,75 @@ export class ClientesComponent {
 
     this.modalAccionista.hide();
   }
-consultarFrecuencia() {
-  const body = { option: 5 };
-  this.datos.frecuenciaVista(body).subscribe(
-    (resp: any) => {
-      this.frecuencias = resp.info[0].manage_frecuencia_operaciones.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar frecuencias' })
-  );
-}
+  consultarFrecuencia() {
+    const body = { option: 5 };
+    this.datos.frecuenciaVista(body).subscribe(
+      (resp: any) => {
+        this.frecuencias = resp.info[0].manage_frecuencia_operaciones.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar frecuencias' })
+    );
+  }
 
-consultarTipoOperaciones() {
-  const body = { option: 5 };
-  this.datos.tipoOperacionesVista(body).subscribe(
-    (resp: any) => {
-      this.tiposOperaciones = resp.info[0].manage_tipo_operaciones.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar tipos de operaciones' })
-  );
-}
+  consultarTipoOperaciones() {
+    const body = { option: 5 };
+    this.datos.tipoOperacionesVista(body).subscribe(
+      (resp: any) => {
+        this.tiposOperaciones = resp.info[0].manage_tipo_operaciones.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar tipos de operaciones' })
+    );
+  }
 
-consultarActuaNombre() {
-  const body = { option: 5 };
-  this.datos.actuaNombreVista(body).subscribe(
-    (resp: any) => {
-      this.actuaNombres = resp.info[0].manage_actua_en_nombre.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar actúa en nombre' })
-  );
-}
+  consultarActuaNombre() {
+    const body = { option: 5 };
+    this.datos.actuaNombreVista(body).subscribe(
+      (resp: any) => {
+        this.actuaNombres = resp.info[0].manage_actua_en_nombre.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar actúa en nombre' })
+    );
+  }
 
-consultarMedioPago() {
-  const body = { option: 5 };
-  this.datos.medioPagoVista(body).subscribe(
-    (resp: any) => {
-      this.mediosPago = resp.info[0].manage_medio_pago.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar medio de pago' })
-  );
-}
+  consultarMedioPago() {
+    const body = { option: 5 };
+    this.datos.medioPagoVista(body).subscribe(
+      (resp: any) => {
+        this.mediosPago = resp.info[0].manage_medio_pago.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar medio de pago' })
+    );
+  }
 
-consultarOrigenRecursos() {
-  const body = { option: 5 };
-  this.datos.origenRecursosVista(body).subscribe(
-    (resp: any) => {
-      this.origenesRecursos = resp.info[0].manage_origen_recursos.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar origen de recursos' })
-  );
-}
+  consultarOrigenRecursos() {
+    const body = { option: 5 };
+    this.datos.origenRecursosVista(body).subscribe(
+      (resp: any) => {
+        this.origenesRecursos = resp.info[0].manage_origen_recursos.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar origen de recursos' })
+    );
+  }
 
-consultarDestinoRecursos() {
-  const body = { option: 5 };
-  this.datos.destinoRecursosVista(body).subscribe(
-    (resp: any) => {
-      this.destinosRecursos = resp.info[0].manage_destino_recursos.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar destino de recursos' })
-  );
-}
+  consultarDestinoRecursos() {
+    const body = { option: 5 };
+    this.datos.destinoRecursosVista(body).subscribe(
+      (resp: any) => {
+        this.destinosRecursos = resp.info[0].manage_destino_recursos.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar destino de recursos' })
+    );
+  }
 
-consultarRelacionTercero() {
-  const body = { option: 5 };
-  this.datos.relacionTerceroVista(body).subscribe(
-    (resp: any) => {
-      this.relacionesTercero = resp.info[0].manage_relacion_tercero.data;
-    },
-    () => Swal.fire({ icon: 'error', title: 'Error al consultar relación con tercero' })
-  );
-}
+  consultarRelacionTercero() {
+    const body = { option: 5 };
+    this.datos.relacionTerceroVista(body).subscribe(
+      (resp: any) => {
+        this.relacionesTercero = resp.info[0].manage_relacion_tercero.data;
+      },
+      () => Swal.fire({ icon: 'error', title: 'Error al consultar relación con tercero' })
+    );
+  }
   consultarProposito() {
     const data = { option: 5 };
     this.datos.propositoVista(data).subscribe(
@@ -1563,6 +1563,17 @@ consultarRelacionTercero() {
       },
       () => Swal.fire({ icon: 'error', title: 'Error al consultar propósitos' })
     );
+  }
+
+  valorOriginal = {
+    pais_procedencia_fondos: "",
+    pais_destino_fondos: ""
+  };
+
+
+  verificarCambio(campo: string) {
+
+    console.log(`✖ Sin cambio en: ${campo}`);
   }
 
 }
