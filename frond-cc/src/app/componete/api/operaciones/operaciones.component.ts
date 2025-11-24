@@ -46,6 +46,7 @@ esAdmin: boolean = false; // true si el usuario es administrador
     const data = { option: 1, tipo_alerta: this.tipoSeleccionado };
     try {
       const res: any = await this.cp.alertasMontosConsultar(data).toPromise();
+      
       this.alertas = res?.info?.data || res?.info || [];
       if (!this.alertas.length) {
         Swal.fire('Sin registros', 'No se encontraron alertas.', 'info');
@@ -78,6 +79,8 @@ esAdmin: boolean = false; // true si el usuario es administrador
 
     try {
       const res: any = await this.cp.alertasMontosConsultar(data).toPromise();
+      console.log("------------------------------------")
+      console.log(res);
       this.alertas = res?.info?.data || res?.info || [];
 
       console.log(res)
@@ -121,7 +124,7 @@ esAdmin: boolean = false; // true si el usuario es administrador
     try {
       const res: any = await this.cp.alertasMontosActualizar(data).toPromise();
       const info = res?.info || res;
-
+      
       if (info.action === 'success') {
         Swal.fire('Éxito', info.message || 'La alerta se actualizó correctamente.', 'success');
         //this.cerrarModal();

@@ -90,7 +90,7 @@ app.use('/reporte', reporte)
 app.use('/perfil', perfil);
 const alertasMontosRoutes = require('./routes/alertasMontos');
 app.use('/alertas-montos', alertasMontosRoutes);
-app.use('/configalerta', configuracionAlertaRoutes);
+app.use('/pld', configuracionAlertaRoutes);
 
 // para restablecer la contraseña 
 

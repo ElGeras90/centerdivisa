@@ -3,8 +3,10 @@ const { mysqlConnection, postgresClient, sqlServerPool, postgresPool } = require
 async function configalertas(data) {
   const client = await postgresPool.connect();
   try {
+    console.log("Datos recibidos en el modelo:", data);
     const query = 'SELECT * FROM "public"."manage_config_alertas_pld"($1)';
     const result = await client.query(query, [data]);
+    console.log("Resultado de la consulta:", result);
     return result;
   } catch (error) {
     throw error;

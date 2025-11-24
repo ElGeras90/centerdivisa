@@ -4,7 +4,7 @@ const { verifyAuthToken } = require('../util/token');
 
 const configuracion = require('../controller/ConfiguracionAlertaController');
 
-  router.post('/configuracion',verifyAuthToken, configuracion.confi);
+  router.post('/config-alertas',verifyAuthToken, configuracion.confi);
 
 
   module.exports = router;
