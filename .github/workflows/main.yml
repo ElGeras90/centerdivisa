@@ -92,10 +92,10 @@ jobs:
             npm install --production
 
             echo "🔄 Reiniciando proceso PM2 cc..."
-            pm2 delete cc || true
-            pm2 start index.js --name cc
+            sudo pm2 delete cc || true
+            sudo pm2 start index.js --name cc
 
-            pm2 save
+            sudo pm2 save
 
             echo "✔️ Backend actualizado y ejecutándose con PM2"
             echo "🚀 Despliegue completo correctamente"

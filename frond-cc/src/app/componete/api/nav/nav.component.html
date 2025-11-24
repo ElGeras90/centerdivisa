@@ -1,93 +1,95 @@
-<!-- Alertas flotantes -->
-<div>
-  <app-alerta-flotante class="alserts" *ngFor="let a of messages; let i = index"
-    [message]="a" (closed)="closeAlert(i)"></app-alerta-flotante>
-</div>
+<!-- HEADER SUPERIOR -->
+<header 
+  class="d-flex justify-content-between align-items-center px-4 py-3 text-white shadow"
+  style="background: linear-gradient(135deg, #0072FF, #1FA774);">
 
-<!-- Header con logo y notificaciones -->
-<header class="header-container d-flex justify-content-between align-items-center p-3 bg-primary text-white">
   <a [routerLink]="['/api']" class="d-flex align-items-center">
-    <img src="../../../../assets/img/Centro cambiario logo-03.png" alt="Logo" class="logo">
+    <img src="../../../../assets/img/unnamed.png" class="logo" style="height: 48px;">
   </a>
 
   <div class="d-flex align-items-center gap-3">
-    <button *ngIf="rol=='PLD'" class="btn btn-outline-light position-relative" (click)="riesgo.show()">
+
+    <!-- Botón de alertas -->
+    <button *ngIf="rol=='PLD'" class="btn btn-light position-relative rounded-pill px-3 py-1 shadow-sm"
+      (click)="riesgo.show()">
       <mat-icon [matBadge]="calert" matBadgeColor="warn">notifications</mat-icon>
     </button>
 
-    <button class="btn btn-outline-light" (click)="logout()">
+    <!-- Logout -->
+    <button class="btn btn-danger rounded-pill px-3 shadow-sm" (click)="logout()">
       <mat-icon>logout</mat-icon>
     </button>
   </div>
 </header>
 
-<!-- Ticker de divisas -->
-<div class="ticker-container bg-dark text-white py-1">
-  <div class="marquee">
-    <ul class="list-inline mb-0">
-      <li class="list-inline-item" *ngFor="let a of divisas">
-        <span class="fw-bold">{{a.grupo}}</span> Compra: {{a.compra}} | Venta: {{ a.venta }}
+<!-- TICKER BLOOMBERG -->
+<div class="ticker-wrapper">
+  <div class="ticker-blur-left"></div>
+  <div class="ticker-blur-right"></div>
+
+  <div class="ticker-content" (mouseenter)="pauseTicker()" (mouseleave)="resumeTicker()">
+    <ul class="ticker-items">
+      <li *ngFor="let a of divisas">
+        <strong class="text-success">{{ a.grupo }}</strong>
+        &nbsp;Compra:&nbsp;<span class="text-info">{{ a.compra }}</span>
+        &nbsp;| Venta:&nbsp;<span class="text-warning">{{ a.venta }}</span>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- Menú de navegación -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm py-2">
+
+<!-- NAV MODERNO -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm py-2"
+  style="background: #0B0C0E;">
   <div class="container-fluid">
-    <!-- 🔹 Botón para pantallas pequeñas -->
-    <button
-      class="navbar-toggler border-0"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarMenu"
-      aria-controls="navbarMenu"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
+
+    <!-- Botón móvil -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarMenu">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- 🔹 Contenido del menú -->
     <div class="collapse navbar-collapse justify-content-center" id="navbarMenu">
       <ul class="navbar-nav gap-lg-4 gap-2 text-center">
-        <li
-          class="nav-item dropdown"
-          *ngFor="let a of menus"
-          [class.dropdown-center]="true">
 
-          <!-- 🔸 Menú principal -->
-          <a
-            class="nav-link dropdown-toggle fw-semibold text-white px-3"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
+        <li class="nav-item dropdown" *ngFor="let a of menus">
+
+          <!-- Menú principal -->
+          <a class="nav-link dropdown-toggle fw-semibold px-3 py-2"
+            style="color: #F4F7FA;"
+            href="#" data-bs-toggle="dropdown">
             {{ a.menu }}
           </a>
 
-          <!-- 🔸 Submenú -->
-          <ul class="dropdown-menu dropdown-menu-dark shadow rounded-3 animate__animated animate__fadeIn">
+          <!-- Submenú -->
+          <ul
+            class="dropdown-menu shadow-lg border-0 rounded-3 mt-2 animate__animated animate__fadeIn"
+            style="background: #0B0C0E;">
+
             <li *ngFor="let b of a.submenus">
-              <a
-                class="dropdown-item py-2 px-3"
+              <a class="dropdown-item py-2 px-3 text-white"
+                style="transition: 0.2s;"
                 [routerLink]="b.componente"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }">
-                <i class="bi bi-caret-right-fill me-2 text-primary"></i>{{ b.nombre }}
+                routerLinkActive="active">
+                <i class="bi bi-caret-right-fill me-2" style="color:#0072FF;"></i>
+                {{ b.nombre }}
               </a>
             </li>
           </ul>
+
         </li>
+
       </ul>
     </div>
   </div>
 </nav>
 
-<!-- Modal de alertas -->
-<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1" aria-labelledby="alertasModalLabel" aria-hidden="true">
+<!-- MODAL ALERTAS -->
+<div class="modal fade" bsModal #riesgo="bs-modal" tabindex="-1">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content bg-dark text-white">
-      <div class="modal-header">
+    <div class="modal-content bg-dark text-white rounded-4 shadow-lg">
+      <div class="modal-header border-0">
         <h5 class="modal-title">Alertas</h5>
         <button type="button" class="btn-close btn-close-white" (click)="riesgo.hide()"></button>
       </div>

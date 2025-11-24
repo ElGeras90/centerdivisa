@@ -1,85 +1,24 @@
-$primary: #1F2124;
-$secondary: #383A3F;
-$accent: #F68657;
-$accent-light: #F6B352;
 
-body {
-  background: $secondary;
-  font-family: "Varela Round", sans-serif;
+
+/* Efecto hover luminoso */
+.navbar .nav-link:hover {
+  color: #1FA774 !important;
+  text-shadow: 0 0 6px rgba(31, 167, 116, 0.8);
 }
 
-.header-container {
-  background: $primary;
-  img.logo {
-    height: 50px;
-    width: auto;
-  }
+/* Dropdown hover */
+.dropdown-item:hover {
+  background: rgba(0, 114, 255, 0.15) !important;
+  padding-left: 35px !important;
+  color: #1FA774 !important;
 }
 
-.ticker-container {
-  background: $secondary;
-  .marquee {
-    display: flex;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: scroll 20s linear infinite;
-    
-    ul {
-      display: inline-flex;
-      gap: 2rem;
-      li {
-        font-size: 0.9rem;
-      }
-    }
-  }
+/* Marquee */
+.marquee {
+  white-space: nowrap;
+  animation: ticker 18s linear infinite;
 }
-
-@keyframes scroll {
-  0% { transform: translateX(100%); }
+@keyframes ticker {
+  0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
-}
-
-.navbar {
-  background: $secondary !important;
-  .nav-link {
-    font-weight: 600;
-    transition: color 0.3s;
-    &:hover {
-      color: $accent-light !important;
-    }
-  }
-  .dropdown-menu {
-    background: $primary;
-    .dropdown-item {
-      color: white;
-      &:hover {
-        background: $accent;
-      }
-    }
-  }
-}
-
-/* Modern cards para sección principal */
-.cardx {
-  background: $primary;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  border-radius: 10px;
-  margin: 20px;
-  padding: 20px;
-  color: white;
-  text-align: center;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.6);
-  }
-
-  .titlex { font-size: 1.5rem; font-weight: bold; }
-  .iconx svg path { fill: $accent-light; }
-  .btnx {
-    background: $accent-light;
-    color: white;
-    &:hover { background: $accent; }
-  }
 }

@@ -1,62 +1,68 @@
-.image {
-    height: 25px;
+/* ================================
+   TICKER BLOOMBERG PROFESIONAL
+   ================================ */
+
+.ticker-wrapper {
+  position: relative;
+  width: 100%;
+  height: 38px;
+  background: #0B0C0E;
+  border-bottom: 3px solid #1FA774;
+  overflow: hidden;                /* <--- elimina scroll horizontal */
+  display: flex;
+  align-items: center;
 }
 
-.tm {
-    padding: 10px;
+/* Contenido que se mueve */
+.ticker-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: tickerMove 18s linear infinite;
+  padding-left: 100%;              /* Inicia fuera de pantalla (derecha) */
+  font-size: 15px;
 }
 
-.derecha {
-    display: flex;
-    justify-content: end;
+/* Movimiento continuo de derecha → izquierda */
+@keyframes tickerMove {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 
-.blue-line {
-    height: 30px;
-    position: relative;
-    overflow: hidden;
+/* Lista horizontal */
+.ticker-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  gap: 60px;
 }
 
-.moving-text {
-    position: absolute;
-    white-space: nowrap;
-    animation: moveText 20s linear infinite;
-    right: 100%;
-    /* Comienza fuera del área visible a la derecha */
-    top: 75%;
-    /* Centra verticalmente el texto */
-    transform: translateY(-50%);
-    /* Alinea el texto en el centro */
+.ticker-items li {
+  color: white;
+  font-weight: 500;
 }
 
-@keyframes moveText {
-    0% {
-        right: -100%;
-        /* Comienza fuera del área visible a la derecha */
-    }
-
-    100% {
-        right: 100%;
-        /* Termina fuera del área visible a la izquierda */
-    }
+/* Efecto fade lateral estilo Bloomberg */
+.ticker-blur-left, .ticker-blur-right {
+  position: absolute;
+  top: 0;
+  width: 80px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
 }
 
-.reverse-list {
-    list-style: circle;
-    /* Quita los puntos de viñetas predeterminados */
-
+.ticker-blur-left {
+  left: 0;
+  background: linear-gradient(to right, #0B0C0E 0%, transparent 100%);
 }
 
-.rli {
-    display: inline;
-    /* Muestra los elementos de la lista en una sola línea */
-    margin-right: 10px;
-    /* Agrega un espacio entre los elementos si lo deseas */
-
+.ticker-blur-right {
+  right: 0;
+  background: linear-gradient(to left, #0B0C0E 0%, transparent 100%);
 }
 
-.cuerpo {
-    display: flex;
-    flex-direction: column;
-    min-height: 50vh;
+/* Pausa al pasar el mouse */
+.ticker-content.paused {
+  animation-play-state: paused !important;
 }

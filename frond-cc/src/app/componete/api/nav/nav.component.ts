@@ -191,5 +191,14 @@ toggleSidebar() {
 toggleSubmenu(menu: any) {
   menu.open = !menu.open;
 }
+pauseTicker() {
+  const ticker = document.querySelector('.ticker-content');
+  if (ticker) ticker.classList.add('paused');
+}
+
+resumeTicker() {
+  const ticker = document.querySelector('.ticker-content');
+  if (ticker) ticker.classList.remove('paused');
+}
 
 }
