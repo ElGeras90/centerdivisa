@@ -8,7 +8,7 @@ import { io } from 'socket.io-client';
 export class SocketService {
   private socket: any;
   //private readonly serverUrl = 'http://localhost:3003'; 
-  private readonly serverUrl = 'https://demo.axen.devgeras.xyz:3003'; // URL del servidor Socket.IO
+  private readonly serverUrl = 'https://axencash.com:3002'; // URL del servidor Socket.IO
   //private readonly serverUrl = "https://inmtecdivisas.mx:3003/";
   constructor() { }
 

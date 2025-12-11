@@ -5,11 +5,11 @@ import { Injectable } from "@angular/core";
 
 export class ConfiguracionConstante {
 	//public API_ENDPOINT = "http://localhost:3004/";
-	public API_ENDPOINT = "https://demo.axen.devgeras.xyz:3004/";
+	public API_ENDPOINT = "https://axencash.com:4000/";
 }
 export class pld_data {
 	 //public API_ENDPOINT_PLD = "http://localhost:3000/";
-	public API_ENDPOINT_PLD = "https://demo.axen.devgeras.xyz:3002/";
+	public API_ENDPOINT_PLD = "https://axencash.com:4001/";
 }
 export class LoginConstante {
 	public static URLLogin = "auth/login";

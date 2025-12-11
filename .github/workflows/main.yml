@@ -1,4 +1,4 @@
-name: CI/CD Full Stack (Frontend + Backend) on AWS
+name: CI/CD Full Stack (Frontend + Backend) on Azure VM
 
 on:
   push:
@@ -10,92 +10,115 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Clonar repositorio
-      - name: Checkout code
+      # =====================================
+      # 1️⃣ Checkout del repositorio
+      # =====================================
+      - name: Checkout repository
         uses: actions/checkout@v4
 
+      # =====================================
       # 2️⃣ Login a Docker Hub
-      - name: Login to DockerHub
+      # =====================================
+      - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # =====================================
       # 3️⃣ Build Frontend
-      - name: Build Frontend image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest ./frond-cc
+      # =====================================
+      - name: Build Frontend Docker image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest \
+            ./frond-cc
 
+      # =====================================
       # 4️⃣ Push Frontend
-      - name: Push Frontend image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
+      # =====================================
+      - name: Push Frontend Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
 
-      # 5️⃣ Deploy en AWS EC2
-      - name: Deploy on AWS EC2 (Frontend + Backend PM2)
+      # =====================================
+      # 5️⃣ Deploy Frontend en Azure VM
+      # =====================================
+      - name: Deploy Frontend (Docker)
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            echo "🚀 Iniciando despliegue en EC2..."
+            echo "🚀 Deploy Frontend en Azure VM"
 
-            # ===============================
-            #      FRONTEND DOCKER
-            # ===============================
             docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
             docker pull ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
+
             docker stop frontend || true
             docker rm frontend || true
 
-            docker run -d --name frontend -p 82:80 \
+            docker run -d \
+              --name frontend \
               --restart unless-stopped \
+              -p 82:80 \
               ${{ secrets.DOCKER_USERNAME }}/frond-cc:latest
 
-            echo "✔️ Frontend desplegado con Docker"
+            echo "✔️ Frontend desplegado correctamente"
 
-            # ===============================
-            #           BACKEND
-            #   (SIN DOCKER - CON PM2)
-            # ===============================
+      # =====================================
+      # 6️⃣ Crear ruta del backend si no existe
+      # =====================================
+      - name: Prepare backend directory
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            echo "📁 Verificando ruta /home/centroc/backend/4000"
 
-            echo "📁 Actualizando backend en /home/ubuntu/backend-cc"
+            mkdir -p /home/centroc/backend/4000
 
-            # Crear carpeta si no existe
-            mkdir -p /home/ubuntu/backend-cc
+            chown -R centroc:centroc /home/centroc/backend
+            chmod -R 755 /home/centroc/backend
 
-            # Limpiar el backend anterior
-            rm -rf /home/ubuntu/backend-cc/*
+            echo "✔️ Ruta lista"
 
-            # Subir nuevos archivos del backend desde el repositorio actual
-            # GitHub Actions los copia con SCP
-      - name: Upload backend to EC2
+      # =====================================
+      # 7️⃣ Subir Backend
+      # =====================================
+      - name: Upload Backend to Azure VM
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           source: "backend-cc/*"
-          target: "/home/ubuntu/backend-cc"
+          target: "/home/centroc/backend/4000"
 
-      # 6️⃣ Instalar dependencias y reiniciar PM2
-      - name: Restart backend with PM2
+      # =====================================
+      # 8️⃣ Instalar dependencias y reiniciar PM2
+      # =====================================
+      - name: Restart Backend with PM2
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            cd /home/ubuntu/backend-cc
+            echo "📦 Actualizando backend..."
 
-            echo "📦 Instalando dependencias del backend..."
+            cd /home/centroc/backend/4000
+
             npm install --production
 
-            echo "🔄 Reiniciando proceso PM2 cc..."
-            sudo pm2 stop cc
-            sudo pm2 start cc
+            pm2 stop cc || true
+            pm2 start ecosystem.config.js --only cc
 
-            sudo pm2 save
+            pm2 save
 
-            echo "✔️ Backend actualizado y ejecutándose con PM2"
-            echo "🚀 Despliegue completo correctamente"
+            echo "✔️ Backend ejecutándose con PM2"
+            echo "🚀 Despliegue completo"
