@@ -98,8 +98,9 @@ app.use('/pld', configuracionAlertaRoutes);
 if (process.env.NODE_ENV === 'production') {
   // Configurar opciones SSL
   const options = {
-    key: fs.readFileSync('/etc/letsencrypt/live/axencash.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/axencash.com/fullchain.pem'),
+    key: fs.readFileSync("/home/centroc/certs/privkey.pem"),
+    cert: fs.readFileSync("/home/centroc/certs/fullchain.pem")
+
   };
 
 
